@@ -9,7 +9,14 @@ id = f57ece03-0b21-473c-af95-82fe4bc24e91
 
 [config.relations.collections]
 rootDirectory = postman/collections
+files[] = {"id":"19609580-de14f261-bc2d-42c0-90e2-68b9845b7cb1","path":"assessment-service.json","metaData":{}}
+files[] = {"id":"19609580-8b23cbd5-f7f3-4f38-9a03-9942d099517c","path":"chat-service.json","metaData":{}}
+files[] = {"id":"19609580-637f2a50-65c3-4dc8-91db-89fd3329948e","path":"clinical-data-service.json","metaData":{}}
 files[] = {"id":"19609580-669bda42-bd54-4cd5-b457-5c2190fd6110","path":"composition-service.json","metaData":{}}
+files[] = {"id":"19609580-cda0d371-32fd-46a3-90fe-3f92e459c487","path":"Inquiry-Referral-Service.json","metaData":{}}
+files[] = {"id":"19609580-7e10e05b-150b-4e75-9ce8-5976e1ff387b","path":"notification-service.json","metaData":{}}
+files[] = {"id":"19609580-2fea974d-979a-40a9-a561-0ff77c39b3f3","path":"schedule-service.json","metaData":{}}
+files[] = {"id":"19609580-644c90de-3390-4733-9f8b-c30f58594da7","path":"task-service.json","metaData":{}}
 files[] = {"id":"19609580-89795b16-3a9b-4aa8-8aa6-f13173c3f859","path":"user-service.json","metaData":{}}
 
 [config.relations.collections.metaData]

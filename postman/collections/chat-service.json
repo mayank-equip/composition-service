@@ -1,0 +1,2705 @@
+{
+	"info": {
+		"_postman_id": "8b23cbd5-f7f3-4f38-9a03-9942d099517c",
+		"name": "chat-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19609580-8b23cbd5-f7f3-4f38-9a03-9942d099517c"
+	},
+	"item": [
+		{
+			"name": "EQ-7131 BE: Change Chat Service to use new User API to get external id",
+			"item": [
+				{
+					"name": "Get token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d97b369b-b2af-46d0-96cf-421f41160270",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"pm.test(\"Response has a JSON body\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"pm.test(\"Content-Type header is application/json\", () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+									"});",
+									"",
+									"pm.environment.set(\"responseToken\", jsonData.token);",
+									"",
+									"pm.test(\"Verify token is returned\", function () {",
+									"    pm.expect(jsonData.token).to.eql(pm.variables.get(\"responseToken\"));",
+									"",
+									"",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "cb102d5b-634b-4a75-92d7-b3b0ae8801c1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/chat/users/token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"chat",
+								"users",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "e77afc9e-29e9-4960-ba5e-943885dfa8cf"
+		},
+		{
+			"name": "EQ-6088 BE: Execute SendBird Updates identified by Algorithm",
+			"item": [
+				{
+					"name": "Test For Admission Team",
+					"item": [
+						{
+							"name": "Add Patient",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "af2bf394-5034-43ee-8d3c-1f150e401ecc",
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Response has a JSON body\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", () => {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test(\"Verify id is generated\", function () {",
+											"    pm.expect(jsonData.id).length.greaterThan(0);",
+											"});",
+											"",
+											"pm.environment.set(\"patientId\", jsonData.id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "611a985f-1dba-44c8-8ec1-4affa2886fcc",
+										"exec": [
+											"let ld = require('lodash');",
+											"",
+											"let gendersList = [",
+											"    \"Cis-gender male\",",
+											"    \"Cis-gender female\",",
+											"    \"Non-binary\",",
+											"    \"Other\",",
+											"    \"Unknown\",",
+											"    \"Transgender male\",",
+											"    \"Transgender female\"",
+											"];",
+											"",
+											"let pronounsList = [",
+											"    \"He/Him/His\",",
+											"    \"She/Her/Hers\",",
+											"    \"They/Them/Theirs\",",
+											"    \"Other\"",
+											"];",
+											"",
+											"let ethnicitiesList = [",
+											"    \"Asian\",",
+											"    \"Black/African American\",",
+											"    \"White/Caucasian\",",
+											"    \"Hispanic/Latinx\",",
+											"    \"Native American, Indian American, or Alaska Native\",",
+											"    \"Native Hawaiian or other Pacific Islander\",",
+											"    \"Middle Eastern or North African\",",
+											"    \"Prefer not to answer\",",
+											"    \"Other\"",
+											"];",
+											"",
+											"let languagesList = [",
+											"    \"English\",",
+											"    \"Spanish\",",
+											"    \"Chinese\",",
+											"    \"French\",",
+											"    \"Tagalog\",",
+											"    \"Vietnamese\",",
+											"    \"Korean\",",
+											"    \"German\",",
+											"    \"Russian\",",
+											"    \"Italian\",",
+											"    \"Portuguese\",",
+											"    \"Polish\",",
+											"    \"Japanese\",",
+											"    \"Persian\",",
+											"    \"Greek\",",
+											"    \"Serbo-Croatian\",",
+											"    \"Armenian\",",
+											"    \"Yiddish\",",
+											"    \"American Sign Language (ASL)\"",
+											"];",
+											"",
+											"let sexList = [",
+											"    \"Male\",",
+											"    \"Female\"",
+											"];",
+											"",
+											"let timezonesList = [",
+											"    \"Hawaii Standard Time\",",
+											"    \"Hawaii-Aleutian Time\",",
+											"    \"Alaska Time\",",
+											"    \"Pacific Time\",",
+											"    \"Arizona\",",
+											"    \"Mountain Time\",",
+											"    \"Central Time\",",
+											"    \"Eastern Time\"",
+											"];",
+											"",
+											"let contactPreferences = [\"Email\", \"No preference\", \"Phone\", \"Unknown\"];",
+											"",
+											"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+											"",
+											"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+											"",
+											"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+											"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+											"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+											"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+											"let zip = Math.floor(10000 + Math.random() * 90000);",
+											"",
+											"//Generate random Date of Birth in YYYY-MM-DD Format",
+											"function randomDate(start, end) {",
+											"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+											"}",
+											"let date = randomDate(new Date(1990, 00, 01), new Date());",
+											"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+											"",
+											"//Save the variables to be used in next request for validation",
+											"pm.environment.set(\"patientFirstName\", firstName);",
+											"pm.environment.set(\"patientLastName\", lastName);",
+											"pm.environment.set(\"patientEmail\", email);",
+											"pm.environment.set(\"patientPhoneNumber\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));",
+											"pm.environment.set(\"patientChosenName\", chosenName);",
+											"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+											"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+											"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+											"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+											"pm.environment.set(\"patientState\", ld.sample(statesList));",
+											"pm.environment.set(\"patientCountry\", \"US\");",
+											"pm.environment.set(\"patientZip\", zip.toString());",
+											"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+											"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+											"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+											"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+											"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+											"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+											"pm.environment.set(\"patientPronounsOnRecord\", ld.sample(pronounsList));",
+											"pm.environment.set(\"patientPronounsOffRecord\", ld.sample(pronounsList));",
+											"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+											"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+											"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "d96f359b-6aab-46fd-8f31-fb5d83cc28d9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"{{patientPhoneNumber}}\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": \"{{patientPronounsOnRecord}}\",\n    \"pronounsOffRecord\": \"{{patientPronounsOffRecord}}\",\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/patients",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sendbird Group Channel-no admission team exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "99bc040b-c6e2-4485-a966-46d849a5d6d0",
+										"exec": [
+											"\r",
+											"let jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 4000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has a JSON body\", function () {\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json\", () => {\r",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+											"});\r",
+											"\r",
+											"let errorMessage = jsonData.error;\r",
+											"let message = jsonData.message;\r",
+											"let errorCode = jsonData.code;\r",
+											"\r",
+											"pm.test(\"Response body should return error for not having channel\", () => {\r",
+											"    pm.expect(errorMessage).to.be.true;\r",
+											"    pm.expect(message).to.eql(\"\\\"Channel\\\" not found.\");\r",
+											"    pm.expect(errorCode).to.eql(400201);\r",
+											"});\r",
+											"\r",
+											"//console.log(message);\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "be7735fd-194a-4ac6-9b31-aca208725315",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "593d109e-3704-4c1e-8c4e-4254d6b250d6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "api-token",
+										"value": "{{sendbird-api-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{sendbird-host}}/group_channels/{{sendbird-url}}{{patientId}}?show_member=true",
+									"host": [
+										"{{sendbird-host}}"
+									],
+									"path": [
+										"group_channels",
+										"{{sendbird-url}}{{patientId}}"
+									],
+									"query": [
+										{
+											"key": "show_member",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get providers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2e61fb7e-b153-473a-a07d-3a4d6c6b1c3e",
+										"exec": [
+											"let responseJson = pm.response.json();",
+											"let ld = require('lodash');",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify providers by page size and page number\", () => {",
+											"    var pageSize = pm.request.url.query.get(\"page-size\");",
+											"    pm.expect(responseJson.providers.length.toString()).to.eql(pageSize);",
+											"});",
+											"//Fetch providers's externalIds and and store them in an arry of objects and randomly picks one to pass in the request. ",
+											"let userIds = responseJson.providers;",
+											"let arryOfProviderIds = userIds.map(tool => tool.userId);",
+											"// One random externalId for admission team",
+											"let random = Math.floor(Math.random() * arryOfProviderIds.length);",
+											"let providerExternalIdForAdmissionTeam = arryOfProviderIds[random];",
+											"",
+											"pm.environment.set(\"providerExternalIdForAdmissionTeam\", providerExternalIdForAdmissionTeam);",
+											"//pm.environment.set(\"providerExternalIdForAdmissionTeam\", ld.sample(arryOfProviderIds));",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6049918d-f4dc-4153-bf49-806d213a06a0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "aa2809a8-7fe5-4449-a90a-517ea29fad0d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/providers?page-size=20&page-number=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"providers"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "20"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create admission team",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "76ece93b-4746-4aaf-a81f-7463f6aa2ddd",
+										"exec": [
+											"",
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Response has a JSON body\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", () => {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test(\"Verify id is generated\", function () {",
+											"    pm.expect(jsonData.id).length.greaterThan(0);",
+											"});",
+											"",
+											"pm.environment.set(\"admissionTeamExternalId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "1bb42ffc-8bdf-403e-8aeb-9e2f23d58a5c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"patientExternalId\": \"{{patientId}}\",\n    \"type\": \"admissions\",\n    \"providers\": [\n        \"{{providerExternalIdForAdmissionTeam}}\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/care-team",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"care-team"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sendbird Group Channel-channelIsNotFreez",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "59cad8fd-d5fe-43a3-b99d-31c72380f2e6",
+										"exec": [
+											"let jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 4000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has a JSON body\", function () {\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json\", () => {\r",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+											"});\r",
+											"\r",
+											"let channelFreezeStatus = jsonData.freeze;\r",
+											"let memberCount = jsonData.member_count;\r",
+											"\r",
+											"if (memberCount == 0) {\r",
+											"    pm.test(\"Channel should be freeze\", () => {\r",
+											"        pm.expect(channelFreezeStatus).to.be.true;\r",
+											"    });\r",
+											"} else {\r",
+											"    pm.test(\"Channel should not be freeze\", () => {\r",
+											"        pm.expect(channelFreezeStatus).to.be.false;\r",
+											"    });\r",
+											"}\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"console.log(memberCount);\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4fc07bd6-38ed-443e-a00d-0c0e4291169e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "f4e57fb0-ae23-4440-b408-a0498420f5a7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "api-token",
+										"value": "{{sendbird-api-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{sendbird-host}}/group_channels/{{sendbird-url}}{{patientId}}?show_member=true",
+									"host": [
+										"{{sendbird-host}}"
+									],
+									"path": [
+										"group_channels",
+										"{{sendbird-url}}{{patientId}}"
+									],
+									"query": [
+										{
+											"key": "show_member",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "b19926dd-c2d3-4841-a7fd-af24ec6af8c4"
+				},
+				{
+					"name": "Test For Care Team",
+					"item": [
+						{
+							"name": "Add Patient",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "443f413a-f965-4426-aeee-bbb52ea37504",
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Response has a JSON body\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", () => {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test(\"Verify id is generated\", function () {",
+											"    pm.expect(jsonData.id).length.greaterThan(0);",
+											"});",
+											"",
+											"pm.environment.set(\"patientId\", jsonData.id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8dbf74de-82e0-4e3a-ab9b-81836765b5c5",
+										"exec": [
+											"let ld = require('lodash');",
+											"",
+											"let gendersList = [",
+											"    \"Cis-gender male\",",
+											"    \"Cis-gender female\",",
+											"    \"Non-binary\",",
+											"    \"Other\",",
+											"    \"Unknown\",",
+											"    \"Transgender male\",",
+											"    \"Transgender female\"",
+											"];",
+											"",
+											"let pronounsList = [",
+											"    \"He/Him/His\",",
+											"    \"She/Her/Hers\",",
+											"    \"They/Them/Theirs\",",
+											"    \"Other\"",
+											"];",
+											"",
+											"let ethnicitiesList = [",
+											"    \"Asian\",",
+											"    \"Black/African American\",",
+											"    \"White/Caucasian\",",
+											"    \"Hispanic/Latinx\",",
+											"    \"Native American, Indian American, or Alaska Native\",",
+											"    \"Native Hawaiian or other Pacific Islander\",",
+											"    \"Middle Eastern or North African\",",
+											"    \"Prefer not to answer\",",
+											"    \"Other\"",
+											"];",
+											"",
+											"let languagesList = [",
+											"    \"English\",",
+											"    \"Spanish\",",
+											"    \"Chinese\",",
+											"    \"French\",",
+											"    \"Tagalog\",",
+											"    \"Vietnamese\",",
+											"    \"Korean\",",
+											"    \"German\",",
+											"    \"Russian\",",
+											"    \"Italian\",",
+											"    \"Portuguese\",",
+											"    \"Polish\",",
+											"    \"Japanese\",",
+											"    \"Persian\",",
+											"    \"Greek\",",
+											"    \"Serbo-Croatian\",",
+											"    \"Armenian\",",
+											"    \"Yiddish\",",
+											"    \"American Sign Language (ASL)\"",
+											"];",
+											"",
+											"let sexList = [",
+											"    \"Male\",",
+											"    \"Female\"",
+											"];",
+											"",
+											"let timezonesList = [",
+											"    \"Hawaii Standard Time\",",
+											"    \"Hawaii-Aleutian Time\",",
+											"    \"Alaska Time\",",
+											"    \"Pacific Time\",",
+											"    \"Arizona\",",
+											"    \"Mountain Time\",",
+											"    \"Central Time\",",
+											"    \"Eastern Time\"",
+											"];",
+											"",
+											"let contactPreferences = [\"Email\", \"No preference\", \"Phone\", \"Unknown\"];",
+											"",
+											"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+											"",
+											"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+											"",
+											"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+											"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+											"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+											"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+											"let zip = Math.floor(10000 + Math.random() * 90000);",
+											"",
+											"//Generate random Date of Birth in YYYY-MM-DD Format",
+											"function randomDate(start, end) {",
+											"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+											"}",
+											"let date = randomDate(new Date(1990, 00, 01), new Date());",
+											"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+											"",
+											"//Save the variables to be used in next request for validation",
+											"pm.environment.set(\"patientFirstName\", firstName);",
+											"pm.environment.set(\"patientLastName\", lastName);",
+											"pm.environment.set(\"patientEmail\", email);",
+											"pm.environment.set(\"patientPhoneNumber\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));",
+											"pm.environment.set(\"patientChosenName\", chosenName);",
+											"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+											"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+											"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+											"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+											"pm.environment.set(\"patientState\", ld.sample(statesList));",
+											"pm.environment.set(\"patientCountry\", \"US\");",
+											"pm.environment.set(\"patientZip\", zip.toString());",
+											"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+											"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+											"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+											"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+											"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+											"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+											"pm.environment.set(\"patientPronounsOnRecord\", ld.sample(pronounsList));",
+											"pm.environment.set(\"patientPronounsOffRecord\", ld.sample(pronounsList));",
+											"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+											"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+											"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "719086df-a0bf-4a8e-8eff-13eff4321844",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"{{patientPhoneNumber}}\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": \"{{patientPronounsOnRecord}}\",\n    \"pronounsOffRecord\": \"{{patientPronounsOffRecord}}\",\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/patients",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sendbird Group Channel-no care team exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "321c5280-2117-4f3b-b1b0-2048ac571173",
+										"exec": [
+											"\r",
+											"let jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 4000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has a JSON body\", function () {\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json\", () => {\r",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+											"});\r",
+											"\r",
+											"let errorMessage = jsonData.error;\r",
+											"let message = jsonData.message;\r",
+											"let errorCode = jsonData.code;\r",
+											"\r",
+											"pm.test(\"Response body should return error for having channel\", () => {\r",
+											"    pm.expect(errorMessage).to.be.true;\r",
+											"    pm.expect(message).to.eql(\"\\\"Channel\\\" not found.\");\r",
+											"    pm.expect(errorCode).to.eql(400201);\r",
+											"});\r",
+											"\r",
+											"//console.log(message);\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "dfa04760-f210-46e3-b526-67f329a0e277",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "6978ceee-9bd5-4954-bad6-2bf4166dc9e9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "api-token",
+										"value": "{{sendbird-api-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{sendbird-host}}/group_channels/{{sendbird-url-careTeam}}{{patientId}}?show_member=true",
+									"host": [
+										"{{sendbird-host}}"
+									],
+									"path": [
+										"group_channels",
+										"{{sendbird-url-careTeam}}{{patientId}}"
+									],
+									"query": [
+										{
+											"key": "show_member",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get providers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "91a2d8ad-963b-4c45-bf49-9081c99104a6",
+										"exec": [
+											"let responseJson = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify providers by page size and page number\", () => {",
+											"    var pageSize = pm.request.url.query.get(\"page-size\");",
+											"    pm.expect(responseJson.providers.length.toString()).to.eql(pageSize);",
+											"});",
+											"//Fetch providers's externalIds and and store them in an arry of objects and randomly picks one to pass in the request. ",
+											"let userIds = responseJson.providers;",
+											"let arryCareTeamMemberIds = userIds.map (tool => tool.userId);",
+											"// One random externalId for care team",
+											"let randomForCare = Math.floor(Math.random() * arryCareTeamMemberIds.length);",
+											"let providerExternalIdForCareTeam = arryCareTeamMemberIds[randomForCare];",
+											"",
+											"pm.environment.set(\"providerExternalIdForCareTeam\", providerExternalIdForCareTeam);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "a1d3a4da-ced7-452c-b394-e0c1fa9ab3fd",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "32d760bb-d001-4c62-a879-b234763b92f8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/providers?page-size=20&page-number=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"providers"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "20"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create care team",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b61e889b-4460-46e8-9ac7-9a9bed489838",
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Response has a JSON body\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", () => {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test(\"Verify id is generated\", function () {",
+											"    pm.expect(jsonData.id).length.greaterThan(0);",
+											"});",
+											"",
+											"pm.environment.set(\"careTeamExternalId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "c5dc7aea-5248-4203-81b9-df06296af170",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"patientExternalId\": \"{{patientId}}\",\n    \"type\": \"care\",\n    \"providers\": [\n        \"{{providerExternalIdForCareTeam}}\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/care-team",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"care-team"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sendbird Group Channel-Care Team-channelIsNotFreez",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "33b7187f-2b67-4145-89b9-b73ef689139c",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "e214c16c-929f-40e7-8cdc-94c7263cf02b",
+										"exec": [
+											"let jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 4000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response has a JSON body\", function () {\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json\", () => {\r",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+											"});\r",
+											"\r",
+											"let channelFreezeStatus = jsonData.freeze;\r",
+											"let memberCount = jsonData.member_count;\r",
+											"\r",
+											"if (memberCount == 0) {\r",
+											"    pm.test(\"Channel should be freeze\", () => {\r",
+											"        pm.expect(channelFreezeStatus).to.be.true;\r",
+											"    });\r",
+											"} else {\r",
+											"    pm.test(\"Channel should not be freeze\", () => {\r",
+											"        pm.expect(channelFreezeStatus).to.be.false;\r",
+											"    });\r",
+											"}\r",
+											"//console.log(jsonData.freeze);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "b0b51c35-51b8-4900-959a-0c3075b86636",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "api-token",
+										"value": "{{sendbird-api-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{sendbird-host}}/group_channels/{{sendbird-url-careTeam}}{{patientId}}?show_member=true",
+									"host": [
+										"{{sendbird-host}}"
+									],
+									"path": [
+										"group_channels",
+										"{{sendbird-url-careTeam}}{{patientId}}"
+									],
+									"query": [
+										{
+											"key": "show_member",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "6e21a77f-b44e-4c05-9db9-ccfd27c73f30"
+				}
+			],
+			"id": "9f052c4d-46e4-4d81-ba33-d9b036e08577"
+		},
+		{
+			"name": "EQ-7668  BE - Add family route to get SendBird token",
+			"item": [
+				{
+					"name": "Request to get SendBird token - MyEquip token passed in the header as authorizaion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e2e3c607-eb0d-418a-8371-b12e635a2139",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"const family_Rout_SendBird_Token = responseJson.token;",
+									"pm.test(\"family rout SendBird token\", function () {",
+									"    pm.expect(responseJson.token).to.eql(family_Rout_SendBird_Token);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6eb1ccb1-9449-468f-8ad8-1db4f1988e8c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8f04f74a-da10-48e9-8b61-cfd304e9f77f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{myequip-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/chat/family/token/v1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"chat",
+								"family",
+								"token",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request to get SendBird token - Maud token passed in the header as authorizaion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "af2f0cd2-9c20-4853-9da4-648b5ab68d93",
+								"exec": [
+									"",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"})",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "12c8b6cd-0a74-4ae2-8e5a-a6e66b8f26ee",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "02169390-007f-45c0-b8ac-d90adbb61fa6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/chat/family/token/v1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"chat",
+								"family",
+								"token",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request to get SendBird token - No token passed in the header as authorizaion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3361c470-f115-4902-b75e-60f1b88225e1",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"})",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "da9068af-16bb-430a-bd1c-a58499bf106f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "9754dbda-8fb8-440e-ba52-041b6c753488",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/chat/family/token/v1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"chat",
+								"family",
+								"token",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "ffa89ddf-ad01-425c-b81f-94c6e156affe"
+		},
+		{
+			"name": "Add and Remove user from channel",
+			"item": [
+				{
+					"name": "Add Patient Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b317f33e-960c-4fc3-bb8c-8b0e222b1259",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Response has a JSON body\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Content-Type header is application/json\", () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+									"});",
+									"",
+									"pm.test(\"Verify id is generated\", function () {",
+									"    pm.expect(jsonData.id).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.environment.set(\"patientId\", jsonData.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f2d39808-d1c2-4196-9ddb-bf0ab1054fb5",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"let gendersList = [",
+									"    \"Cis-gender male\",",
+									"    \"Cis-gender female\",",
+									"    \"Non-binary\",",
+									"    \"Other\",",
+									"    \"Unknown\",",
+									"    \"Transgender male\",",
+									"    \"Transgender female\"",
+									"];",
+									"",
+									"let pronounsList = [",
+									"    \"He/Him/His\",",
+									"    \"She/Her/Hers\",",
+									"    \"They/Them/Theirs\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let ethnicitiesList = [",
+									"    \"Asian\",",
+									"    \"Black/African American\",",
+									"    \"White/Caucasian\",",
+									"    \"Hispanic/Latinx\",",
+									"    \"Native American, Indian American, or Alaska Native\",",
+									"    \"Native Hawaiian or other Pacific Islander\",",
+									"    \"Middle Eastern or North African\",",
+									"    \"Prefer not to answer\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let languagesList = [",
+									"    \"English\",",
+									"    \"Spanish\",",
+									"    \"Chinese\",",
+									"    \"French\",",
+									"    \"Tagalog\",",
+									"    \"Vietnamese\",",
+									"    \"Korean\",",
+									"    \"German\",",
+									"    \"Russian\",",
+									"    \"Italian\",",
+									"    \"Portuguese\",",
+									"    \"Polish\",",
+									"    \"Japanese\",",
+									"    \"Persian\",",
+									"    \"Greek\",",
+									"    \"Serbo-Croatian\",",
+									"    \"Armenian\",",
+									"    \"Yiddish\",",
+									"    \"American Sign Language (ASL)\"",
+									"];",
+									"",
+									"let sexList = [",
+									"    \"Male\",",
+									"    \"Female\"",
+									"];",
+									"",
+									"let timezonesList = [",
+									"    \"Hawaii Standard Time\",",
+									"    \"Hawaii-Aleutian Time\",",
+									"    \"Alaska Time\",",
+									"    \"Pacific Time\",",
+									"    \"Arizona\",",
+									"    \"Mountain Time\",",
+									"    \"Central Time\",",
+									"    \"Eastern Time\"",
+									"];",
+									"",
+									"let contactPreferences = [\"Email\", \"No preference\", \"Phone\", \"Unknown\"];",
+									"",
+									"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+									"",
+									"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+									"",
+									"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+									"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+									"let zip = Math.floor(10000 + Math.random() * 90000);",
+									"",
+									"//Generate random Date of Birth in YYYY-MM-DD Format",
+									"function randomDate(start, end) {",
+									"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+									"}",
+									"let date = randomDate(new Date(1990, 00, 01), new Date());",
+									"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+									"",
+									"//Save the variables to be used in next request for validation",
+									"pm.environment.set(\"patientFirstName\", firstName);",
+									"pm.environment.set(\"patientLastName\", lastName);",
+									"pm.environment.set(\"patientEmail\", email);",
+									"pm.environment.set(\"patientPhoneNumber\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));",
+									"pm.environment.set(\"patientChosenName\", chosenName);",
+									"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+									"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+									"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+									"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+									"pm.environment.set(\"patientState\", ld.sample(statesList));",
+									"pm.environment.set(\"patientCountry\", \"US\");",
+									"pm.environment.set(\"patientZip\", zip.toString());",
+									"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+									"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientPronounsOnRecord\", ld.sample(pronounsList));",
+									"pm.environment.set(\"patientPronounsOffRecord\", ld.sample(pronounsList));",
+									"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+									"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c009d0b7-599d-4496-84dc-57ee2d931ff1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"{{patientPhoneNumber}}\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": \"{{patientPronounsOnRecord}}\",\n    \"pronounsOffRecord\": \"{{patientPronounsOffRecord}}\",\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/patients",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get providers Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc6e99dd-6699-4ee6-94ae-8c546bbc23fb",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"let ld = require('lodash');",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify providers by page size and page number\", () => {",
+									"    var pageSize = pm.request.url.query.get(\"page-size\");",
+									"    pm.expect(responseJson.providers.length.toString()).to.eql(pageSize);",
+									"});",
+									"//Fetch providers's externalIds and and store them in an arry of objects and randomly picks one to pass in the request. ",
+									"let userIds = responseJson.providers;",
+									"let arryOfProviderIds = userIds.map(tool => tool.userId);",
+									"// One random externalId for admission team",
+									"let random = Math.floor(Math.random() * arryOfProviderIds.length);",
+									"let providerExternalIdForCareTeam = arryOfProviderIds[random];",
+									"",
+									"pm.environment.set(\"providerExternalIdForCareTeam1\", providerExternalIdForCareTeam);",
+									"//pm.environment.set(\"providerExternalIdForAdmissionTeam\", ld.sample(arryOfProviderIds));",
+									"console.log(\"providerExternalIdForCareTeam1: \"+providerExternalIdForCareTeam);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7a7b49ea-eb94-4262-a348-a10bcbe3cfea",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1b6bcc7b-d375-458a-a690-612c6564f612",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/providers?page-size=20&page-number=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"providers"
+							],
+							"query": [
+								{
+									"key": "page-size",
+									"value": "20"
+								},
+								{
+									"key": "page-number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get providers Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1d0ca4e6-4b8e-40e2-a70c-6242db79b0ca",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"let ld = require('lodash');",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify providers by page size and page number\", () => {",
+									"    var pageSize = pm.request.url.query.get(\"page-size\");",
+									"    pm.expect(responseJson.providers.length.toString()).to.eql(pageSize);",
+									"});",
+									"//Fetch providers's externalIds and and store them in an arry of objects and randomly picks one to pass in the request. ",
+									"let userIds = responseJson.providers;",
+									"let arryOfProviderIds = userIds.map(tool => tool.userId);",
+									"// One random externalId for admission team",
+									"let random = Math.floor(Math.random() * arryOfProviderIds.length);",
+									"let providerExternalIdForCareTeam = arryOfProviderIds[random];",
+									"",
+									"pm.environment.set(\"providerExternalIdForCareTeam2\", providerExternalIdForCareTeam);",
+									"//pm.environment.set(\"providerExternalIdForAdmissionTeam\", ld.sample(arryOfProviderIds));",
+									"console.log(\"providerExternalIdForCareTeam2: \"+providerExternalIdForCareTeam);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bd94a5f9-86d7-4611-a804-5207c7841c7b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b3dc5e3a-4f83-4534-a3db-05e53a067d27",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/providers?page-size=20&page-number=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"providers"
+							],
+							"query": [
+								{
+									"key": "page-size",
+									"value": "20"
+								},
+								{
+									"key": "page-number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add provider1 to care team",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6ef26b7c-45d0-46bb-a3ee-8948453efa90",
+								"exec": [
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Response has a JSON body\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Content-Type header is application/json\", () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+									"});",
+									"",
+									"pm.test(\"Verify id is generated\", function () {",
+									"    pm.expect(jsonData.id).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.environment.set(\"careTeamExternalId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e58cd307-a83e-4203-904c-16b85e3d35d3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"patientExternalId\": \"{{patientId}}\",\n    \"type\": \"care\",\n    \"providers\": [\n        \"{{providerExternalIdForCareTeam1}}\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/care-team",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"care-team"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Provider1 is added to care team channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "20210fbd-9a39-43ae-ae41-27df65912a46",
+								"exec": [
+									"\r",
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify only added user in the care team channel\", () => {\r",
+									"    pm.expect(jsonData.channels[0].members.length).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify only added user in the care team channel\", () => {\r",
+									"    let flag = false;\r",
+									"    for(let i=0; i<jsonData.channels[0].members.length; i++){\r",
+									"        \r",
+									"        if(pm.expect(jsonData.channels[0].members[i].user_id).to.eql(pm.environment.get(\"providerExternalIdForCareTeam1\"))){\r",
+									"            flag = true;\r",
+									"            break;\r",
+									"        }\r",
+									"    }\r",
+									"    if(!flag)\r",
+									"        pm.expect.fail(\"Added user is not available in the channel\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "790ec579-8b6c-46fc-b47f-e6b2b647d1ec",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "0e061e2b-f1e4-452b-af8b-59b257cb38b4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "api-token",
+								"value": "{{sendbird-api-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sendbird-host}}/group_channels?metadata_key=patientId&metadata_values={{patientId}}&show_metadata=true&limit=20&order=chronological&show_member=true&show_read_receipt=true&show_delivery_receipt=true&show_empty=true&public_mode=public&public_membership_mode=all&super_mode=all",
+							"host": [
+								"{{sendbird-host}}"
+							],
+							"path": [
+								"group_channels"
+							],
+							"query": [
+								{
+									"key": "metadata_key",
+									"value": "patientId"
+								},
+								{
+									"key": "metadata_values",
+									"value": "{{patientId}}"
+								},
+								{
+									"key": "show_metadata",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "chronological"
+								},
+								{
+									"key": "show_member",
+									"value": "true"
+								},
+								{
+									"key": "show_read_receipt",
+									"value": "true"
+								},
+								{
+									"key": "show_delivery_receipt",
+									"value": "true"
+								},
+								{
+									"key": "show_empty",
+									"value": "true"
+								},
+								{
+									"key": "public_mode",
+									"value": "public"
+								},
+								{
+									"key": "public_membership_mode",
+									"value": "all"
+								},
+								{
+									"key": "super_mode",
+									"value": "all"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add provider2 to care team",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8dcf0a89-13ef-4470-9061-a08b04a78999",
+								"exec": [
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "238edc4c-a044-4461-8d84-f49297ea29c5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providers\": [\n        {\n            \"externalId\": \"{{providerExternalIdForCareTeam1}}\",\n            \"isVisibleForPatientChat\": false\n        },\n        {\n            \"externalId\": \"{{providerExternalIdForCareTeam2}}\",\n            \"isVisibleForPatientChat\": true\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/care-team/{{careTeamExternalId}}/v2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"care-team",
+								"{{careTeamExternalId}}",
+								"v2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Provider2 also is added to care team channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6fa1e827-3942-4666-895c-c662e6e33c22",
+								"exec": [
+									"\r",
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify only added user in the care team channel\", () => {\r",
+									"    pm.expect(jsonData.channels[0].members.length).to.eql(2);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify only added provider1 in the care team channel\", () => {\r",
+									"    let flag = false;\r",
+									"    for(let i=0; i<jsonData.channels[0].members.length; i++){\r",
+									"        \r",
+									"        if(jsonData.channels[0].members[i].user_id===pm.environment.get(\"providerExternalIdForCareTeam1\")){\r",
+									"            flag = true;\r",
+									"            break;\r",
+									"        }\r",
+									"    }\r",
+									"    if(!flag)\r",
+									"        pm.expect.fail(\"Provider1 user is not available in the channel\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify only added provider2 in the care team channel\", () => {\r",
+									"    let flag = false;\r",
+									"    for(let i=0; i<jsonData.channels[0].members.length; i++){\r",
+									"        \r",
+									"        if(jsonData.channels[0].members[i].user_id===pm.environment.get(\"providerExternalIdForCareTeam2\")){\r",
+									"            flag = true;\r",
+									"            break;\r",
+									"        }\r",
+									"    }\r",
+									"    if(!flag)\r",
+									"        pm.expect.fail(\"Provider2 user is not available in the channel\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "638fd65d-ad62-4ba8-b35d-1c8253fd8254",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "582ca642-57e8-43c4-a4e9-05ff1a6061ad",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "api-token",
+								"value": "{{sendbird-api-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sendbird-host}}/group_channels?metadata_key=patientId&metadata_values={{patientId}}&show_metadata=true&limit=20&order=chronological&show_member=true&show_read_receipt=true&show_delivery_receipt=true&show_empty=true&public_mode=public&public_membership_mode=all&super_mode=all",
+							"host": [
+								"{{sendbird-host}}"
+							],
+							"path": [
+								"group_channels"
+							],
+							"query": [
+								{
+									"key": "metadata_key",
+									"value": "patientId"
+								},
+								{
+									"key": "metadata_values",
+									"value": "{{patientId}}"
+								},
+								{
+									"key": "show_metadata",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "chronological"
+								},
+								{
+									"key": "show_member",
+									"value": "true"
+								},
+								{
+									"key": "show_read_receipt",
+									"value": "true"
+								},
+								{
+									"key": "show_delivery_receipt",
+									"value": "true"
+								},
+								{
+									"key": "show_empty",
+									"value": "true"
+								},
+								{
+									"key": "public_mode",
+									"value": "public"
+								},
+								{
+									"key": "public_membership_mode",
+									"value": "all"
+								},
+								{
+									"key": "super_mode",
+									"value": "all"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove provider2 from care team",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "535c6946-1267-4850-b672-bf62eb323a0d",
+								"exec": [
+									"",
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c00f67ff-10e8-4efe-b141-2f2b28976998",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providers\": [\n        {\n            \"externalId\": \"{{providerExternalIdForCareTeam2}}\",\n            \"isVisibleForPatientChat\": true\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/care-team/{{careTeamExternalId}}/v2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"care-team",
+								"{{careTeamExternalId}}",
+								"v2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Provider1 is removed from care team channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6b370b4f-226e-4597-bf98-57a7cdde3786",
+								"exec": [
+									"\r",
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify only added user in the care team channel\", () => {\r",
+									"    pm.expect(jsonData.channels[0].members.length).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify only added provider2 in the care team channel\", () => {\r",
+									"    let flag = false;\r",
+									"    for(let i=0; i<jsonData.channels[0].members.length; i++){\r",
+									"        \r",
+									"        if(jsonData.channels[0].members[i].user_id===pm.environment.get(\"providerExternalIdForCareTeam2\")){\r",
+									"            flag = true;\r",
+									"            break;\r",
+									"        }\r",
+									"    }\r",
+									"    if(!flag)\r",
+									"        pm.expect.fail(\"Provider2 user is not available in the channel\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify provider1 is removed from care team channel\", () => {\r",
+									"    let flag = false;\r",
+									"    for(let i=0; i<jsonData.channels[0].members.length; i++){\r",
+									"        \r",
+									"        if(jsonData.channels[0].members[i].user_id===pm.environment.get(\"providerExternalIdForCareTeam1\")){\r",
+									"            flag = true;\r",
+									"            break;\r",
+									"        }\r",
+									"    }\r",
+									"    if(flag)\r",
+									"        pm.expect.fail(\"Provider1 user is available in the channel\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "196f11a0-35e1-42ec-a92c-a184fc5193a2",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "18ab6d6d-2f63-4339-97d2-f0c6cf9000d0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "api-token",
+								"value": "{{sendbird-api-token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sendbird-host}}/group_channels?metadata_key=patientId&metadata_values={{patientId}}&show_metadata=true&limit=20&order=chronological&show_member=true&show_read_receipt=true&show_delivery_receipt=true&show_empty=true&public_mode=public&public_membership_mode=all&super_mode=all",
+							"host": [
+								"{{sendbird-host}}"
+							],
+							"path": [
+								"group_channels"
+							],
+							"query": [
+								{
+									"key": "metadata_key",
+									"value": "patientId"
+								},
+								{
+									"key": "metadata_values",
+									"value": "{{patientId}}"
+								},
+								{
+									"key": "show_metadata",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "order",
+									"value": "chronological"
+								},
+								{
+									"key": "show_member",
+									"value": "true"
+								},
+								{
+									"key": "show_read_receipt",
+									"value": "true"
+								},
+								{
+									"key": "show_delivery_receipt",
+									"value": "true"
+								},
+								{
+									"key": "show_empty",
+									"value": "true"
+								},
+								{
+									"key": "public_mode",
+									"value": "public"
+								},
+								{
+									"key": "public_membership_mode",
+									"value": "all"
+								},
+								{
+									"key": "super_mode",
+									"value": "all"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "463c94fc-50ce-4284-ba32-92a0c526f35f"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4618ad4e-00dc-4444-9263-7ebfc81f18f4",
+				"type": "text/javascript",
+				"exec": [
+					"// Refresh the OAuth token if necessary",
+					"console.log('Current environment: ' + pm.environment.name);",
+					"",
+					"if (pm.environment.name === \"qa\") {",
+					"    pm.environment.set(\"vesta_audience\", \"https://equip-qa.us.auth0.com/api/v2/\");",
+					"    pm.environment.set(\"token_tenant\", \"equip-qa\");",
+					"    pm.environment.set(\"coookieURL\", \"https://equip-qa.us.auth0.com\");",
+					"    pm.environment.set(\"vesta_client_id\", \"octk74sRPfVm7zJz314cMMzFHnGO3B2s\")",
+					"    pm.environment.set(\"token_host\", \"https://equip-qa.us.auth0.com\")",
+					"} else if (pm.environment.name === \"dev\") {",
+					"    pm.environment.set(\"vesta_audience\", \"https://equip-dev.us.auth0.com/api/v2/\");",
+					"    pm.environment.set(\"token_tenant\", \"equip-dev\");",
+					"    pm.environment.set(\"coookieURL\", \"https://equip-dev.us.auth0.com\");",
+					"    pm.environment.set(\"vesta_client_id\", \"hh9fZVGIShbS2xXdr7B0glheYEKOFFdw\")",
+					"    pm.environment.set(\"token_host\", \"https://equip-dev.us.auth0.com\")",
+					"}",
+					"",
+					"var tokenDate = new Date(2010, 1, 1);",
+					"var tokenTimestamp = pm.environment.get(\"OAuth_Timestamp\");",
+					"if (tokenTimestamp) {",
+					"    tokenDate = Date.parse(tokenTimestamp);",
+					"}",
+					"var expiresInTime = pm.environment.get(\"ExpiresInTime\");",
+					"if (!expiresInTime) {",
+					"    expiresInTime = 86400000; // Set default expiration time to 24 hours (in ms)",
+					"}",
+					"",
+					"if ((new Date() - tokenDate) >= expiresInTime || pm.environment.get(\"test-token\") === \"\") {",
+					"    // clearCookies();",
+					"    getToken();",
+					"}",
+					"",
+					"var tokenAuthorizationCode1;",
+					"var tokenAuthorizationCode2;",
+					"//Function to generate token",
+					"function getToken() {",
+					"    //Clear cookies",
+					"    const cookieJar = pm.cookies.jar();",
+					"    cookieJar.clear(pm.environment.get(\"coookieURL\"), () => {",
+					"        console.log(\"Cookies cleared!\");",
+					"        cookieJar.clear(pm.environment.get(\"coookieURL\") + '/usernamepassword/login', () => {",
+					"            console.log(\"CSRF cookies cleared!\");",
+					"",
+					"            console.log(\"Generating token...\")",
+					"            //GET authorization code",
+					"            pm.sendRequest({",
+					"                url: pm.environment.get(\"token_host\") + '/authorize?audience=' + pm.environment.get(\"vesta_audience\")",
+					"                    + '&response_type=code&client_id=' + pm.environment.get(\"vesta_client_id\")",
+					"                    + '&redirect_uri=https://*.equip.health',",
+					"                method: 'GET',",
+					"                header: {",
+					"                    'Accept': '*/*'",
+					"                }",
+					"            }, (err, res) => {",
+					"                let responseHeaderData = res.headers.get('Location').split('=');",
+					"                let token = responseHeaderData[1].split('&');",
+					"                tokenAuthorizationCode1 = token[0];",
+					"                console.log(tokenAuthorizationCode1);",
+					"",
+					"                //POST request to login to vesta",
+					"                let url = pm.environment.get(\"token_host\") + '/usernamepassword/login';",
+					"                pm.sendRequest({",
+					"                    url: url,",
+					"                    method: 'POST',",
+					"                    header: {",
+					"                        'Accept': '*/*',",
+					"                        'Content-Type': 'application/x-www-form-urlencoded',",
+					"                    },",
+					"                    body: {",
+					"                        mode: 'urlencoded',",
+					"                        urlencoded: [",
+					"                            { key: \"username\", value: pm.environment.get(\"vesta_username\") },",
+					"                            { key: \"password\", value: pm.environment.get(\"vesta_password\") },",
+					"                            { key: \"state\", value: tokenAuthorizationCode1 },",
+					"                            { key: \"tenant\", value: pm.environment.get(\"token_tenant\") },",
+					"                            { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
+					"                            { key: \"redirect_uri\", value: \"https://*.equip.health\" },",
+					"                            { key: \"response_type\", value: \"code\" },",
+					"                            { key: \"connection\", value: \"Username-Password-Authentication\" }",
+					"                        ]",
+					"                    }",
+					"                }, (err, res) => {",
+					"                    const $ = cheerio.load(res.text());",
+					"                    var wresult = ($(\"input\")[1])['attribs'].value; // get wresult",
+					"                    var wctx = ($(\"input\")[2])['attribs'].value; // get wctx",
+					"",
+					"                    //POST request to get resume state",
+					"                    let url = pm.environment.get(\"token_host\") + '/login/callback';",
+					"                    pm.sendRequest({",
+					"                        url: url,",
+					"                        method: 'POST',",
+					"                        header: {",
+					"                            'Accept': '*/*',",
+					"                            'Content-Type': 'application/x-www-form-urlencoded',",
+					"                        },",
+					"                        body: {",
+					"                            mode: 'urlencoded',",
+					"                            urlencoded: [",
+					"                                { key: \"wa\", value: \"wsignin1.0\" },",
+					"                                { key: \"wresult\", value: wresult },",
+					"                                { key: \"wctx\", value: wctx }",
+					"                            ]",
+					"                        }",
+					"                    }, (err, res) => {",
+					"                        //GET authorization code",
+					"                        pm.sendRequest({",
+					"                            url: pm.environment.get(\"token_host\")",
+					"                                + '/authorize?audience=' + pm.environment.get(\"vesta_audience\")",
+					"                                + '&response_type=code&client_id=' + pm.environment.get(\"vesta_client_id\")",
+					"                                + '&redirect_uri=https://*.equip.health',",
+					"                            method: 'GET',",
+					"                            header: {",
+					"                                'Accept': '*/*'",
+					"                            }",
+					"                        }, (err, res) => {",
+					"                            console.log(res);",
+					"                            let responseHeaderData = res.headers.get('Location').split('=');",
+					"                            let token = responseHeaderData[1].split('&');",
+					"                            // console.log(token[0]);",
+					"                            tokenAuthorizationCode2 = token[0];",
+					"                            // Get token using POST request",
+					"                            let url = pm.environment.get(\"token_host\") + '/oauth/token';",
+					"                            pm.sendRequest({",
+					"                                url: url,",
+					"                                method: 'POST',",
+					"                                header: {",
+					"                                    'Accept': '*/*',",
+					"                                    'Content-Type': 'application/x-www-form-urlencoded',",
+					"                                },",
+					"                                body: {",
+					"                                    mode: 'urlencoded',",
+					"                                    urlencoded: [",
+					"                                        { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
+					"                                        { key: \"code\", value: tokenAuthorizationCode2 },",
+					"                                        { key: \"audience\", value: pm.environment.get(\"vesta_audience\") },",
+					"                                        { key: \"grant_type\", value: \"authorization_code\" },",
+					"                                        { key: \"redirect_uri\", value: \"https://*.equip.health\" }]",
+					"                                }",
+					"                            }, (err, res) => {",
+					"                                console.log(res.json().access_token)",
+					"                                pm.environment.set(\"test-token\", res.json().access_token)",
+					"                                pm.environment.set(\"OAuth_Timestamp\", new Date());",
+					"",
+					"                                // Set the ExpiresInTime variable to the time given in the response if it exists",
+					"                                if (res.json().expires_in) {",
+					"                                    expiresInTime = res.json().expires_in * 1000;",
+					"                                }",
+					"                                pm.environment.set(\"ExpiresInTime\", expiresInTime);",
+					"                            })",
+					"                        });",
+					"                    });",
+					"",
+					"                });",
+					"            });",
+					"        });",
+					"    });",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ce979e37-7099-49b1-b6c5-9e0143f41f2a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

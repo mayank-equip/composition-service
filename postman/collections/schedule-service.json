@@ -1,0 +1,4731 @@
+{
+	"info": {
+		"_postman_id": "2fea974d-979a-40a9-a561-0ff77c39b3f3",
+		"name": "schedule-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19609580-2fea974d-979a-40a9-a561-0ff77c39b3f3"
+	},
+	"item": [
+		{
+			"name": "External",
+			"item": [
+				{
+					"name": "Add Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb186c41-24bc-47aa-948f-cd054f73364d",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Response has a JSON body\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Content-Type header is application/json\", () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+									"});",
+									"",
+									"pm.test(\"Verify id is generated\", function () {",
+									"    pm.expect(jsonData.id).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.environment.set(\"patientId\", jsonData.id);",
+									"",
+									"pm.environment.set(\"test-token\",\"\");",
+									"pm.environment.set(\"vesta_username\", pm.environment.get(\"scheduleUserId1_username\"));",
+									"pm.environment.set(\"vesta_password\", pm.environment.get(\"scheduleUserId1password\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2a92ef80-e41f-4212-9f58-a7933e9300cc",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"let gendersList = [",
+									"    \"Cis-gender male\",",
+									"    \"Cis-gender female\",",
+									"    \"Non-binary\",",
+									"    \"Other\",",
+									"    \"Unknown\",",
+									"    \"Transgender male\",",
+									"    \"Transgender female\"",
+									"];",
+									"",
+									"let pronounsList = [",
+									"    \"He/Him/His\",",
+									"    \"She/Her/Hers\",",
+									"    \"They/Them/Theirs\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let ethnicitiesList = [",
+									"    \"Asian\",",
+									"    \"Black/African American\",",
+									"    \"White/Caucasian\",",
+									"    \"Hispanic/Latinx\",",
+									"    \"Native American, Indian American, or Alaska Native\",",
+									"    \"Native Hawaiian or other Pacific Islander\",",
+									"    \"Middle Eastern or North African\",",
+									"    \"Prefer not to answer\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let languagesList = [",
+									"    \"English\",",
+									"    \"Spanish\",",
+									"    \"Chinese\",",
+									"    \"French\",",
+									"    \"Tagalog\",",
+									"    \"Vietnamese\",",
+									"    \"Korean\",",
+									"    \"German\",",
+									"    \"Russian\",",
+									"    \"Italian\",",
+									"    \"Portuguese\",",
+									"    \"Polish\",",
+									"    \"Japanese\",",
+									"    \"Persian\",",
+									"    \"Greek\",",
+									"    \"Serbo-Croatian\",",
+									"    \"Armenian\",",
+									"    \"Yiddish\",",
+									"    \"American Sign Language (ASL)\"",
+									"];",
+									"",
+									"let sexList = [",
+									"    \"Male\",",
+									"    \"Female\"",
+									"];",
+									"",
+									"let timezonesList = [",
+									"    \"Hawaii Standard Time\",",
+									"    \"Hawaii-Aleutian Time\",",
+									"    \"Alaska Time\",",
+									"    \"Pacific Time\",",
+									"    \"Arizona\",",
+									"    \"Mountain Time\",",
+									"    \"Central Time\",",
+									"    \"Eastern Time\"",
+									"];",
+									"",
+									"let contactPreferences = [\"Email\", \"No preference\", \"Phone\", \"Unknown\"];",
+									"",
+									"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+									"",
+									"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+									"",
+									"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+									"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+									"let zip = Math.floor(10000 + Math.random() * 90000);",
+									"",
+									"//Generate random Date of Birth in YYYY-MM-DD Format",
+									"function randomDate(start, end) {",
+									"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+									"}",
+									"let date = randomDate(new Date(1990, 00, 01), new Date());",
+									"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+									"",
+									"//Save the variables to be used in next request for validation",
+									"pm.environment.set(\"patientChosenName\", chosenName);",
+									"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+									"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+									"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+									"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+									"pm.environment.set(\"patientCountry\", \"US\");",
+									"pm.environment.set(\"patientZip\", zip.toString());",
+									"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+									"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientPronounsOnRecord\", ld.sample(pronounsList));",
+									"pm.environment.set(\"patientPronounsOffRecord\", ld.sample(pronounsList));",
+									"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+									"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "12c04ced-e530-4ada-8b15-4a3844ae56f0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"6767676767\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": \"{{patientPronounsOnRecord}}\",\n    \"pronounsOffRecord\": \"{{patientPronounsOffRecord}}\",\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/patients",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET user details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "215be9c6-4bec-4790-ad16-4bd24268171c",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"calendarId\", jsonData.calendarId);",
+									"pm.environment.set(\"profileName\", jsonData.profileName);",
+									"pm.environment.set(\"sub\", jsonData.subs);",
+									"pm.environment.set(\"userId\", \"af2215db-647f-4b20-8f6a-f2f3db0ce5ee\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "3e737ab9-59ee-4b3b-b3af-c2604379ec69",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/schedule/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET multiple user details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94194d98-7493-490f-989d-54ae2133d7dc",
+								"exec": [
+									"let ld = require('lodash');",
+									"let jsonData = pm.response.json();",
+									"let expected=null;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"if(pm.environment.name === \"qa\"){",
+									"    expected = [",
+									"        {",
+									"            \"calendarId\": \"cal_Yw26wOZg@gFnJLpx_buhyH1O9zimYoDs3TOKghw\",",
+									"            \"sub\": \"acc_630dbac1e660fe016724ba77\"",
+									"        },",
+									"        {",
+									"            \"calendarId\": \"cal_YtpTdkhreQCLmyql_FZeYrK@FjGC7vkC5qCCuIA\",",
+									"            \"sub\": \"acc_62da5377486b79008b9b2aab\"",
+									"        }",
+									"    ]",
+									"}else{",
+									"    expected = [",
+									"        {",
+									"            \"calendarId\": \"cal_Yw26wOZg@gFnJLpx_buhyH1O9zimYoDs3TOKghw\",",
+									"            \"sub\": \"acc_630dbac1e660fe016724ba77\"",
+									"        },",
+									"        {",
+									"            \"calendarId\": \"cal_YtpTdkhreQCLmyql_FZeYrK@FjGC7vkC5qCCuIA\",",
+									"            \"sub\": \"acc_62da5377486b79008b9b2aab\"",
+									"        }",
+									"    ]",
+									"}",
+									"",
+									"for(let i=0; i<jsonData.length; i++){",
+									"    delete jsonData[i].externalId;",
+									"}",
+									"",
+									"pm.test(\"Validate calendar details\", function () {",
+									"    pm.expect(ld.orderBy(jsonData, ['calendarId'], ['asc'])).to.eql(ld.orderBy(expected, ['calendarId'], ['asc']));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5fc93e4d-ba46-4bee-8c91-13a4954e0927",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/schedule/users?provider-external-ids={{scheduleUserId1}},{{scheduleUserId2}},{{nonScheduleUserId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"users"
+							],
+							"query": [
+								{
+									"key": "provider-external-ids",
+									"value": "{{scheduleUserId1}},{{scheduleUserId2}},{{nonScheduleUserId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET multiple user details - calendar not linked",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "47d7e686-2d60-4bce-812e-5dd621856de7",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify response array is empty\", function () {",
+									"    pm.expect(jsonData.length).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "57113b7a-cb39-4788-8240-abdec7eb2108",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/schedule/users?provider-external-ids={{nonScheduleUserId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"users"
+							],
+							"query": [
+								{
+									"key": "provider-external-ids",
+									"value": "{{nonScheduleUserId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get PSR external Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "80d62567-1b66-4d22-9f05-8c3b4c8c6b4b",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Get PSR external id\", function () {",
+									"    let ld = require('lodash');",
+									"   // let sortedJsonData = ld.orderBy(jsonData, ['label'], ['asc']);",
+									"",
+									"    for (i = 0; i < jsonData.length; i++) {",
+									"        if(jsonData[i].label===\"Patient Service Representative\"){",
+									"            pm.environment.set(\"psrextid\",jsonData[i].id);",
+									"            break;",
+									"        }",
+									"    }",
+									"});",
+									"",
+									"console.log(\"psrextid: \"+pm.environment.get(\"psrextid\"));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "85446327-c67c-4ecb-8a53-a714a6241b26",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/enums/provider-types",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"enums",
+								"provider-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Qualifying call appointment details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b286e59e-4fa8-477d-817e-e96a8009fb8f",
+								"exec": [
+									"let ld = require('lodash');",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"let appointmentTypeQualifyingCall = [",
+									"    {",
+									"        \"appointmentType\": \"Qualifying call\",",
+									"        \"durationInMinutes\": 20,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Patient Service Representative\"",
+									"    }",
+									"];",
+									"",
+									"pm.environment.set(\"appointmentTypeExtIdQualifyingCall\", jsonData[0].appointmentTypeExtId);",
+									"",
+									"pm.test(\"Validate appointment type qualifying call details\", function () {",
+									"    ",
+									"    for(let i=0; i<jsonData.length; i++) ",
+									"        delete jsonData[i].appointmentTypeExtId;",
+									"",
+									"    pm.expect(ld.orderBy(jsonData, ['appointmentType'], ['asc'])).to.eql(ld.orderBy(appointmentTypeQualifyingCall, ['appointmentType'], ['asc']));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "04fbbb00-38a9-414b-8e08-fcca6c3adb51",
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d4ee2fd8-511e-427e-90bd-10ea80755a68",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/schedule/appointment-types?provider-type-name=Patient Service Representative",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"appointment-types"
+							],
+							"query": [
+								{
+									"key": "provider-type-name",
+									"value": "Patient Service Representative"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET all appointment types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2bad9b9c-ef59-4b62-9c17-0b63491c0966",
+								"exec": [
+									"let ld = require('lodash');",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"let appointmentTypes = [",
+									"    {",
+									"        \"appointmentType\": \"Therapy Intake\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Therapist\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Therapy Session\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Therapist\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Therapy Session\",",
+									"        \"durationInMinutes\": 25,",
+									"        \"bufferInMinutes\": 5,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Therapist\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Therapy Session\",",
+									"        \"durationInMinutes\": 15,",
+									"        \"bufferInMinutes\": 0,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Therapist\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Psychiatric Intake\",",
+									"        \"durationInMinutes\": 80,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Psychiatrist\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Medication Management Session\",",
+									"        \"durationInMinutes\": 25,",
+									"        \"bufferInMinutes\": 5,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Psychiatrist\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Medical Provider Intake\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Physician\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Medical Provider Session\",",
+									"        \"durationInMinutes\": 25,",
+									"        \"bufferInMinutes\": 5,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Physician\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Medical Provider Session\",",
+									"        \"durationInMinutes\": 15,",
+									"        \"bufferInMinutes\": 0,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Physician\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Registered Nurse Session\",",
+									"        \"durationInMinutes\": 25,",
+									"        \"bufferInMinutes\": 5,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Registered Nurse\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Registered Nurse Session\",",
+									"        \"durationInMinutes\": 15,",
+									"        \"bufferInMinutes\": 0,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Registered Nurse\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Medical Assistant Session\",",
+									"        \"durationInMinutes\": 15,",
+									"        \"bufferInMinutes\": 0,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Medical Assistant\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Peer Mentor Intake\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Peer Mentor\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Peer Mentor Session\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Peer Mentor\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Peer Mentor Session\",",
+									"        \"durationInMinutes\": 25,",
+									"        \"bufferInMinutes\": 5,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Peer Mentor\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Peer Mentor Session\",",
+									"        \"durationInMinutes\": 15,",
+									"        \"bufferInMinutes\": 0,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Peer Mentor\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Family Mentor Intake\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Family Mentor\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Family Mentor Session\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Family Mentor\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Family Mentor Session\",",
+									"        \"durationInMinutes\": 25,",
+									"        \"bufferInMinutes\": 5,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Family Mentor\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Family Mentor Session\",",
+									"        \"durationInMinutes\": 15,",
+									"        \"bufferInMinutes\": 0,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Family Mentor\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Dietitian Intake\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Dietitian\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Dietitian Session\",",
+									"        \"durationInMinutes\": 50,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Dietitian\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Dietitian Session\",",
+									"        \"durationInMinutes\": 25,",
+									"        \"bufferInMinutes\": 5,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Dietitian\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Dietitian Session\",",
+									"        \"durationInMinutes\": 15,",
+									"        \"bufferInMinutes\": 0,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Dietitian\"",
+									"    },",
+									"    {",
+									"        \"appointmentType\": \"Qualifying call\",",
+									"        \"durationInMinutes\": 20,",
+									"        \"bufferInMinutes\": 10,",
+									"        \"startTime\": \"08:00\",",
+									"        \"endTime\": \"17:00\",",
+									"        \"providerTypeName\": \"Patient Service Representative\"",
+									"    }",
+									"];",
+									"",
+									"pm.test(\"Validate appointment type qualifying call details\", function () {",
+									"    ",
+									"    for(let i=0; i<jsonData.length; i++) {",
+									"        delete jsonData[i].appointmentTypeExtId;",
+									"    }",
+									"",
+									"    jsonData = _.sortBy(jsonData, [function(o) { return o.appointmentType; }]);",
+									"    appointmentTypes = _.sortBy(appointmentTypes, [function(o) { return o.appointmentType; }]);",
+									"",
+									"    console.log(\"jsonData: \" + JSON.stringify(jsonData));",
+									"    console.log(\"appointmentTypes: \" + JSON.stringify(appointmentTypes).replace(/\\\\/g, ''));",
+									"",
+									"    pm.expect(jsonData).to.eql(appointmentTypes);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "4b980f7b-5952-4df2-a8d6-1e5924da3a7d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/schedule/appointment-types",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"appointment-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-inquiry-self",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7520e2c7-30fb-494b-8bb7-2b94ab515043",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Verify inquiryExternalId is generated\", function () {",
+									"    pm.expect(jsonData.inquiryExternalId).length.greaterThan(0);",
+									"});",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"pm.environment.set(\"inquiryExternalId\", jsonData.inquiryExternalId);",
+									"pm.environment.set(\"taskExternalId\", jsonData.taskExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "05a10a28-450e-4820-9b8a-036c0d937d7b",
+								"exec": [
+									"let moment = require('moment');",
+									"let ld = require('lodash');",
+									"",
+									"let states = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+									"",
+									"var equip_source;",
+									"if (pm.environment.name === \"qa\") {",
+									"    equip_source = [",
+									"        {",
+									"            \"equip_source_name\": \"Dietitian\",",
+									"            \"equip_source_external_id\": \"b0548d60-6706-66f4-39ce-64244ac9b488\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Doctor\\/clinician\",",
+									"            \"equip_source_external_id\": \"73d0851d-ef86-3fde-eb42-e76456cc06bc\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Eating disorder organization\",",
+									"            \"equip_source_external_id\": \"e78a85ff-d5bb-e9b6-aa52-4207f4514579\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Equip employee\",",
+									"            \"equip_source_external_id\": \"03b05531-9533-334c-18cf-788ef65a54f2\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Equip event\\/webinar\",",
+									"            \"equip_source_external_id\": \"537513f8-9f48-a8d5-28c5-df4292aaae9f\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Equip patient\\/family\",",
+									"            \"equip_source_external_id\": \"69e56306-2342-8564-0d97-dfa0ac133a2e\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Friend or family member\",",
+									"            \"equip_source_external_id\": \"20331916-2e8c-8e23-6fef-2d7051594e8d\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Google\\/search\",",
+									"            \"equip_source_external_id\": \"da1241be-41f5-bd47-1c58-53b22d71dacd\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Health insurance\\/payor\",",
+									"            \"equip_source_external_id\": \"5e58b996-1a5a-19d6-b0ee-ca47d2898055\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Hospital\\/medical center\",",
+									"            \"equip_source_external_id\": \"d212a73b-8e40-0c7d-b040-86cf1d1457b1\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Newsletter\",",
+									"            \"equip_source_external_id\": \"f5968f05-8073-23e5-2e70-343d65100791\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Other\",",
+									"            \"equip_source_external_id\": \"9fb76684-e848-69d9-e2d8-b576fc815f2f\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Press\",",
+									"            \"equip_source_external_id\": \"cf6a2fca-837e-bdb2-421a-9e7676bedb77\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"School\",",
+									"            \"equip_source_external_id\": \"ccab06ed-4abd-682e-a49a-a6a0c01cd225\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Social media\",",
+									"            \"equip_source_external_id\": \"3df90a84-dcaf-2490-0135-f5a843991ed7\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Therapist\",",
+									"            \"equip_source_external_id\": \"edf08f1b-9c83-f220-a240-d1cada96eb60\"",
+									"        }",
+									"    ];",
+									"}",
+									"else if (pm.environment.name === \"dev\") {",
+									"    equip_source = [",
+									"        {",
+									"            \"equip_source_name\": \"Dietitian\",",
+									"            \"equip_source_external_id\": \"78b47636-5172-758f-8385-9725544f1a27\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Doctor\\/clinician\",",
+									"            \"equip_source_external_id\": \"c3e7e93d-89d9-3b66-5299-12ff47bdc7a2\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Eating disorder organization\",",
+									"            \"equip_source_external_id\": \"27d60a8e-a74a-32b8-18c9-cd8ca70e84d1\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Equip employee\",",
+									"            \"equip_source_external_id\": \"34cc0d41-9cc4-5bfa-1325-79603b87683d\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Equip event\\/webinar\",",
+									"            \"equip_source_external_id\": \"be509e34-811d-708a-00cd-9b13e21f984b\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Equip patient\\/family\",",
+									"            \"equip_source_external_id\": \"7411a661-e243-fed8-b509-58c5fcd96f5f\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Friend or family member\",",
+									"            \"equip_source_external_id\": \"335da8a6-e12e-85b2-9a19-70c435ff673d\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Google\\/search\",",
+									"            \"equip_source_external_id\": \"a0824f84-d5bd-3785-371a-73259f0845f3\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Health insurance\\/payor\",",
+									"            \"equip_source_external_id\": \"79673f1c-b875-2b44-25e0-70908d982fb4\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Hospital\\/medical center\",",
+									"            \"equip_source_external_id\": \"46c0fcde-3e98-1d3c-55e2-13daaffbf1cb\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Newsletter\",",
+									"            \"equip_source_external_id\": \"acd544bc-263c-8e0e-3956-65731516d082\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Other\",",
+									"            \"equip_source_external_id\": \"d5be92a6-6b6f-4024-7055-afdcea602ba5\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Press\",",
+									"            \"equip_source_external_id\": \"35d60ffc-1f2a-fa9b-f9fc-199e340a3432\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"School\",",
+									"            \"equip_source_external_id\": \"7eba105e-a97f-d018-a8cf-89e102f576eb\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Social media\",",
+									"            \"equip_source_external_id\": \"221c88cf-739d-2d87-8cb4-c247e776ec14\"",
+									"        },",
+									"        {",
+									"            \"equip_source_name\": \"Therapist\",",
+									"            \"equip_source_external_id\": \"de8df45c-0565-a59c-2623-994ee857e4a3\"",
+									"        }",
+									"    ];",
+									"}",
+									"let random_equip_source = ld.sample(equip_source);",
+									"let equip_source_id = random_equip_source.equip_source_external_id;",
+									"let equip_source_name = random_equip_source.equip_source_name;",
+									"",
+									"let age = ld.random(10, 30);",
+									"let dob = moment().subtract(age, 'years').format('YYYY-MM-DD');",
+									"",
+									"///// get random date of birth (past date) /////",
+									"// var end = new Date();",
+									"// var start = new Date(1970, 1, 1);",
+									"// var dob = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+									"// var month = (dob.getMonth() + 1) >= 10 ? dob.getMonth() + 1 : \"0\" + (dob.getMonth() + 1);",
+									"// console.log(\"month: \" + month);",
+									"// var day = (dob.getDate() + 1) > 10 ? dob.getDate() : \"0\" + dob.getDate();",
+									"// var dob = dob.getFullYear() + '-' + month + '-' + day;",
+									"// dob = dob;",
+									"// console.log(dob);",
+									"///// end - get random date of birth (past date) /////",
+									"",
+									"pm.environment.set(\"patientFirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+									"pm.environment.set(\"patientLastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+									"pm.environment.set(\"patientEmail\", \"qa\" + \"+\" + pm.environment.get(\"patientFirstName\") + \"+\" + Date.now() + \"@equip.health\");",
+									"pm.environment.set(\"patientMobile\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));",
+									"pm.environment.set(\"patientPreferredContact\", \"both\");",
+									"pm.environment.set(\"AdditionalNotes\", pm.variables.replaceIn('{{$randomPhrase}}'));",
+									"pm.environment.set(\"tellUsMore\", pm.variables.replaceIn('{{$randomPhrase}}'));",
+									"pm.environment.set(\"dob\", dob);",
+									"pm.environment.set(\"age\", age);",
+									"pm.environment.set(\"equipSourceExternalId\", equip_source_id);",
+									"pm.environment.set(\"equipSourceName\", equip_source_name);",
+									"pm.environment.set(\"patientState\", ld.sample(states));",
+									"",
+									"var assigneeUserId, assigneeUserName;",
+									"if (pm.environment.name === \"qa\") {",
+									"    pm.environment.set(\"assigneeUserId\", \"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\");",
+									"    pm.environment.set(\"assigneeUserName\", \"Bala 000analyst\");",
+									"} else {",
+									"    pm.environment.set(\"assigneeUserId\", \"42bd1c96-995d-45c0-bd0b-cee0e167b864\");",
+									"    pm.environment.set(\"assigneeUserName\", \"Balakrishna Deema\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7a3b443e-9b79-4e89-9993-d746eaadbe1a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"inquirerFirstName\": \"\",\n    \"inquirerLastName\": \"\",\n    \"inquirerPhone\": \"\",\n    \"inquirerMobile\": \"\",\n    \"inquirerEmail\": \"\",\n    \"inquirerAbout\": \"self\",\n    \"relationWithPatient\": \"\",\n    \"preferredContact\": \"\",\n    \"notes\": \"{{AdditionalNotes}}\",\n    \"equipSourceExternalId\": \"{{equipSourceExternalId}}\",\n    \"patientFirstName\": \"{{patientFirstName}}\",\n    \"patientLastName\": \"{{patientLastName}}\",\n    \"patientState\": \"{{patientState}}\",\n    \"patientBirthDate\": \"{{dob}}\",\n    \"patientAge\": {{age}},\n    \"patientPhone\": \"{{patientMobile}}\",\n    \"patientMobile\": \"{{patientMobile}}\",\n    \"patientEmail\": \"{{patientEmail}}\",\n    \"patientPreferredContact\": \"{{patientPreferredContact}}\",\n    \"contactPatientDirectly\": \"\",\n    \"tellUsMore\" : \"{{tellUsMore}}\",\n    \"informationSource\": \"Webform\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/inquiry-referral/add-inquiry",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"inquiry-referral",
+								"add-inquiry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an element token - public Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fd1a6389-7e67-45ed-8e10-39e8cae1ebb2",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"ElementTokenPublic\", jsonData.elementToken.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6044a2e0-3787-4b67-bee4-ab21d3e0006c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"origin\": \"https://dev-my.equip.health\",\n  \"subs\": [\"acc_630dbac1e660fe016724ba77\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/schedule/element-token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"element-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get availability - public Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4943cdb-1518-4a9f-a052-8ec7b5622625",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"",
+									"pm.environment.set(\"appointment_start_date\", jsonData.available_slots[0].start);",
+									"pm.environment.set(\"appointment_end_date\", jsonData.available_slots[0].end);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "967222af-8a41-43ae-abee-7dfe3e6ecf52",
+								"exec": [
+									"let moment = require('moment');",
+									"",
+									"let startDate = moment().format('YYYY-MM-DD');",
+									"let endDate = moment().add(10, 'days').format('YYYY-MM-DD');",
+									"",
+									"pm.environment.set(\"startDate\", startDate);",
+									"pm.environment.set(\"endDate\", endDate);",
+									"",
+									"console.log(startDate);",
+									"console.log(endDate);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8952e049-a085-40a2-ac41-2bec747a25a1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, DateTimePicker",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-my.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-my.equip.health/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"response_format\": \"overlapping_slots\",\n  \"buffer\": {\n    \"after\": {\n      \"minutes\": 10\n    },\n    \"before\": {\n      \"minutes\": 10\n    }\n  },\n  \"participants\": [\n    {\n      \"members\": [\n        {\n          \"availability_rule_ids\": [\n            \"Qualifying call\"\n          ],\n          \"calendar_ids\": [\n            \"cal_Yw26wOZg@gFnJLpx_buhyH1O9zimYoDs3TOKghw\"\n          ],\n          \"managed_availability\": true,\n          \"sub\": \"acc_630dbac1e660fe016724ba77\"\n        }\n      ],\n      \"required\": 1\n    }\n  ],\n  \"query_periods\": [\n    {\n      \"start\": \"{{startDate}}T16:22:56Z\",\n      \"end\": \"{{endDate}}T16:22:56Z\"\n    }\n  ],\n  \"required_duration\": {\n    \"minutes\": 20\n  },\n  \"start_interval\": {\n    \"minutes\": 30\n  },\n  \"max_results\": 512\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cronofy.com/v1/availability?et={{ElementTokenPublic}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"availability"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenPublic}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save appointment - Qualifying call",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "23e9e2bd-4abc-4a1a-9a18-ed58f1ed2c21",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"appointmentExtId\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d2f466d8-6979-47da-93a9-3120dfbdfd67",
+								"exec": [
+									"let moment = require('moment');",
+									"",
+									"pm.environment.set(\"appointmentStartDate\", );",
+									"",
+									"",
+									"function randomDate(start, end) {",
+									"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+									"}",
+									"",
+									"const startDateTime = randomDate(new Date(), new Date(2024, 0, 1));",
+									"const endDateTime = moment(startDateTime).add(30, 'm').toDate();",
+									"",
+									"console.log(\"startDateTime: \"+ startDateTime);",
+									"console.log(\"endDateTime: \"+endDateTime);",
+									"",
+									"pm.environment.set(\"appointmentStartDateTime\", startDateTime);",
+									"pm.environment.set(\"appointmentEndDateTime\", endDateTime);",
+									"pm.environment.set(\"providerName\", \"Maud Scheduling\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e5dd0adc-53f6-4d26-b71c-533cd04d0ff7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "03AFY_a8UmSq6LRHMel9ZAtXOUZiD0wvjUKmYNB1ZRW5efyhVToQ0c8cz-_Q1mEvrmB-7Oq4wiIcWYsEKBFi9dxuu7G9Mmfv9PLOJqe5tC_FrYTto-Y28LbX696n_6c1oJdHVOY473aqgiyNtH8hFVNBJgUZydhArnyC2UMuNQSM-0tQOKu71rPtGIkaEL6F7cJ2koNPiGh37EpcNUaSpxoPgOfEeSLV9wzhwaziVANKrs7-CFcVNtBVriLO3TfuuOkdlXItaJfpeBBfcdkjiQdYJA32iYD6uCUh0R3dXzoekZc0touocA9eplwLUwYeFLVO77-yr1KITLmmleTbnh2olLE7VE9O-AnA0a5HKC0TDYRuo3x9m7Bkg2UByPeVtfSpSIx23pOpjH8EWrjBED9HxC3FG8T2LOqx5VXuFPWntkc74kg3saS3xegkE9rFCyjx5CDBiDbgjOB5-8qiti6S53sUM8iikvuOpLNzkDb-0BvGrMliNptOst3IEH0WV8OLEbR7bpj86AIZgIu7IrLEpXyNNDSF2bSA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"appointmentEndDateTime\": \"{{appointment_end_date}}\",\n  \"appointmentStartDateTime\": \"{{appointment_start_date}}\",\n  \"appointmentType\": \"Qualifying call\",\n  \"calendarIds\": [\n    \"{{calendarId}}\"\n  ],\n  \"createdBy\": null,\n  \"hostExternalId\": null,\n  \"inquiryExternalId\": \"{{inquiryExternalId}}\",\n  \"otherAttendees\": [\n    {\n      \"email\": \"{{patientEmail}}\",\n      \"phone\": \"+917842414959\"\n    }\n  ],\n  \"patientExternalId\": null,\n  \"patientName\": \"wefwefwerg cvdsfwds\",\n  \"subject\": \"Qualifying call\",\n  \"taskExternalId\": \"{{taskExternalId}}\",\n  \"timeZoneId\": \"Asia/Calcutta\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/schedule/external/appointment",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"external",
+								"appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify task is auto assigned to PSR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b78268e-8cf0-4d6e-8ff1-c85649088882",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"let moment = require('moment');\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify task is assigned to PSR\", function () {\r",
+									"    pm.expect(jsonData.data[0].assignee.externalId).to.eql(pm.variables.get(\"userId\"));\r",
+									"    pm.expect(jsonData.data[0].assignee.firstName+\" \"+jsonData.data[0].assignee.lastName).to.eql(pm.variables.get(\"providerName\"));\r",
+									"    pm.expect(jsonData.data[0].assignee.providerType).to.eql(\"Patient Service Representative\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify appointment details appended to the task description\", function () {\r",
+									"    var exp_task_desc = \"Inquiry type: self\\nPatient first name: \" + pm.variables.get(\"patientFirstName\") + \"\\nPatient last name: \" + pm.variables.get(\"patientLastName\") + \"\\nPatient’s current state: \" + pm.variables.get(\"patientState\") + \"\\nPatient’s age: \" + pm.variables.get(\"age\") + \"\\nPatient’s DOB: \" + pm.variables.get(\"dob\") + \"\\nPreferred contact method: \" + pm.variables.get(\"patientPreferredContact\") + \"\\nMobile phone: \" + pm.variables.get(\"patientMobile\") + \"\\nEmail: \" + pm.variables.get(\"patientEmail\") + \"\\nAdditional notes: \" + pm.variables.get(\"AdditionalNotes\") + \"\\nAnything else we should know? \" + pm.variables.get(\"tellUsMore\") + \"\\nHow they heard about Equip: \" + pm.variables.get(\"equipSourceName\") + \"\\nHow was this inquiry information gathered? Webform\\n\\n\\n*** Appointment Details ***\\nAppointment date: \"+moment(pm.environment.get(\"appointmentStartDateTime\")).local().format('MM/DD/YYYY')+\"\\nAppointment start time: \"+moment(pm.environment.get(\"appointmentStartDateTime\")).local().format('hh:mm A')+ \" (IST)\"+\"\\nAppointment title: Equip call confirmed for \"+moment(pm.environment.get(\"appointmentStartDateTime\")).local().format('ddd, MMM D, YYYY hh:mm A')+\"-\"+moment(pm.environment.get(\"appointmentEndDateTime\")).local().format('hh:mm A')+\" (IST)\\nPSR assigned: Maud Scheduling\\nPhone: +917842414959\\nEmail: \"+pm.environment.get(\"patientEmail\")+\"\";\r",
+									"    console.log(\"exp_task_desc: \" + exp_task_desc);\r",
+									"    console.log(\"act_task_desc: \" + jsonData.data[0].taskDescription);\r",
+									"    pm.expect(jsonData.data[0].taskDescription).to.eql(exp_task_desc);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify task due date is updated to appointment date\", function () {\r",
+									"    let appointmentStartDateTime = pm.environment.get(\"appointmentStartDateTime\").replace(\"Z\",\".000Z\");\r",
+									"    pm.expect(jsonData.data[0].taskDueDate).to.eql(appointmentStartDateTime);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "11a39000-953c-4d79-86e9-ac87a18a502b",
+								"exec": [
+									"var task_name = pm.variables.get(\"task_name\");\r",
+									"console.log(task_name);\r",
+									"\r",
+									"pm.environment.set(\"appointmentStartDateTime\", pm.environment.get(\"appointment_start_date\"));\r",
+									"pm.environment.set(\"appointmentEndDateTime\", pm.environment.get(\"appointment_end_date\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "eb2849c9-0fde-4a26-aeff-da8e24ffef02",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/composition/tasks?filter-by=task-external-id::{{taskExternalId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"composition",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "filter-by",
+									"value": "task-external-id::{{taskExternalId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save appointment - slot not available",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd866e98-fdca-4bfd-b771-2cf83cef797d",
+								"exec": [
+									"let ld = require('lodash');",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify error json response\", function () {",
+									"    pm.expect(jsonData._embedded.errors[0].message).to.eql(\"Internal Server Error: The requested time slot is no longer available\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a5bffc80-03af-4516-a82c-92838bb5f69a",
+								"exec": [
+									"let moment = require('moment');",
+									"",
+									"pm.environment.set(\"appointmentStartDate\", );",
+									"",
+									"",
+									"function randomDate(start, end) {",
+									"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+									"}",
+									"",
+									"const startDateTime = randomDate(new Date(), new Date(2024, 0, 1));",
+									"const endDateTime = moment(startDateTime).add(30, 'm').toDate();",
+									"",
+									"console.log(\"startDateTime: \"+ startDateTime);",
+									"console.log(\"endDateTime: \"+endDateTime);",
+									"",
+									"pm.environment.set(\"appointmentStartDateTime\", startDateTime);",
+									"pm.environment.set(\"appointmentEndDateTime\", endDateTime);",
+									"pm.environment.set(\"providerName\", \"Maud Scheduling\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5fc1bd22-9c21-4abb-bc0f-2dccaedb08bf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "03AFY_a8X5iqF1UDGk-ZacWDHTqrjyDYx68iY6TvIqziqoZeXHl6EtcBXyASCWIQXbgljTKqS3mUrc5nCyY2aWwmiqgQKJwuovKJfMSa7xBynUYInvRuResvZBIdDyTYrDka1joGd63fHt0YWVesjIcAg5PafWRK45c80QaxKRRyiVIEMR8qE_gaMhNxX7VaF_hto3t0AFMz8PXJA4ciiz8qH8xyFDqC9reUrKZwi55MTuVm2Miqmv7odxhHg6th-627Ixoe09FXIFmBSoek5aNqRF-X_2OCMGD2hO84l2vsFR_3p3fQzRgsUHygwr_XB1J6OWK6fMG_Eqp5GVI3U407lt8qVtBeFu7aAX5J1_Uz26Y3TzHUUvq6QUhZ13wHivVbQq3j8CET6ZeJMnhdg4SesqvD0Eh-O9HrFYXcbFPmwJBcsZZ5-A81yp0otZnljC6ly31Ju7hAQRK8_G08PG2wWr5R3m2RcwNxfbI2dXLiGjZz0w8FmlpU3_pUEI9Lpn0e1cYy2SItPAfa7Ih97T64HAYKuy9hZuww",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"appointmentEndDateTime\": \"{{appointment_end_date}}\",\n  \"appointmentStartDateTime\": \"{{appointment_start_date}}\",\n  \"appointmentType\": \"Qualifying call\",\n  \"calendarIds\": [\n    \"{{calendarId}}\"\n  ],\n  \"createdBy\": null,\n  \"hostExternalId\": null,\n  \"inquiryExternalId\": \"{{inquiryExternalId}}\",\n  \"otherAttendees\": [\n    {\n      \"email\": \"{{patientEmail}}\",\n      \"phone\": \"+917842414959\"\n    }\n  ],\n  \"patientExternalId\": null,\n  \"patientName\": \"wefwefwerg cvdsfwds\",\n  \"subject\": \"Qualifying call\",\n  \"taskExternalId\": \"{{taskExternalId}}\",\n  \"timeZoneId\": \"Asia/Calcutta\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/schedule/external/appointment",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"external",
+								"appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET AllUsersByAppointmentTypeQualifyingCall",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b515f09a-f840-4836-87e1-2c0919d2fc1e",
+								"exec": [
+									"let ld = require('lodash');",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify response\", function () {",
+									"    pm.expect(jsonData.calendarInfos).length.greaterThan(0);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a385eefe-6f6a-4ad5-8711-819d95a12605",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/composition/schedule/calendar-infos?appointment-type-ext-id={{appointmentTypeExtIdQualifyingCall}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"composition",
+								"schedule",
+								"calendar-infos"
+							],
+							"query": [
+								{
+									"key": "appointment-type-ext-id",
+									"value": "{{appointmentTypeExtIdQualifyingCall}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an element token - public",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "afe865f9-40b5-4492-a564-6882ec8dd06a",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"ElementTokenPublic\", jsonData.elementToken.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "76497841-a77a-4b5e-a25b-378106f910b6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"origin\": \"https://dev-my.equip.health\",\n  \"subs\": [\"acc_630dbac1e660fe016724ba77\",\"acc_62da5377486b79008b9b2aab\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/schedule/element-token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"element-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get availability - public",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98ba103f-5b9d-4187-aec0-6e795b05840f",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "eb430618-aa13-4aa5-b00f-34bc221a9a27",
+								"exec": [
+									"let moment = require('moment');",
+									"",
+									"let startDate = moment().format('YYYY-MM-DD');",
+									"let endDate = moment().add(10, 'days').format('YYYY-MM-DD');",
+									"",
+									"pm.environment.set(\"startDate\", startDate);",
+									"pm.environment.set(\"endDate\", endDate);",
+									"",
+									"console.log(startDate);",
+									"console.log(endDate);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8212fa47-1b25-476f-a5e6-b76857b39899",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, DateTimePicker",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-my.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-my.equip.health/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"response_format\": \"overlapping_slots\",\n  \"buffer\": {\n    \"after\": {\n      \"minutes\": 10\n    },\n    \"before\": {\n      \"minutes\": 10\n    }\n  },\n  \"participants\": [\n    {\n      \"members\": [\n        {  \"availability_rule_ids\": [\n            \"Qualifying call\"\n          ],\n          \"calendar_ids\": [\n            \"cal_YtpTdkhreQCLmyql_FZeYrK@FjGC7vkC5qCCuIA\"\n          ],\n          \"managed_availability\": true,\n          \"sub\": \"acc_62da5377486b79008b9b2aab\"\n        },\n        {\n          \"availability_rule_ids\": [\n            \"Qualifying call\"\n          ],\n          \"calendar_ids\": [\n            \"cal_Yw26wOZg@gFnJLpx_buhyH1O9zimYoDs3TOKghw\"\n          ],\n          \"managed_availability\": true,\n          \"sub\": \"acc_630dbac1e660fe016724ba77\"\n        }\n      ],\n      \"required\": 1\n    }\n  ],\n  \"query_periods\": [\n    {\n      \"start\": \"{{startDate}}T16:22:56Z\",\n      \"end\": \"{{endDate}}T16:22:56Z\"\n    }\n  ],\n  \"required_duration\": {\n    \"minutes\": 20\n  },\n  \"start_interval\": {\n    \"minutes\": 30\n  },\n  \"max_results\": 512\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cronofy.com/v1/availability?et={{ElementTokenPublic}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"availability"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenPublic}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get availability negative - public",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9e9bcfd3-fc59-49cb-bcf9-c57949affcf3",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"let expJsonError = {",
+									"    \"errors\": {",
+									"        \"participants[0].members[0].sub\": [",
+									"            {",
+									"                \"key\": \"errors.not_recognized\",",
+									"                \"description\": \"not recognized\"",
+									"            }",
+									"        ]",
+									"    }",
+									"}",
+									"",
+									"pm.test(\"Verify error json response\", function () {",
+									"    pm.expect(jsonData).to.eql(expJsonError);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bf715feb-0a60-4572-af1c-6805bf4067f7",
+								"exec": [
+									"let moment = require('moment');",
+									"",
+									"let startDate = moment().format('YYYY-MM-DD');",
+									"let endDate = moment().add(10, 'days').format('YYYY-MM-DD');",
+									"",
+									"pm.environment.set(\"startDate\", startDate);",
+									"pm.environment.set(\"endDate\", endDate);",
+									"",
+									"console.log(startDate);",
+									"console.log(endDate);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a69e4615-bdd9-4a45-85c4-5c97c47b462c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, DateTimePicker",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-my.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-my.equip.health/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"response_format\": \"overlapping_slots\",\n  \"buffer\": {\n    \"after\": {\n      \"minutes\": 10\n    },\n    \"before\": {\n      \"minutes\": 10\n    }\n  },\n  \"participants\": [\n    {\n      \"members\": [\n        {  \"availability_rule_ids\": [\n            \"Qualifying call\"\n          ],\n          \"calendar_ids\": [\n            \"cal_YwQswMDVFgD5632l_kMXKpVjPj21w7GBe-rkqpA\"\n          ],\n          \"managed_availability\": true,\n          \"sub\": \"acc_6304bf99de05ce008ca1ca99\"\n        },\n        {\n          \"availability_rule_ids\": [\n            \"Qualifying call\"\n          ],\n          \"calendar_ids\": [\n            \"cal_Yw26wOZg@gFnJLpx_buhyH1O9zimYoDs3TOKghw\"\n          ],\n          \"managed_availability\": true,\n          \"sub\": \"acc_630dbac1e660fe016724ba77\"\n        }\n      ],\n      \"required\": 1\n    }\n  ],\n  \"query_periods\": [\n    {\n      \"start\": \"{{startDate}}T16:22:56Z\",\n      \"end\": \"{{endDate}}T16:22:56Z\"\n    }\n  ],\n  \"required_duration\": {\n    \"minutes\": 20\n  },\n  \"start_interval\": {\n    \"minutes\": 30\n  },\n  \"max_results\": 512\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cronofy.com/v1/availability?et={{ElementTokenPublic}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"availability"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenPublic}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "a7a5d6a6-fdf2-4f3b-816c-0bf5eb1534a9",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9a29b0c6-fb40-418c-bf35-7bdabb8eb2ca",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"if(pm.environment.name === \"qa\"){",
+							"    pm.environment.set(\"scheduleUserId1\", \"af2215db-647f-4b20-8f6a-f2f3db0ce5ee\");",
+							"    pm.environment.set(\"scheduleUserId1_username\", \"maud_scheduling+psr@equip.health\");",
+							"    pm.environment.set(\"scheduleUserId1password\", \"Equip@1234\");",
+							"    pm.environment.set(\"scheduleUserId1_UserFirstname1\", \"Maud\");",
+							"    pm.environment.set(\"scheduleUserId1_UserLastname1\", \"Scheduling\");",
+							"    pm.environment.set(\"scheduleUserId1_UserType1\", \"Patient Service Represent\");",
+							"",
+							"    pm.environment.set(\"scheduleUserId2\", \"0a113848-7671-42b2-bb7c-82a980a4393f\");",
+							"    pm.environment.set(\"nonScheduleUserId\", \"f32d83dc-1271-4efc-b05f-aa5632fd0a9b\");",
+							"}else{",
+							"    pm.environment.set(\"scheduleUserId1\", \"a4684d41-f12f-4e96-af65-9ff44d723d61\")",
+							"    pm.environment.set(\"scheduleUserId1_username\", \"maud_scheduling+psr@equip.health\");",
+							"    pm.environment.set(\"scheduleUserId1password\", \"Equip@1234\");",
+							"    pm.environment.set(\"scheduleUserId1_UserFirstname1\", \"Maud\");",
+							"    pm.environment.set(\"scheduleUserId1_UserLastname1\", \"Scheduling\");",
+							"    pm.environment.set(\"scheduleUserId1_UserType1\", \"Patient Service Represent\");",
+							"",
+							"    pm.environment.set(\"scheduleUserId2\", \"aa96a8bb-f124-4aa2-9098-d58826909840\");",
+							"    pm.environment.set(\"nonScheduleUserId\", \"f32d83dc-1271-4efc-b05f-aa5632fd0a9b\");",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "86e035ba-02b7-4c03-ab87-7ba5890ec8d0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Internal",
+			"item": [
+				{
+					"name": "Add Appointments",
+					"item": [
+						{
+							"name": "Add Patient",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2078e134-9e1a-4176-b532-b43a21de62b7",
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Response has a JSON body\", function () {",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", () => {",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test(\"Verify id is generated\", function () {",
+											"    pm.expect(jsonData.id).length.greaterThan(0);",
+											"});",
+											"",
+											"pm.environment.set(\"patientId\", jsonData.id);",
+											"",
+											"pm.environment.set(\"test-token\",\"\");",
+											"pm.environment.set(\"vesta_username\", pm.environment.get(\"host_username\"));",
+											"pm.environment.set(\"vesta_password\", pm.environment.get(\"host_password\"));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "fb3c9979-fc71-433f-8ef7-f85a4cd12fd2",
+										"exec": [
+											"let ld = require('lodash');",
+											"",
+											"let gendersList = [",
+											"    \"Cis-gender male\",",
+											"    \"Cis-gender female\",",
+											"    \"Non-binary\",",
+											"    \"Other\",",
+											"    \"Unknown\",",
+											"    \"Transgender male\",",
+											"    \"Transgender female\"",
+											"];",
+											"",
+											"let pronounsList = [",
+											"    \"He/Him/His\",",
+											"    \"She/Her/Hers\",",
+											"    \"They/Them/Theirs\",",
+											"    \"Other\"",
+											"];",
+											"",
+											"let ethnicitiesList = [",
+											"    \"Asian\",",
+											"    \"Black/African American\",",
+											"    \"White/Caucasian\",",
+											"    \"Hispanic/Latinx\",",
+											"    \"Native American, Indian American, or Alaska Native\",",
+											"    \"Native Hawaiian or other Pacific Islander\",",
+											"    \"Middle Eastern or North African\",",
+											"    \"Prefer not to answer\",",
+											"    \"Other\"",
+											"];",
+											"",
+											"let languagesList = [",
+											"    \"English\",",
+											"    \"Spanish\",",
+											"    \"Chinese\",",
+											"    \"French\",",
+											"    \"Tagalog\",",
+											"    \"Vietnamese\",",
+											"    \"Korean\",",
+											"    \"German\",",
+											"    \"Russian\",",
+											"    \"Italian\",",
+											"    \"Portuguese\",",
+											"    \"Polish\",",
+											"    \"Japanese\",",
+											"    \"Persian\",",
+											"    \"Greek\",",
+											"    \"Serbo-Croatian\",",
+											"    \"Armenian\",",
+											"    \"Yiddish\",",
+											"    \"American Sign Language (ASL)\"",
+											"];",
+											"",
+											"let sexList = [",
+											"    \"Male\",",
+											"    \"Female\"",
+											"];",
+											"",
+											"let timezonesList = [",
+											"    \"Hawaii Standard Time\",",
+											"    \"Hawaii-Aleutian Time\",",
+											"    \"Alaska Time\",",
+											"    \"Pacific Time\",",
+											"    \"Arizona\",",
+											"    \"Mountain Time\",",
+											"    \"Central Time\",",
+											"    \"Eastern Time\"",
+											"];",
+											"",
+											"let contactPreferences = [\"Email\", \"No preference\", \"Phone\", \"Unknown\"];",
+											"",
+											"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+											"",
+											"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+											"",
+											"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+											"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+											"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+											"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+											"let zip = Math.floor(10000 + Math.random() * 90000);",
+											"",
+											"//Generate random Date of Birth in YYYY-MM-DD Format",
+											"function randomDate(start, end) {",
+											"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+											"}",
+											"let date = randomDate(new Date(1990, 00, 01), new Date());",
+											"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+											"",
+											"//Save the variables to be used in next request for validation",
+											"pm.environment.set(\"patientChosenName\", chosenName);",
+											"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+											"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+											"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+											"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+											"pm.environment.set(\"patientCountry\", \"US\");",
+											"pm.environment.set(\"patientZip\", zip.toString());",
+											"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+											"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+											"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+											"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+											"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+											"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+											"pm.environment.set(\"patientPronounsOnRecord\", ld.sample(pronounsList));",
+											"pm.environment.set(\"patientPronounsOffRecord\", ld.sample(pronounsList));",
+											"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+											"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+											"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "2cf7c82c-0b94-4db2-bb75-1a3741fd50f0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"6767676767\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": \"{{patientPronounsOnRecord}}\",\n    \"pronounsOffRecord\": \"{{patientPronounsOffRecord}}\",\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/patients",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET multiple user details",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "49900f17-bee7-48d2-a05b-7d5afe5ea04c",
+										"exec": [
+											"let jsonData = pm.response.json();",
+											"let expected=null;",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"let subs=[];",
+											"for(let i=0; i<jsonData.length; i++){",
+											"    subs.push(jsonData[i].sub);",
+											"}",
+											"pm.environment.set(\"sub1\", subs[0]);",
+											"pm.environment.set(\"sub2\", subs[1]);",
+											"pm.environment.set(\"sub3\", subs[2]);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "38e7e8fc-a455-4280-9f72-fb184d7a410c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/users?provider-external-ids={{UserId1}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"users"
+									],
+									"query": [
+										{
+											"key": "provider-external-ids",
+											"value": "{{UserId1}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get view availability element token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "12298283-ebe6-4788-ba20-7b83e82d5f6c",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.environment.set(\"ElementTokenInternal_multiUsers\", jsonData.elementToken.token);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c90b7e31-bcf5-4ba8-9c33-45a0f7011785",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "5adf9018-b644-471b-bf72-a3cad7243bad",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"origin\": \"https://dev-app.equip.health\",\n    \"tokenType\": \"view-availability\",\n    \"subs\": [\"{{sub1}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/schedule/management-element-token",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"management-element-token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get availability-subs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "aa15cf26-fbfd-4532-bc15-0778ae3efaab",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.environment.set(\"appointment_start_date\", jsonData.available_slots[0].start);",
+											"pm.environment.set(\"appointment_end_date\", jsonData.available_slots[0].end);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "af936ed2-d80b-4897-a0c9-0bb93108dacc",
+										"exec": [
+											"",
+											"let fillAppointmentTypes = [];",
+											"let appointmentTypes = [",
+											"    [\"Therapy 50-minute Session\",\"Therapist\"],",
+											"    [\"Therapy 15-minute Check-In\",\"Therapist\"]",
+											"];",
+											"",
+											"fillAppointmentTypes = pm.environment.get(\"fillAppointmentTypes\");",
+											"",
+											"if (!fillAppointmentTypes || fillAppointmentTypes.length == 0) {",
+											"    fillAppointmentTypes = appointmentTypes;",
+											"}",
+											"let currentAppointmentType = fillAppointmentTypes.shift();",
+											"",
+											"console.log(\"Length: \"+ fillAppointmentTypes.length);",
+											"console.log(fillAppointmentTypes);",
+											"pm.environment.set(\"fillAppointmentTypes\", fillAppointmentTypes);",
+											"pm.environment.set(\"currentAppointmentType\", currentAppointmentType[0]);",
+											"pm.environment.set(\"currentProviderType\", currentAppointmentType[1]);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "d4ff6421-37fb-4899-85d5-c283b414d509",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "cronofy-element",
+										"value": "v1.50.0, DateTimePicker",
+										"type": "text"
+									},
+									{
+										"key": "origin",
+										"value": "https://dev-app.equip.health",
+										"type": "text"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-GB,en-US;q=0.9,en;q=0.8",
+										"type": "text"
+									},
+									{
+										"key": "referer",
+										"value": "https://dev-app.equip.health/",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"participants\": [\n    {\n      \"members\": [\n        {\n        \t\"sub\": \"{{sub1}}\"\n        }\n      ],\n      \"required\": \"all\"\n    }\n  ],\n  \"required_duration\": { \"minutes\": 60 },\n  \"query_periods\": [\n    {\n      \"start\": \"{{start_date}}T09:00:00Z\",\n      \"end\": \"{{end_date}}T18:00:00Z\"\n    }\n  ],\n  \"response_format\": \"slots\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.cronofy.com/v1/availability?et={{ElementTokenInternal_multiUsers}}",
+									"protocol": "https",
+									"host": [
+										"api",
+										"cronofy",
+										"com"
+									],
+									"path": [
+										"v1",
+										"availability"
+									],
+									"query": [
+										{
+											"key": "et",
+											"value": "{{ElementTokenInternal_multiUsers}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Provider",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "82ddd885-dbdd-49cc-aff0-8ee37f816ee1",
+										"exec": [
+											"let ld = require('lodash');",
+											"let timezones=[\"Hawaii Standard Time\",\"Hawaii-Aleutian Time\",\"Alaska Time\",\"Pacific Time\",\"Arizona\",\"Mountain Time\",\"Central Time\",\"Eastern Time\",\"London/UK Time\"];",
+											"let regions=[\"Northeast\",\"Southwest\",\"Southeast\",\"West\",\"Midwest\"];",
+											"let providerTypes=[\"Therapist\",\"Dietitian\",\"Medical Assistant\",\"Clinical Ops\",\"Family Mentor\",\"Peer Mentor\",\"Physician\",\"Psychiatrist\",\"Billing Specialist\",\"Analyst\",\"Admissions Specialist\",\"Clinical Supervisor\",\"Family Experience Navigator\",\"Insurance Specialist\",\"Patient Service Representative\",\"Product Support\"];",
+											"let capacities=[\"full-time\",\"part-time\"];",
+											"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+											"let lastName = pm.variables.replaceIn('{{$randomLastName}}')",
+											"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+											"let phoneNumber = pm.variables.replaceIn('{{$randomPhoneNumber}}');",
+											"let supervisorId=\"\";",
+											"let capacity = ld.sample(capacities);",
+											"let hoursPerWeek;",
+											"if(capacity==\"full-time\"){",
+											"    hoursPerWeek = 40;",
+											"}else{",
+											"    hoursPerWeek=Math.floor(Math.random() * 90);",
+											"}",
+											"let accountStatus = \"active\";",
+											"let permissions=[\"both\"];",
+											"let permission = ld.sample(permissions);",
+											"let roles = [\"admin:role:manage-users\",",
+											"        \"maud:role:general-access\",",
+											"        \"maud:role:advanced-access\"];",
+											"if(permission===\"admin\"){",
+											"    roles=[\"\\\"admin:role:manage-users\\\"\"];",
+											"}else if(permission===\"maud\"){",
+											"    roles=[\"\\\"maud:role:general-access\\\"\",\"\\\"maud:role:advanced-access\\\"\"];",
+											"}else if(permission===\"both\"){",
+											"    roles=[\"\\\"admin:role:manage-users\\\"\",\"\\\"maud:role:general-access\\\"\",\"\\\"maud:role:advanced-access\\\"\"];",
+											"}",
+											"pm.environment.set(\"firstName\", firstName);",
+											"pm.environment.set(\"lastName\", lastName);",
+											"pm.environment.set(\"email\", email);",
+											"pm.environment.set(\"phoneNumber\", phoneNumber);",
+											"pm.environment.set(\"timezone\", ld.sample(timezones));",
+											"pm.environment.set(\"region\", ld.sample(regions));",
+											"pm.environment.set(\"providerType\", ld.sample(providerTypes));",
+											"pm.environment.set(\"capacity\",capacity);",
+											"pm.environment.set(\"hoursPerWeek\",hoursPerWeek);",
+											"pm.environment.set(\"accountStatus\", accountStatus);",
+											"pm.environment.set(\"roles\", roles);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "41dd2e27-5a14-4d65-a4d6-3a0c55921f48",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"{{firstName}}\",\n    \"lastName\": \"{{lastName}}\",\n    \"email\": \"{{email}}\",\n    \"phoneNumber\": \"{{phoneNumber}}\",\n    \"timezone\": \"{{providerTimezone}}\",\n    \"region\": \"{{providerRegion}}\",\n    \"providerType\": \"{{currentProviderType}}\",\n    \"capacity\": \"{{providerCapacity}}\",\n    \"hoursPerWeek\": \"{{providerHoursPerWeek}}\",\n    \"accountStatus\": \"{{providerAccountStatus}}\",\n    \"roles\": [\n        {{providerRoles}}\n    ],\n    \"supervisorId\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/providers/{{providerId}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"providers",
+										"{{providerId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save appointment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ed847459-1b66-4efd-b30d-7bb674889fe6",
+										"exec": [
+											"let response = pm.response.text();",
+											"",
+											"let fillAppointmentTypes = pm.environment.get(\"fillAppointmentTypes\");",
+											"",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"console.log(\"length: \"+fillAppointmentTypes.length);",
+											"if (fillAppointmentTypes && fillAppointmentTypes.length > 0) {",
+											"    postman.setNextRequest(\"Get availability-subs\");",
+											"} else {",
+											"    postman.setNextRequest(null);",
+											"}",
+											"",
+											"//pm.environment.set(\"appointmentExtId\", pm.response.text());"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6bbc7ed9-37c4-418b-b214-586b2c1b98ed",
+										"exec": [
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "b962b44f-33c0-4a6d-9ce2-f023cd81d957",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "03AFY_a8UmSq6LRHMel9ZAtXOUZiD0wvjUKmYNB1ZRW5efyhVToQ0c8cz-_Q1mEvrmB-7Oq4wiIcWYsEKBFi9dxuu7G9Mmfv9PLOJqe5tC_FrYTto-Y28LbX696n_6c1oJdHVOY473aqgiyNtH8hFVNBJgUZydhArnyC2UMuNQSM-0tQOKu71rPtGIkaEL6F7cJ2koNPiGh37EpcNUaSpxoPgOfEeSLV9wzhwaziVANKrs7-CFcVNtBVriLO3TfuuOkdlXItaJfpeBBfcdkjiQdYJA32iYD6uCUh0R3dXzoekZc0touocA9eplwLUwYeFLVO77-yr1KITLmmleTbnh2olLE7VE9O-AnA0a5HKC0TDYRuo3x9m7Bkg2UByPeVtfSpSIx23pOpjH8EWrjBED9HxC3FG8T2LOqx5VXuFPWntkc74kg3saS3xegkE9rFCyjx5CDBiDbgjOB5-8qiti6S53sUM8iikvuOpLNzkDb-0BvGrMliNptOst3IEH0WV8OLEbR7bpj86AIZgIu7IrLEpXyNNDSF2bSA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"appointmentEndDateTime\": \"{{appointment_end_date}}\",\n    \"appointmentStartDateTime\": \"{{appointment_start_date}}\",\n    \"appointmentType\":\"{{currentAppointmentType}}\",\n    \"hostExternalId\":\"{{host-ext-id}}\",\n    \"patientExternalId\":\"{{patientId}}\",\n    \"otherAttendees\":[],\n    \"providerAttendeeExternalIds\":[\"dca423d7-00e6-430f-a7ba-06c949d171b0\",\"9f29b62f-e3c8-4ad0-afd6-9fc75642f90a\"],\n    \"supportAttendeeExternalIds\":[\"93c2dcc3-6a3f-4698-8f56-e2a2895fcccc\",\"15ecad24-e92c-4d69-b82d-b619157e116a\"],\n    \"timeZoneId\":\"Asia/Calcutta\",\n    \"recurrenceFrequency\": null,\n    \"isPatientAttending\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/schedule/appointment",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "ae636cef-6f96-4724-9ee3-3c48b6f4d463",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "77ad3e32-65ba-4681-8f3a-b9d384ba21a8",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"if(pm.environment.name === \"qa\"){",
+									"    pm.environment.set(\"UserId1\", \"af2215db-647f-4b20-8f6a-f2f3db0ce5ee\")",
+									"    pm.environment.set(\"UserId1_username\", \"maud_scheduling+psr@equip.health\");",
+									"    pm.environment.set(\"UserId1_password\", \"Equip@1234\");",
+									"    pm.environment.set(\"UserFirstname1\", \"Maud\");",
+									"    pm.environment.set(\"UserLastname1\", \"Scheduling\");",
+									"    pm.environment.set(\"UserType1\", \"Patient Service Representative\");",
+									"",
+									"    pm.environment.set(\"UserId2\", \"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\")",
+									"    pm.environment.set(\"UserId2_username\", \"balakrishna+analyst0107@equip.health\");",
+									"    pm.environment.set(\"UserId2_password\", \"Equip@1234\");",
+									"    pm.environment.set(\"UserFirstname2\", \"Bala\");",
+									"    pm.environment.set(\"UserLastname2\", \"000analyst\");",
+									"    pm.environment.set(\"UserType2\", \"Analyst\");",
+									"",
+									"    pm.environment.set(\"UserId3\", \"3733fe8a-4d35-4951-b899-69f559bb67bc\")",
+									"    pm.environment.set(\"UserId3_username\", \"kim@equip.health\");",
+									"    pm.environment.set(\"UserId3_password\", \"Equip@1234\");",
+									"    pm.environment.set(\"UserFirstname3\", \"Kimmy\");",
+									"    pm.environment.set(\"UserLastname3\", \"Pack\");",
+									"    pm.environment.set(\"UserType3\", \"Dietitian\");",
+									"",
+									"    pm.environment.set(\"UserId4\", \"0a113848-7671-42b2-bb7c-82a980a4393f\")",
+									"    pm.environment.set(\"UserId4_username\", \"balakrishna@equip.health\");",
+									"    pm.environment.set(\"UserId4_password\", \"Equip@1234\");",
+									"    pm.environment.set(\"UserFirstname4\", \"Bala\");",
+									"    pm.environment.set(\"UserLastname4\", \"Deema\");",
+									"    pm.environment.set(\"UserType4\", \"Patient Service Representative\");",
+									"}else{",
+									"    pm.environment.set(\"host-ext-id\", \"a4684d41-f12f-4e96-af65-9ff44d723d61\")",
+									"    pm.environment.set(\"host_username\", \"maud_scheduling+psr@equip.health\");",
+									"    pm.environment.set(\"host_password\", \"Equip@1234\");",
+									"    pm.environment.set(\"hostFirstname1\", \"Maud\");",
+									"    pm.environment.set(\"hostLastname1\", \"Scheduling\");",
+									"    pm.environment.set(\"hostType1\", \"Patient Service Representative\");",
+									"",
+									"    pm.environment.set(\"UserId2\", \"61e1108d-a4cd-4f4d-92bc-eb214e8594c6\")",
+									"    pm.environment.set(\"UserId2_username\", \"balakrishna+dietitian@equip.health\");",
+									"    pm.environment.set(\"UserId2_password\", \"Equip@1234\");",
+									"    pm.environment.set(\"UserFirstname2\", \"Balakrishna\");",
+									"    pm.environment.set(\"UserLastname2\", \"Deema\");",
+									"    pm.environment.set(\"UserType2\", \"Dietitian\");",
+									"",
+									"    pm.environment.set(\"UserId3\", \"dca423d7-00e6-430f-a7ba-06c949d171b0\")",
+									"    pm.environment.set(\"UserId3_username\", \"mahathi@equip.health\");",
+									"    pm.environment.set(\"UserId3_password\", \"Equip@1234\");",
+									"    pm.environment.set(\"UserFirstname3\", \"Mahathi\");",
+									"    pm.environment.set(\"UserLastname3\", \"Chaturvedula\");",
+									"    pm.environment.set(\"UserType3\", \"Patient Service Representative\");",
+									"",
+									"    pm.environment.set(\"UserId4\", \"42bd1c96-995d-45c0-bd0b-cee0e167b864\")",
+									"    pm.environment.set(\"UserId4_username\", \"balakrishna@equip.health\");",
+									"    pm.environment.set(\"UserId4_password\", \"Equip@1234\");",
+									"    pm.environment.set(\"UserFirstname4\", \"Balakrishna\");",
+									"    pm.environment.set(\"UserLastname4\", \"Deema\");",
+									"    pm.environment.set(\"UserType4\", \"Therapist\");",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b35fe655-cedb-4b7f-bb3f-165aeaeb42d1",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "GET Appointment filters",
+					"item": [
+						{
+							"name": "filter by patient-ext-id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "05f09a39-84a3-4a40-8021-8f2373f89a5c",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"let ld = require('lodash');",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one patient_ext_id\", function () {",
+											"    pm.expect(jsonData.data[0].appointmentExternalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify each appointment record in the response have the expected patient external id\", () => {",
+											"    var patient_ext_id = pm.request.url.query.get(\"filter-by\").toString().substring(21);",
+											"    console.log(\"patient_ext_id: \" + patient_ext_id);",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        console.log(jsonData.data[i].patient.externalId);",
+											"        pm.expect(jsonData.data[i].patient.externalId).to.eql(patient_ext_id);",
+											"    }",
+											"});",
+											"",
+											"pm.test('Appointment records are sorted by start date desc', () => {",
+											"    let sorted = [];",
+											"    for (var i = 0; i < jsonData.data.length; i++) {",
+											"        if (jsonData.data[i].appointmentStartDateTime === null) {",
+											"            continue;",
+											"        }",
+											"        sorted.push(jsonData.data[i].appointmentStartDateTime);",
+											"    }",
+											"    console.log(sorted);",
+											"",
+											"    let expectedSortedOrder = ld.orderBy(sorted, [], ['desc']);",
+											"    console.log(expectedSortedOrder);",
+											"",
+											"    for (let i = 0; i < sorted.length; i++) {",
+											"        tests[\"Appointment# \" + (i + 1) + \" has start date as \" + jsonData['data'][i].appointmentStartDateTime]",
+											"            = pm.expect(jsonData['data'][i].appointmentStartDateTime).to.include((expectedSortedOrder[i]));",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "a9cedbc6-6eac-402d-bff4-f3415908a3c1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=patient-external-id::{{patient-ext-id}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "patient-external-id::{{patient-ext-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "filter by status-scheduled",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "078efb66-c3eb-4b1a-bc98-ee21e59f6327",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"let ld = require('lodash');",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one appointmentExternalId\", function () {",
+											"    pm.expect(jsonData.data[0].appointmentExternalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify each appointment record in the response have the expected patient external id\", () => {",
+											"    var status = pm.request.url.query.get(\"filter-by\").toString().substring(8);",
+											"    console.log(\"status: \" + status);",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        pm.expect(jsonData.data[i].appointmentStatus).to.eql(status);",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "597f1488-72fd-457e-a1ae-2264fc6639d4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=status::scheduled",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "status::scheduled"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "filter by status-cancelled",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bdc3a985-adad-4eee-8cb4-89a6eb702bcd",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"let ld = require('lodash');",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one appointmentExternalId\", function () {",
+											"    pm.expect(jsonData.data[0].appointmentExternalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify each appointment record in the response have the expected patient external id\", () => {",
+											"    var status = pm.request.url.query.get(\"filter-by\").toString().substring(8);",
+											"    console.log(\"status: \" + status);",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        pm.expect(jsonData.data[i].appointmentStatus).to.eql(status);",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "e8d6e7f7-a19b-4e18-958d-33562120efc7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=status::cancelled",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "status::cancelled"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "filter by status-completed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "153cc14c-c98f-454d-bd90-a837471e88e0",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"let ld = require('lodash');",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one appointmentExternalId\", function () {",
+											"    pm.expect(jsonData.data[0].appointmentExternalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify each appointment record in the response have the expected patient external id\", () => {",
+											"    var status = pm.request.url.query.get(\"filter-by\").toString().substring(8);",
+											"    console.log(\"status: \" + status);",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        pm.expect(jsonData.data[i].appointmentStatus).to.eql(status);",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "2f2ee04e-c22a-4040-a95a-b8745f45a5b6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=status::completed",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "status::completed"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "filter by status-no show",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6b3d405a-53bf-45fd-b3f1-27bc13a9f55c",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"let ld = require('lodash');",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one appointmentExternalId\", function () {",
+											"    pm.expect(jsonData.data[0].appointmentExternalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify each appointment record in the response have the expected patient external id\", () => {",
+											"    var status = pm.request.url.query.get(\"filter-by\").toString().substring(8).replace(\"%20\",\" \");",
+											"    console.log(\"status: \" + status);",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        pm.expect(jsonData.data[i].appointmentStatus).to.eql(status);",
+											"    }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "2adf1d9a-dca4-4d76-9bf8-eb7dbb0b4f63",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=status::no show",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "status::no show"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "filter by host-ext-id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6e9598be-22b6-4e04-8298-804a33c2eeaf",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one host_ext_id\", function () {",
+											"    pm.expect(jsonData.data[0].host.externalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify each appointment record in the response have the expected host external id\", () => {",
+											"    var host_ext_id = pm.request.url.query.get(\"filter-by\").toString().substring(18);",
+											"    console.log(\"host_ext_id: \" + host_ext_id);",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        console.log(jsonData.data[i].host.externalId);",
+											"        pm.expect(jsonData.data[i].host.externalId).to.eql(host_ext_id);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "e11aafa3-3a45-49b5-9d5f-f7c3f443fb5a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=host-external-id::{{host-ext-id}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "host-external-id::{{host-ext-id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "filter by date range",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8acd8575-66a9-4294-9e09-88a673ddd8aa",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one record\", function () {",
+											"    pm.expect(jsonData.data[0].appointmentExternalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify appointment date is in the given range\", () => {",
+											"    var filterString = pm.request.url.query.get(\"filter-by\").toString();",
+											"    var filterObj = filterString.split('%26')",
+											"        .reduce((obj, filter) => {",
+											"            const [key, val] = filter.split('::');",
+											"            return {...obj, [key]: val };",
+											"        }, {});",
+											"",
+											"    var dateFrom = filterObj[\"start-date\"];",
+											"    var dateTo = filterObj[\"end-date\"];",
+											"    console.log(\"dateFrom: \" + dateFrom);",
+											"    console.log(\"dateTo: \" + dateTo);",
+											"",
+											"    var from = Date.parse(dateFrom);",
+											"    var to = Date.parse(dateTo);",
+											"",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        var dateCheck = jsonData.data[i].appointmentStartDateTime;",
+											"        var check = Date.parse(dateCheck);",
+											"        if ((from <= check && to >= check))",
+											"            continue;",
+											"        else",
+											"            pm.expect.fail(\"The appointment date is not in the given range\");",
+											"",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "0e36db77-81b5-4e70-9161-cb492c90dac1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=start-date::{{start-date}}%26end-date::{{end-date}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "start-date::{{start-date}}%26end-date::{{end-date}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "filter by start date",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "aa0b0a88-51da-45db-89b9-5491ad708f36",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one record\", function () {",
+											"    pm.expect(jsonData.data[0].appointmentExternalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify appointment date in the response is greater than or equal to given start date\", () => {",
+											"    var dateFrom = pm.request.url.query.get(\"filter-by\").toString().substring(12);",
+											"    console.log(\"dateFrom: \" + dateFrom);",
+											"    var from = Date.parse(dateFrom);",
+											"",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        var dateCheck = jsonData.data[i].appointmentStartDateTime;",
+											"        var check = Date.parse(dateCheck);",
+											"        if (from <= check)",
+											"            continue;",
+											"        else",
+											"            pm.expect.fail(\"Appointment date in the response is not greater than or equal to given start date\");",
+											"",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "585776a5-0e51-4895-9191-6f11dfcb946c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=start-date::{{start-date}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "start-date::{{start-date}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "filter by end date",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9b238913-ce9c-4626-9d7d-cddf1290e34e",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 4000ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+											"});",
+											"",
+											"pm.test(\"Verify response has atlease one record\", function () {",
+											"    pm.expect(jsonData.data[0].appointmentExternalId).length.greaterThan(0);",
+											"    pm.expect(jsonData.count).to.eql(jsonData.data.length);",
+											"});",
+											"",
+											"pm.test(\"Verify appointment date in the response is less than or equal to given end date\", () => {",
+											"    var dateTo = pm.request.url.query.get(\"filter-by\").toString().substring(10);",
+											"    console.log(\"dateFrom: \" + dateTo);",
+											"    var to = Date.parse(dateTo);",
+											"",
+											"    for (let i = 0; i < jsonData.data.length; i++) {",
+											"        var dateCheck = jsonData.data[i].appointmentEndDateTime;",
+											"        var check = Date.parse(dateCheck);",
+											"        if (to >= check)",
+											"            continue;",
+											"        else",
+											"            pm.expect.fail(\"Appointment date in the response is not less than or equal to given end date\");",
+											"",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "fd853459-af1e-4fb8-ba59-7c856e647002",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{test-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/schedule/appointment-details?page-size=100&page-number=1&filter-by=end-date::{{end-date}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"schedule",
+										"appointment-details"
+									],
+									"query": [
+										{
+											"key": "page-size",
+											"value": "100"
+										},
+										{
+											"key": "page-number",
+											"value": "1"
+										},
+										{
+											"key": "filter-by",
+											"value": "end-date::{{end-date}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "fab43616-5187-441b-a987-038ba2bf7d94",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1a89d13f-6e9a-4305-a79b-8850d86a525d",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"if(pm.environment.name === \"qa\"){",
+									"    pm.environment.set(\"patient-ext-id\", \"d1c92574-362a-42ca-8e17-7e99a4b4bcdd\")",
+									"    pm.environment.set(\"host-ext-id\", \"af2215db-647f-4b20-8f6a-f2f3db0ce5ee\")",
+									"    pm.environment.set(\"start-date\", \"2022-08-25T00:00:00.000Z\")",
+									"    pm.environment.set(\"end-date\", \"2023-08-25T23:59:59.000Z\")",
+									"}else{",
+									"    pm.environment.set(\"patient-ext-id\", \"ba87939e-5a25-4223-af91-b7f5f2f6c0a2\")",
+									"    pm.environment.set(\"host-ext-id\", \"b6a16a3d-6805-4ab3-ba71-6c0e478cdf4a\")",
+									"    pm.environment.set(\"start-date\", \"2022-08-25T00:00:00.000Z\")",
+									"    pm.environment.set(\"end-date\", \"2023-08-25T23:59:59.000Z\")",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b84533b1-6a49-4d14-9ae4-8e0caf9a91d0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Add Patient Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ebb23241-3121-4beb-8979-896edde46ab6",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Response has a JSON body\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Content-Type header is application/json\", () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+									"});",
+									"",
+									"pm.test(\"Verify id is generated\", function () {",
+									"    pm.expect(jsonData.id).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.environment.set(\"patientId\", jsonData.id);",
+									"",
+									"pm.environment.set(\"test-token\",\"\");",
+									"pm.environment.set(\"vesta_username\", pm.environment.get(\"UserId1_username\"));",
+									"pm.environment.set(\"vesta_password\", pm.environment.get(\"UserId1_password\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f15509fe-9e0b-4aee-96c2-c7d855285601",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"let gendersList = [",
+									"    \"Cis-gender male\",",
+									"    \"Cis-gender female\",",
+									"    \"Non-binary\",",
+									"    \"Other\",",
+									"    \"Unknown\",",
+									"    \"Transgender male\",",
+									"    \"Transgender female\"",
+									"];",
+									"",
+									"let pronounsList = [",
+									"    \"He/Him/His\",",
+									"    \"She/Her/Hers\",",
+									"    \"They/Them/Theirs\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let ethnicitiesList = [",
+									"    \"Asian\",",
+									"    \"Black/African American\",",
+									"    \"White/Caucasian\",",
+									"    \"Hispanic/Latinx\",",
+									"    \"Native American, Indian American, or Alaska Native\",",
+									"    \"Native Hawaiian or other Pacific Islander\",",
+									"    \"Middle Eastern or North African\",",
+									"    \"Prefer not to answer\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let languagesList = [",
+									"    \"English\",",
+									"    \"Spanish\",",
+									"    \"Chinese\",",
+									"    \"French\",",
+									"    \"Tagalog\",",
+									"    \"Vietnamese\",",
+									"    \"Korean\",",
+									"    \"German\",",
+									"    \"Russian\",",
+									"    \"Italian\",",
+									"    \"Portuguese\",",
+									"    \"Polish\",",
+									"    \"Japanese\",",
+									"    \"Persian\",",
+									"    \"Greek\",",
+									"    \"Serbo-Croatian\",",
+									"    \"Armenian\",",
+									"    \"Yiddish\",",
+									"    \"American Sign Language (ASL)\"",
+									"];",
+									"",
+									"let sexList = [",
+									"    \"Male\",",
+									"    \"Female\"",
+									"];",
+									"",
+									"let timezonesList = [",
+									"    \"Hawaii Standard Time\",",
+									"    \"Hawaii-Aleutian Time\",",
+									"    \"Alaska Time\",",
+									"    \"Pacific Time\",",
+									"    \"Arizona\",",
+									"    \"Mountain Time\",",
+									"    \"Central Time\",",
+									"    \"Eastern Time\"",
+									"];",
+									"",
+									"let contactPreferences = [\"Email\", \"No preference\", \"Phone\", \"Unknown\"];",
+									"",
+									"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+									"",
+									"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+									"",
+									"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+									"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+									"let zip = Math.floor(10000 + Math.random() * 90000);",
+									"",
+									"//Generate random Date of Birth in YYYY-MM-DD Format",
+									"function randomDate(start, end) {",
+									"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+									"}",
+									"let date = randomDate(new Date(1990, 00, 01), new Date());",
+									"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+									"",
+									"//Save the variables to be used in next request for validation",
+									"pm.environment.set(\"patientChosenName\", chosenName);",
+									"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+									"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+									"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+									"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+									"pm.environment.set(\"patientCountry\", \"US\");",
+									"pm.environment.set(\"patientZip\", zip.toString());",
+									"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+									"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientPronounsOnRecord\", ld.sample(pronounsList));",
+									"pm.environment.set(\"patientPronounsOffRecord\", ld.sample(pronounsList));",
+									"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+									"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6413d85b-e2a6-45bc-a265-a184c3160042",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"6767676767\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": \"{{patientPronounsOnRecord}}\",\n    \"pronounsOffRecord\": \"{{patientPronounsOffRecord}}\",\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/patients",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an element token PSR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b062c90b-dcde-4687-896b-afa9721bc18e",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"ElementTokenInternal\", jsonData.elementToken.token);",
+									"",
+									"pm.environment.set(\"test-token\",\"\");",
+									"pm.environment.set(\"vesta_username\", pm.environment.get(\"UserId2_username\"));",
+									"pm.environment.set(\"vesta_password\", pm.environment.get(\"UserId2_password\"));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "eb0573c3-05ff-4d02-9783-d7c2d0c5ebb0",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "86f3ff88-1c3d-460c-93a0-7202943f6de4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"origin\": \"https://dev-app.equip.health\",\n  \"tokenType\": \"manage-availability\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/schedule/management-element-token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"management-element-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an element token nonPSR",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4088399-b954-40b7-b814-bbcd7e788a5a",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify error with nonPSR bearer token\", function () {",
+									"    pm.expect(jsonData._embedded.errors[0].message).to.contain('Internal Server Error: sub unknown for user external ID');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a4c8ed5e-a12f-4c25-b792-824de8419ad6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"origin\": \"https://dev-app.equip.health\",\n  \"tokenType\": \"manage-availability\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/schedule/management-element-token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"management-element-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "20d97e70-7f68-4399-b30a-7a202df152e6",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "94c96fc5-9d91-4b61-a556-0da258a82b8c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, AvailabilityRules",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-app.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-app.equip.health/",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.cronofy.com/v1/availability_rules/Qualifying%20call?et={{ElementTokenInternal}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"availability_rules",
+								"Qualifying%20call"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenInternal}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10a9ae5a-ecaf-49a6-8158-11ce1a981d25",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"calendar_id\", jsonData[\"cronofy.data\"].profiles[0].profile_calendars[0].calendar_id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7e9a64ff-b5dc-4fdb-a473-10b720d76861",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, AvailabilityRules",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-app.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-app.equip.health/",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.cronofy.com/v1/userinfo?et={{ElementTokenInternal}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"userinfo"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenInternal}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9edfbf61-6b62-48c1-bc61-0a169fc3fda2",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8c123d3a-eb67-4ed3-87f6-79eeda76aa9f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, AvailabilityRules",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-app.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-app.equip.health/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"availability_rule_id\": \"Qualifying call\",\n  \"tzid\": \"Asia/Calcutta\",\n  \"weekly_periods\": [\n    {\n      \"day\": \"sunday\",\n      \"start_time\": \"10:00\",\n      \"end_time\": \"11:30\"\n    },\n    {\n      \"day\": \"monday\",\n      \"start_time\": \"10:00\",\n      \"end_time\": \"14:00\"\n    },\n    {\n      \"day\": \"tuesday\",\n      \"start_time\": \"12:00\",\n      \"end_time\": \"17:00\"\n    },\n    {\n      \"day\": \"tuesday\",\n      \"start_time\": \"18:00\",\n      \"end_time\": \"20:00\"\n    },\n    {\n      \"day\": \"wednesday\",\n      \"start_time\": \"10:00\",\n      \"end_time\": \"11:30\"\n    },\n    {\n      \"day\": \"wednesday\",\n      \"start_time\": \"13:30\",\n      \"end_time\": \"14:00\"\n    },\n    {\n      \"day\": \"wednesday\",\n      \"start_time\": \"16:30\",\n      \"end_time\": \"17:00\"\n    },\n    {\n      \"day\": \"thursday\",\n      \"start_time\": \"11:00\",\n      \"end_time\": \"13:30\"\n    },\n    {\n      \"day\": \"thursday\",\n      \"start_time\": \"15:30\",\n      \"end_time\": \"17:00\"\n    },\n    {\n      \"day\": \"friday\",\n      \"start_time\": \"09:30\",\n      \"end_time\": \"12:00\"\n    },\n    {\n      \"day\": \"friday\",\n      \"start_time\": \"14:30\",\n      \"end_time\": \"17:00\"\n    },\n    {\n      \"day\": \"saturday\",\n      \"start_time\": \"10:00\",\n      \"end_time\": \"11:30\"\n    },\n    {\n      \"day\": \"saturday\",\n      \"start_time\": \"13:30\",\n      \"end_time\": \"14:00\"\n    }\n  ],\n  \"calendar_ids\": [\n    \"{{calendar_id}}\"\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cronofy.com/v1/availability_rules?et={{ElementTokenInternal}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"availability_rules"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenInternal}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET multiple user details Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f98e5d98-fe6f-4954-8aaf-01843df4b873",
+								"exec": [
+									"let jsonData = pm.response.json();",
+									"let expected=null;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"let subs=[];",
+									"for(let i=0; i<jsonData.length; i++){",
+									"    subs.push(jsonData[i].sub);",
+									"}",
+									"pm.environment.set(\"sub1\", subs[0]);",
+									"pm.environment.set(\"sub2\", subs[1]);",
+									"pm.environment.set(\"sub3\", subs[2]);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f3fce072-388d-440d-be3e-9e2435f0c202",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/schedule/users?provider-external-ids={{UserId1}},{{UserId3}},{{UserId4}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"users"
+							],
+							"query": [
+								{
+									"key": "provider-external-ids",
+									"value": "{{UserId1}},{{UserId3}},{{UserId4}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get view availability element token for multiple users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "308632a9-bb7a-4775-89b3-b5e06037cb52",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"ElementTokenInternal_multiUsers\", jsonData.elementToken.token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "42e97d04-6f16-4100-8445-7e10c73fe951",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ad3c5726-14a5-4f88-9a81-af990c7157a4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"origin\": \"https://dev-app.equip.health\",\n    \"tokenType\": \"view-availability\",\n    \"subs\": [\"{{sub1}}\",\"{{sub2}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/schedule/management-element-token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"schedule",
+								"management-element-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get availability-subs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c52a7f82-c952-4f0e-bd8e-20c86068b68f",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0cafb5fa-0c68-4c36-8b58-1758ef0ee41a",
+								"exec": [
+									"let moment = require('moment');",
+									"",
+									"pm.environment.set(\"start_date\", moment().add(3, 'days').format('YYYY-MM-DD'));",
+									"pm.environment.set(\"end_date\", moment().add(10, 'days').format('YYYY-MM-DD'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "4ce7f6e4-3e0b-43b2-84da-e3d3c3d1e5c1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, DateTimePicker",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-app.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-app.equip.health/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"participants\": [\n    {\n      \"members\": [\n        {\n        \t\"sub\": \"{{sub1}}\"\n        },\n        {\n        \t\"sub\": \"{{sub2}}\"\n        }\n      ],\n      \"required\": \"all\"\n    }\n  ],\n  \"required_duration\": { \"minutes\": 60 },\n  \"query_periods\": [\n    {\n      \"start\": \"{{start_date}}T09:00:00Z\",\n      \"end\": \"{{end_date}}T18:00:00Z\"\n    }\n  ],\n  \"response_format\": \"slots\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cronofy.com/v1/availability?et={{ElementTokenInternal_multiUsers}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"availability"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenInternal_multiUsers}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get availability-Negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9f6113ab-c81a-4d6b-be56-2223f0571f56",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "bc4318ee-6a32-4ad9-b1b2-425cc3073f9d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, DateTimePicker",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-app.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-app.equip.health/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"participants\": [\n    {\n      \"members\": [\n        {\n        \t\"sub\": \"{{sub3}}\",\n        \t\"managed_availability\": true,\n        \t\"availability_rule_ids\": [\"Qualifying call\"]\n        }\n      ],\n      \"required\": \"all\"\n    }\n  ],\n  \"required_duration\": { \"minutes\": 60 },\n  \"query_periods\": [\n    {\n      \"start\": \"{{start_date}}T09:00:00Z\",\n      \"end\": \"{{end_date}}T18:00:00Z\"\n    }\n  ],\n  \"response_format\": \"slots\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cronofy.com/v1/availability?et={{ElementTokenInternal_multiUsers}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"availability"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenInternal_multiUsers}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update availability Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "330ab450-4d7f-4819-8197-1f856b4d3b4b",
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "bf965519-a7ac-4a19-8f7f-0565976951e9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cronofy-element",
+								"value": "v1.50.0, AvailabilityRules",
+								"type": "text"
+							},
+							{
+								"key": "origin",
+								"value": "https://dev-app.equip.health",
+								"type": "text"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "referer",
+								"value": "https://dev-app.equip.health/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"participants\": [\n    {\n      \"members\": [\n        {\n        \t\"sub\": \"{{sub2}}\",\n        \t\"managed_availability\": true,\n        \t\"availability_rule_id\": \"Qualifying call\"\n        }\n      ],\n      \"required\": \"all\"\n    }\n  ],\n  \"availability_rule_id\": \"Qualifying call\",\n  \"tzid\": \"Asia/Calcutta\",\n  \"weekly_periods\": [\n    {\n      \"day\": \"sunday\",\n      \"start_time\": \"10:00\",\n      \"end_time\": \"11:30\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.cronofy.com/v1/availability_rules?et={{ElementTokenInternal_multiUsers}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"cronofy",
+								"com"
+							],
+							"path": [
+								"v1",
+								"availability_rules"
+							],
+							"query": [
+								{
+									"key": "et",
+									"value": "{{ElementTokenInternal_multiUsers}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "7d71c4f5-c57b-40ee-a969-20b0f9e795fd",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2ae6032c-9019-4a4c-b784-7db6f40f55bb",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"if(pm.environment.name === \"qa\"){",
+							"    pm.environment.set(\"UserId1\", \"af2215db-647f-4b20-8f6a-f2f3db0ce5ee\")",
+							"    pm.environment.set(\"UserId1_username\", \"maud_scheduling+psr@equip.health\");",
+							"    pm.environment.set(\"UserId1_password\", \"Equip@1234\");",
+							"    pm.environment.set(\"UserFirstname1\", \"Maud\");",
+							"    pm.environment.set(\"UserLastname1\", \"Scheduling\");",
+							"    pm.environment.set(\"UserType1\", \"Patient Service Representative\");",
+							"",
+							"    pm.environment.set(\"UserId2\", \"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\")",
+							"    pm.environment.set(\"UserId2_username\", \"balakrishna+analyst0107@equip.health\");",
+							"    pm.environment.set(\"UserId2_password\", \"Equip@1234\");",
+							"    pm.environment.set(\"UserFirstname2\", \"Bala\");",
+							"    pm.environment.set(\"UserLastname2\", \"000analyst\");",
+							"    pm.environment.set(\"UserType2\", \"Analyst\");",
+							"",
+							"    pm.environment.set(\"UserId3\", \"3733fe8a-4d35-4951-b899-69f559bb67bc\")",
+							"    pm.environment.set(\"UserId3_username\", \"kim@equip.health\");",
+							"    pm.environment.set(\"UserId3_password\", \"Equip@1234\");",
+							"    pm.environment.set(\"UserFirstname3\", \"Kimmy\");",
+							"    pm.environment.set(\"UserLastname3\", \"Pack\");",
+							"    pm.environment.set(\"UserType3\", \"Dietitian\");",
+							"",
+							"    pm.environment.set(\"UserId4\", \"0a113848-7671-42b2-bb7c-82a980a4393f\")",
+							"    pm.environment.set(\"UserId4_username\", \"balakrishna@equip.health\");",
+							"    pm.environment.set(\"UserId4_password\", \"Equip@1234\");",
+							"    pm.environment.set(\"UserFirstname4\", \"Bala\");",
+							"    pm.environment.set(\"UserLastname4\", \"Deema\");",
+							"    pm.environment.set(\"UserType4\", \"Patient Service Representative\");",
+							"}else{",
+							"    pm.environment.set(\"UserId1\", \"a4684d41-f12f-4e96-af65-9ff44d723d61\")",
+							"    pm.environment.set(\"UserId1_username\", \"maud_scheduling+psr@equip.health\");",
+							"    pm.environment.set(\"UserId1_password\", \"Equip@1234\");",
+							"    pm.environment.set(\"UserFirstname1\", \"Maud\");",
+							"    pm.environment.set(\"UserLastname1\", \"Scheduling\");",
+							"    pm.environment.set(\"UserType1\", \"Patient Service Representative\");",
+							"",
+							"    pm.environment.set(\"UserId2\", \"61e1108d-a4cd-4f4d-92bc-eb214e8594c6\")",
+							"    pm.environment.set(\"UserId2_username\", \"balakrishna+dietitian@equip.health\");",
+							"    pm.environment.set(\"UserId2_password\", \"Equip@1234\");",
+							"    pm.environment.set(\"UserFirstname2\", \"Balakrishna\");",
+							"    pm.environment.set(\"UserLastname2\", \"Deema\");",
+							"    pm.environment.set(\"UserType2\", \"Dietitian\");",
+							"",
+							"    pm.environment.set(\"UserId3\", \"dca423d7-00e6-430f-a7ba-06c949d171b0\")",
+							"    pm.environment.set(\"UserId3_username\", \"mahathi@equip.health\");",
+							"    pm.environment.set(\"UserId3_password\", \"Equip@1234\");",
+							"    pm.environment.set(\"UserFirstname3\", \"Mahathi\");",
+							"    pm.environment.set(\"UserLastname3\", \"Chaturvedula\");",
+							"    pm.environment.set(\"UserType3\", \"Patient Service Representative\");",
+							"",
+							"    pm.environment.set(\"UserId4\", \"42bd1c96-995d-45c0-bd0b-cee0e167b864\")",
+							"    pm.environment.set(\"UserId4_username\", \"balakrishna@equip.health\");",
+							"    pm.environment.set(\"UserId4_password\", \"Equip@1234\");",
+							"    pm.environment.set(\"UserFirstname4\", \"Balakrishna\");",
+							"    pm.environment.set(\"UserLastname4\", \"Deema\");",
+							"    pm.environment.set(\"UserType4\", \"Therapist\");",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c39b9b09-b693-4d75-8214-0053676e1239",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f052cc67-beb0-4f40-a002-41893e5c06dc",
+				"type": "text/javascript",
+				"exec": [
+					"",
+					"// Refresh the OAuth token if necessary",
+					"console.log('Current environment: ' + pm.environment.name);",
+					"",
+					"if (pm.environment.name === \"qa\") {",
+					"    pm.environment.set(\"vesta_audience\", \"https://equip-qa.us.auth0.com/api/v2/\");",
+					"    pm.environment.set(\"token_tenant\", \"equip-qa\");",
+					"    pm.environment.set(\"coookieURL\", \"https://equip-qa.us.auth0.com\");",
+					"    pm.environment.set(\"vesta_client_id\", \"octk74sRPfVm7zJz314cMMzFHnGO3B2s\")",
+					"    pm.environment.set(\"token_host\", \"https://equip-qa.us.auth0.com\")",
+					"} else if (pm.environment.name === \"dev\") {",
+					"    pm.environment.set(\"vesta_audience\", \"https://equip-dev.us.auth0.com/api/v2/\");",
+					"    pm.environment.set(\"token_tenant\", \"equip-dev\");",
+					"    pm.environment.set(\"coookieURL\", \"https://equip-dev.us.auth0.com\");",
+					"    pm.environment.set(\"vesta_client_id\", \"hh9fZVGIShbS2xXdr7B0glheYEKOFFdw\")",
+					"    pm.environment.set(\"token_host\", \"https://equip-dev.us.auth0.com\")",
+					"}",
+					"",
+					"var tokenDate = new Date(2010, 1, 1);",
+					"var tokenTimestamp = pm.environment.get(\"OAuth_Timestamp\");",
+					"if (tokenTimestamp) {",
+					"    tokenDate = Date.parse(tokenTimestamp);",
+					"}",
+					"var expiresInTime = pm.environment.get(\"ExpiresInTime\");",
+					"if (!expiresInTime) {",
+					"    expiresInTime = 86400000; // Set default expiration time to 24 hours (in ms)",
+					"}",
+					"",
+					"if ((new Date() - tokenDate) >= expiresInTime || pm.environment.get(\"test-token\") === \"\") {",
+					"    // clearCookies();",
+					"    getToken();",
+					"}",
+					"",
+					"var tokenAuthorizationCode1;",
+					"var tokenAuthorizationCode2;",
+					"//Function to generate token",
+					"function getToken() {",
+					"    //Clear cookies",
+					"    const cookieJar = pm.cookies.jar();",
+					"    cookieJar.clear(pm.environment.get(\"coookieURL\"), () => {",
+					"        console.log(\"Cookies cleared!\");",
+					"        cookieJar.clear(pm.environment.get(\"coookieURL\") + '/usernamepassword/login', () => {",
+					"            console.log(\"CSRF cookies cleared!\");",
+					"",
+					"            console.log(\"Generating token...\")",
+					"            //GET authorization code",
+					"            pm.sendRequest({",
+					"                url: pm.environment.get(\"token_host\") + '/authorize?audience=' + pm.environment.get(\"vesta_audience\")",
+					"                    + '&response_type=code&client_id=' + pm.environment.get(\"vesta_client_id\")",
+					"                    + '&redirect_uri=https://*.equip.health',",
+					"                method: 'GET',",
+					"                header: {",
+					"                    'Accept': '*/*'",
+					"                }",
+					"            }, (err, res) => {",
+					"                let responseHeaderData = res.headers.get('Location').split('=');",
+					"                let token = responseHeaderData[1].split('&');",
+					"                tokenAuthorizationCode1 = token[0];",
+					"                console.log(tokenAuthorizationCode1);",
+					"",
+					"                //POST request to login to vesta",
+					"                let url = pm.environment.get(\"token_host\") + '/usernamepassword/login';",
+					"                pm.sendRequest({",
+					"                    url: url,",
+					"                    method: 'POST',",
+					"                    header: {",
+					"                        'Accept': '*/*',",
+					"                        'Content-Type': 'application/x-www-form-urlencoded',",
+					"                    },",
+					"                    body: {",
+					"                        mode: 'urlencoded',",
+					"                        urlencoded: [",
+					"                            { key: \"username\", value: pm.environment.get(\"vesta_username\") },",
+					"                            { key: \"password\", value: pm.environment.get(\"vesta_password\") },",
+					"                            { key: \"state\", value: tokenAuthorizationCode1 },",
+					"                            { key: \"tenant\", value: pm.environment.get(\"token_tenant\") },",
+					"                            { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
+					"                            { key: \"redirect_uri\", value: \"https://*.equip.health\" },",
+					"                            { key: \"response_type\", value: \"code\" },",
+					"                            { key: \"connection\", value: \"Username-Password-Authentication\" }",
+					"                        ]",
+					"                    }",
+					"                }, (err, res) => {",
+					"                    const $ = cheerio.load(res.text());",
+					"                    var wresult = ($(\"input\")[1])['attribs'].value; // get wresult",
+					"                    var wctx = ($(\"input\")[2])['attribs'].value; // get wctx",
+					"",
+					"                    //POST request to get resume state",
+					"                    let url = pm.environment.get(\"token_host\") + '/login/callback';",
+					"                    pm.sendRequest({",
+					"                        url: url,",
+					"                        method: 'POST',",
+					"                        header: {",
+					"                            'Accept': '*/*',",
+					"                            'Content-Type': 'application/x-www-form-urlencoded',",
+					"                        },",
+					"                        body: {",
+					"                            mode: 'urlencoded',",
+					"                            urlencoded: [",
+					"                                { key: \"wa\", value: \"wsignin1.0\" },",
+					"                                { key: \"wresult\", value: wresult },",
+					"                                { key: \"wctx\", value: wctx }",
+					"                            ]",
+					"                        }",
+					"                    }, (err, res) => {",
+					"                        //GET authorization code",
+					"                        pm.sendRequest({",
+					"                            url: pm.environment.get(\"token_host\")",
+					"                                + '/authorize?audience=' + pm.environment.get(\"vesta_audience\")",
+					"                                + '&response_type=code&client_id=' + pm.environment.get(\"vesta_client_id\")",
+					"                                + '&redirect_uri=https://*.equip.health',",
+					"                            method: 'GET',",
+					"                            header: {",
+					"                                'Accept': '*/*'",
+					"                            }",
+					"                        }, (err, res) => {",
+					"                            console.log(res);",
+					"                            let responseHeaderData = res.headers.get('Location').split('=');",
+					"                            let token = responseHeaderData[1].split('&');",
+					"                            // console.log(token[0]);",
+					"                            tokenAuthorizationCode2 = token[0];",
+					"                            // Get token using POST request",
+					"                            let url = pm.environment.get(\"token_host\") + '/oauth/token';",
+					"                            pm.sendRequest({",
+					"                                url: url,",
+					"                                method: 'POST',",
+					"                                header: {",
+					"                                    'Accept': '*/*',",
+					"                                    'Content-Type': 'application/x-www-form-urlencoded',",
+					"                                },",
+					"                                body: {",
+					"                                    mode: 'urlencoded',",
+					"                                    urlencoded: [",
+					"                                        { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
+					"                                        { key: \"code\", value: tokenAuthorizationCode2 },",
+					"                                        { key: \"audience\", value: pm.environment.get(\"vesta_audience\") },",
+					"                                        { key: \"grant_type\", value: \"authorization_code\" },",
+					"                                        { key: \"redirect_uri\", value: \"https://*.equip.health\" }]",
+					"                                }",
+					"                            }, (err, res) => {",
+					"                                console.log(res.json().access_token)",
+					"                                pm.environment.set(\"test-token\", res.json().access_token)",
+					"                                pm.environment.set(\"OAuth_Timestamp\", new Date());",
+					"",
+					"                                // Set the ExpiresInTime variable to the time given in the response if it exists",
+					"                                if (res.json().expires_in) {",
+					"                                    expiresInTime = res.json().expires_in * 1000;",
+					"                                }",
+					"                                pm.environment.set(\"ExpiresInTime\", expiresInTime);",
+					"                            })",
+					"                        });",
+					"                    });",
+					"",
+					"                });",
+					"            });",
+					"        });",
+					"    });",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "785241cf-e66a-46a0-a705-cb514e9b8b66",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

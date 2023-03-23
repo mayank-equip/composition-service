@@ -1,0 +1,3528 @@
+{
+	"info": {
+		"_postman_id": "644c90de-3390-4733-9f8b-c30f58594da7",
+		"name": "task-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19609580-644c90de-3390-4733-9f8b-c30f58594da7"
+	},
+	"item": [
+		{
+			"name": "Add Task",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8a5ee942-94ed-47b4-809f-076f5c9a5c3a",
+						"exec": [
+							"var date_timestamp = new Date().toISOString();\r",
+							"const task_priority_ids = [1, 2, 3];\r",
+							"\r",
+							"///// get random due date (today or future date) /////\r",
+							"var start = new Date();\r",
+							"var end = new Date(start.getFullYear()+1, 1, 1);\r",
+							"var task_due_date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));\r",
+							"var month = (task_due_date.getMonth() + 1) >= 10 ? task_due_date.getMonth() + 1 : \"0\" + (task_due_date.getMonth() + 1);\r",
+							"console.log(\"month: \" + month);\r",
+							"var day = (task_due_date.getDate() + 1) > 10 ? task_due_date.getDate() : \"0\" + task_due_date.getDate();\r",
+							"var task_due_date = task_due_date.getFullYear() + '-' + month + '-' + day;\r",
+							"task_due_date = task_due_date + \"T23:59:59.999Z\";\r",
+							"///// end - get random due date (today or future date) /////\r",
+							"\r",
+							"///// get random category and its sub_category\r",
+							"var category_id;\r",
+							"var sub_category_id;\r",
+							"\r",
+							"const category_names = [\r",
+							"    \"Admissions\",\r",
+							"    \"Billing\",\r",
+							"    \"Inquiry\",\r",
+							"    \"Outreach\",\r",
+							"    \"Referral\",\r",
+							"    \"Review\",\r",
+							"    \"Treatment team\"\r",
+							"];\r",
+							"\r",
+							"var category_ids = [\r",
+							"        \"bd12e9b1-394c-470d-b03e-aa577f6fce65\",\r",
+							"        \"yd16e9b1-394c-470d-b03e-aa577f6fce2z\",\r",
+							"        \"35e121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"        \"td1259b1-394c-470d-b03e-aa577f6fce2y\",\r",
+							"        \"rd12e9b1-394c-470d-b03e-aa577f6fce21\",\r",
+							"        \"bd12e9b1-394c-470d-b03e-aa577f6fce22\",\r",
+							"        \"bd12e9b1-394c-470d-b03e-aa577f6fce13\"\r",
+							"    ];\r",
+							"\r",
+							"var subcategories_names_map = {\r",
+							"    \"Admissions\": [\r",
+							"        \"Assessment\",\r",
+							"        \"Enroll\",\r",
+							"        \"General\",\r",
+							"        \"Insurance verification\",\r",
+							"        \"Medical clearance\",\r",
+							"        \"Medical records coordination\",\r",
+							"        \"Onboard\",\r",
+							"        \"Patient correspondence\",\r",
+							"        \"Phone screen\",\r",
+							"        \"Provider assignment\"\r",
+							"    ],\r",
+							"    \"Inquiry\": [\r",
+							"        \"Correspondence\",\r",
+							"        \"General\",\r",
+							"        \"Inbound outreach\",\r",
+							"        \"Initial outreach\",\r",
+							"        \"Insurance verification\",\r",
+							"        \"Phone screen\"\r",
+							"    ],\r",
+							"    \"Referral\": [\r",
+							"        \"Correspondence\",\r",
+							"        \"General\",\r",
+							"        \"Inbound outreach\",\r",
+							"        \"Initial outreach\",\r",
+							"        \"Phone screen\"\r",
+							"    ],\r",
+							"    \"Review\": [\r",
+							"        \"Consult\",\r",
+							"        \"Supervise\"\r",
+							"    ],\r",
+							"    \"Treatment Team\": [\r",
+							"        \"Assess\",\r",
+							"        \"Care plan\",\r",
+							"        \"Discharge\",\r",
+							"        \"Follow-up\",\r",
+							"        \"Order labs\",\r",
+							"        \"Prescribe meds\",\r",
+							"        \"Reminder\",\r",
+							"        \"Schedule appointment\"\r",
+							"    ]\r",
+							"}\r",
+							"\r",
+							"var subcategories_map = {\r",
+							"    \"Admissions\": [\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"        \"9xe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f210\",\r",
+							"        \"11e121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f212\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce22\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce23\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce24\",\r",
+							"        \"07f3014e-4dc9-4f9b-8c1a-5a66c03562a1\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce25\"\r",
+							"    ],\r",
+							"    \"Inquiry\": [\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"45e121e9-bba2-4bf6-a1a9-8e401e93f2b2\",\r",
+							"        \"3xe121e9-bba3-4bf6-a1a9-8e401e93f2be\",\r",
+							"        \"dxe121e9-bba4-4bf6-a1a9-8e401e93f2bp\",\r",
+							"        \"9621e600-7048-4c4b-8eae-942848bb5985\",\r",
+							"        \"rxe121e9-bba2-4bf6-a1a9-8e401e93f2b5\"\r",
+							"    ],\r",
+							"    \"Referral\": [\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-480d-b03e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-490d-b03e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-470d-b13e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-470d-b23e-aa577f6fce21\"\r",
+							"    ],\r",
+							"    \"Review\": [\r",
+							"        \"kd12e9b1-394c-470d-b03e-aa577f6fce2w\",\r",
+							"        \"md24e9b1-394c-470d-b03e-aa577f6fce2x\"\r",
+							"    ],\r",
+							"    \"Treatment Team\": [\r",
+							"        \"bd12e9b1-384c-470d-b03e-aa577f6fce15\",\r",
+							"        \"gd12e9b1-394c-470d-c23e-aa577f6fce19\",\r",
+							"        \"7d12e9b1-364c-i70d-b03e-aa577f6fce1u\",\r",
+							"        \"1412e9b1-394c-470d-b03e-aa577f6fce09\",\r",
+							"        \"bd12e9b2-394c-470d-b13e-aa577f6fce17\",\r",
+							"        \"cd12e9b1-394c-480d-b04e-aa577f6fce16\",\r",
+							"        \"7d12e9b1-364c-i70d-b03e-aa578f6fce1u\",\r",
+							"        \"qd12e9b1-494c-470d-b03e-aa578f6fce18\"\r",
+							"    ]\r",
+							"}\r",
+							"const category_index = Math.floor(Math.random() * category_names.length);\r",
+							"category_id = category_ids[category_index];\r",
+							"if (category_names[category_index] === \"Outreach\" || category_names[category_index] === \"Billing\") {\r",
+							"    sub_category_id = \"\";\r",
+							"} else {\r",
+							"    var subcategories_list = subcategories_map[category_names[category_index]];\r",
+							"    subcategory_list_index = Math.floor(Math.random() * subcategories_list.length);\r",
+							"    sub_category_id = subcategories_list[subcategory_list_index];\r",
+							"}\r",
+							"///// end - get random category and its sub_category ////////////////////\r",
+							"\r",
+							"pm.environment.set(\"task_name\", \"From Postman task name \" + date_timestamp + \" Equip Health\");\r",
+							"pm.environment.set(\"task_description\", \"task description \" + date_timestamp + \" Equip Health\");\r",
+							"pm.environment.set(\"category_id\", category_id);\r",
+							"pm.environment.set(\"sub_category_id\", sub_category_id);\r",
+							"\r",
+							"if(pm.environment.name === \"qa\"){\r",
+							"    pm.environment.set(\"patient_id\", \"c753db54-c42a-4e7c-87b0-1373765cc28c\");\r",
+							"    pm.environment.set(\"task_assigned_userid\", \"87a6b43f-1e22-4ff6-93ae-dc003fc9c0c5\");\r",
+							"    pm.environment.set(\"task_assigned_username\", \"Bala Deema\");\r",
+							"    pm.environment.set(\"task_createdby_userid\", \"bd12e9b1-394c-470d-b03e-aa577f6fce65\");\r",
+							"    pm.environment.set(\"task_createdby_username\", \"Bala 000analyst\");\r",
+							"}else if(pm.environment.name === \"dev\"){\r",
+							"    pm.environment.set(\"patient_id\", \"9f308d9e-e862-4170-8883-185d8b26b845\");\r",
+							"    pm.environment.set(\"task_assigned_userid\", \"8ff50537-55ae-420d-9f4a-1e6a04bd4c8c\");\r",
+							"    pm.environment.set(\"task_assigned_username\", \"Chandhu Gandra\");\r",
+							"    pm.environment.set(\"task_createdby_userid\", \"42bd1c96-995d-45c0-bd0b-cee0e167b864\");\r",
+							"    pm.environment.set(\"task_createdby_username\", \"Balakrishna Deema\");\r",
+							"}\r",
+							"\r",
+							"pm.environment.set(\"task_due_date\", task_due_date);\r",
+							"pm.environment.set(\"task_priority_id\", task_priority_ids[Math.floor(Math.random() * task_priority_ids.length)]);\r",
+							"pm.environment.set(\"task_status_id\", \"1\");\r",
+							"pm.environment.set(\"task_comment_1\", \"task_comment_1\");\r",
+							"pm.environment.set(\"repeat\", false);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7013449-483c-452b-9fe0-d2eada6b8573",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify taskExternalId is generated\", function () {\r",
+							"    pm.expect(jsonData.taskExternalId).length.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"taskExternalId\", jsonData.taskExternalId);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "110438ac-5283-472a-8414-0df30946df16",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskName\": \"{{task_name}}\",\n    \"taskDescription\": \"{{task_description}}\",\n    \"taskCategoryExternalId\": \"{{category_id}}\",\n    \"taskSubCategoryExternalId\": \"{{sub_category_id}}\",\n    \"taskCreatedByUserId\":\"{{task_createdby_userid}}\",\n    \"taskCreatedByUserName\":\"{{task_createdby_username}}\",\n    \"patientId\":\"{{patient_id}}\",\n    \"taskDueDate\": \"{{task_due_date}}\",\n    \"taskPriorityId\": \"{{task_priority_id}}\",\n    \"taskStatusId\": \"{{task_status_id}}\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task count 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify taskCount is generated\", function () {\r",
+							"    pm.expect(jsonData.taskCount).greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"open_task_count\", jsonData.taskCount);\r",
+							"console.log(\"open_task_count: \" + pm.variables.get(\"open_task_count\"));\r",
+							""
+						],
+						"type": "text/javascript",
+						"id": "a06b952c-1478-46c2-bbc6-cf162e4776bc"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var task_name = pm.variables.get(\"task_name\");\r",
+							"console.log(task_name);"
+						],
+						"type": "text/javascript",
+						"id": "efe13d82-f878-4210-b256-cef8c020341b"
+					}
+				}
+			],
+			"id": "38602495-fdc6-4cb6-b4e2-7c547b4f67c7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/tasks/count/{{task_assigned_userid}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks",
+						"count",
+						"{{task_assigned_userid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task Details 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "720ff5d5-63f8-4ab3-8200-50220ea218ff",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify task name\", function () {\r",
+							"    pm.expect(jsonData.data[0].taskName).to.eql(pm.variables.get(\"task_name\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify task task_description\", function () {\r",
+							"    pm.expect(jsonData.data[0].taskDescription).to.eql(pm.variables.get(\"task_description\"));\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"Verify task task_assigned_userid\", function () {\r",
+							"//     pm.expect(jsonData.taskAssignedUserId).to.eql(pm.variables.get(\"task_assigned_userid\"));\r",
+							"// });\r",
+							"\r",
+							"//pm.test(\"Verify task task_createdby_userid\", function () {\r",
+							"//    pm.expect(jsonData.taskDescription).to.eql(pm.variables.get(\"task_createdby_userid\"));\r",
+							"//});\r",
+							"\r",
+							"pm.test(\"Verify task patient_id\", function () {\r",
+							"    pm.expect(jsonData.data[0].patient.externalId).to.eql(pm.variables.get(\"patient_id\"));\r",
+							"});\r",
+							"\r",
+							"//pm.test(\"Verify task task_due_date\", function () {\r",
+							"//    pm.expect(jsonData.taskDueDate).to.eql(pm.variables.get(\"task_due_date\"));\r",
+							"//});\r",
+							"\r",
+							"pm.test(\"Verify task task_priority_id\", function () {\r",
+							"    pm.expect(jsonData.data[0].taskPriorityId).to.eql(pm.variables.get(\"task_priority_id\"));\r",
+							"});\r",
+							"\r",
+							"//pm.test(\"Verify task task_status_id\", function () {\r",
+							"//    pm.expect(jsonData.taskStatusId).to.eql('\"+pm.variables.get(\"task_status_id\")+\"');\r",
+							"//});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f75f0b11-451f-4db1-ba32-a09f297d9d0b",
+						"exec": [
+							"var task_name = pm.variables.get(\"task_name\");\r",
+							"console.log(task_name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "f7db2f37-383a-4f02-b4be-901cd4fa13aa",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/composition/tasks?filter-by=task-external-id::{{taskExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"composition",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "task-external-id::{{taskExternalId}}"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task Details From Task Service",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e80306b-5289-48ea-b1b6-b8aef498d8b0",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify task name\", function () {\r",
+							"    pm.expect(jsonData.taskName).to.eql(pm.variables.get(\"task_name\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify task task_description\", function () {\r",
+							"    pm.expect(jsonData.taskDescription).to.eql(pm.variables.get(\"task_description\"));\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"Verify task task_assigned_userid\", function () {\r",
+							"//     pm.expect(jsonData.taskAssignedUserId).to.eql(pm.variables.get(\"task_assigned_userid\"));\r",
+							"// });\r",
+							"\r",
+							"//pm.test(\"Verify task task_createdby_userid\", function () {\r",
+							"//    pm.expect(jsonData.taskDescription).to.eql(pm.variables.get(\"task_createdby_userid\"));\r",
+							"//});\r",
+							"\r",
+							"pm.test(\"Verify task patient_id\", function () {\r",
+							"    pm.expect(jsonData.patientId).to.eql(pm.variables.get(\"patient_id\"));\r",
+							"});\r",
+							"\r",
+							"//pm.test(\"Verify task task_due_date\", function () {\r",
+							"//    pm.expect(jsonData.taskDueDate).to.eql(pm.variables.get(\"task_due_date\"));\r",
+							"//});\r",
+							"\r",
+							"pm.test(\"Verify task task_priority_id\", function () {\r",
+							"    pm.expect(jsonData.taskPriorityId).to.eql(pm.variables.get(\"task_priority_id\"));\r",
+							"});\r",
+							"\r",
+							"let task_status_id = jsonData.taskStatusId; \r",
+							"\r",
+							"/*\r",
+							"Task status ids are as follows. If the status return anything out of these numbers, the test should fail.\r",
+							"To do = 1\r",
+							"In progress = 2\r",
+							"Done = 3\r",
+							"Void = 4\r",
+							"Closed = 5 \r",
+							"*/\r",
+							"\r",
+							"if (task_status_id>0||task_status_id<6){\r",
+							"pm.test(\"Verify task task_status_id\", function () {\r",
+							"   pm.expect(task_status_id).to.eql(task_status_id);\r",
+							"});\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "095e33cd-f436-4af3-99f8-b5911cd104af",
+						"exec": [
+							"var task_name = pm.variables.get(\"task_name\");\r",
+							"console.log(task_name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c1fca338-ea5a-4ce9-b2b4-aae8cd8cf35f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/tasks/{{taskExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks",
+						"{{taskExternalId}}"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0fadb8f3-8dc3-4507-bf04-81b403ff96f2",
+						"exec": [
+							"///// get random due date (today or future date) /////",
+							"var start = new Date();",
+							"var end = new Date(2023, 1, 1);",
+							"var task_due_date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+							"var month = (task_due_date.getMonth() + 1) >= 10 ? task_due_date.getMonth() + 1 : \"0\" + (task_due_date.getMonth() + 1);",
+							"console.log(\"month: \" + month);",
+							"var day = (task_due_date.getDate() + 1) > 10 ? task_due_date.getDate() : \"0\" + task_due_date.getDate();",
+							"var task_due_date = task_due_date.getFullYear() + '-' + month + '-' + day;",
+							"task_due_date = task_due_date + \"T23:59:59.999Z\";",
+							"///// end - get random due date (today or future date) /////",
+							"",
+							"pm.environment.set(\"task_due_date\", task_due_date);",
+							"",
+							"if (pm.environment.name === \"qa\") {",
+							"    pm.environment.set(\"patient_id\", \"c734c310-2be9-430d-8cea-4932f8e79dd1\");",
+							"    pm.environment.set(\"task_assigned_userid\", \"87a6b43f-1e22-4ff6-93ae-dc003fc9c0c5\");",
+							"    pm.environment.set(\"task_assigned_username\", \"Bala Deema\");",
+							"    pm.environment.set(\"taskUpdatedByUserId\", \"bd12e9b1-394c-470d-b03e-aa577f6fce65\");",
+							"    pm.environment.set(\"taskUpdatedByUserName\", \"Bala 000analyst\");",
+							"} else if (pm.environment.name === \"dev\") {",
+							"    pm.environment.set(\"patient_id\", \"a254abca-f1a6-4ae8-90d4-b537d579f285\");",
+							"    pm.environment.set(\"task_assigned_userid\", \"8ff50537-55ae-420d-9f4a-1e6a04bd4c8c\");",
+							"    pm.environment.set(\"task_assigned_username\", \"Chandhu Gandra\");",
+							"    pm.environment.set(\"taskUpdatedByUserId\", \"42bd1c96-995d-45c0-bd0b-cee0e167b864\");",
+							"    pm.environment.set(\"taskUpdatedByUserName\", \"Balakrishna Deema\");",
+							"}",
+							"pm.environment.set(\"task_priority_score\", 4.5);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "16031cb1-4da0-4e5f-b157-0e26e7f82ad4",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//console.log(pm.response.body.toString);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify updated task details\", function () {\r",
+							"    pm.expect(jsonData.taskName).to.eql(pm.variables.get(\"task_name\") + \"_updated\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify that priority score was set\", function () {\r",
+							"    pm.expect(jsonData.taskPriorityScore).to.eql(pm.variables.get(\"task_priority_score\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "6b92e70d-0b40-406b-86e7-d0c0c968aa58",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskExternalId\": \"{{taskExternalId}}\",\n    \"taskName\": \"{{task_name}}_updated\",\n    \"taskDescription\": \"{{task_description}}\",\n    \"taskCategoryExternalId\": \"{{category_id}}\",\n    \"taskSubCategoryExternalId\": \"{{sub_category_id}}\",\n    \"taskAssignedUserId\": \"{{task_assigned_userid}}\",\n    \"taskUpdatedByUserId\":\"{{taskUpdatedByUserId}}\",\n    \"taskUpdatedByUserName\": \"{{taskUpdatedByUserName}}\",\n    \"patientId\":\"{{patient_id}}\",\n    \"taskDueDate\": \"{{task_due_date}}\",\n    \"taskPriorityId\": \"{{task_priority_id}}\",\n    \"taskStatusId\": \"2\",\n    \"taskPriorityScore\": {{task_priority_score}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task count 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify open task count\", function () {\r",
+							"    pm.expect(jsonData.taskCount).to.eql(pm.variables.get(\"open_task_count\") + 1);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "fae35282-813a-42b5-b72f-d4cc46f310c6"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"var task_name = pm.variables.get(\"task_name\");\r",
+							"console.log(task_name);"
+						],
+						"type": "text/javascript",
+						"id": "1c3e6940-c5af-418e-bfa3-f66d8ab8cd51"
+					}
+				}
+			],
+			"id": "83c1b3a9-be67-45f6-8ffb-4fd8f7059fd2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/tasks/count/{{task_assigned_userid}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks",
+						"count",
+						"{{task_assigned_userid}}"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task Details-post update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8aae2922-6eeb-4712-9221-699638565211",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify task name\", function () {\r",
+							"    pm.expect(jsonData.data[0].taskName).to.eql(pm.variables.get(\"task_name\") + \"_updated\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify task task_priority_id\", function () {\r",
+							"    pm.expect(jsonData.data[0].taskPriorityId).to.eql(pm.variables.get(\"task_priority_id\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify task task_status_id\", function () {\r",
+							"    pm.expect(jsonData.data[0].status.taskStatusId).to.eql(2);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a7d22ccb-0667-4bd3-866f-b2dc0e35cb52",
+						"exec": [
+							"\r",
+							"var task_name = pm.variables.get(\"task_name\");\r",
+							"console.log(task_name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c5549481-43e8-4e4a-ba6d-d0199fe27f37",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/composition/tasks?filter-by=task-external-id::{{taskExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"composition",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "task-external-id::{{taskExternalId}}"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Categories",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"id": "397ed464-de28-47bf-8ea8-278c4e326964"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var categories_mapping;\r",
+							"if(pm.environment.name === \"qa\"){\r",
+							"categories_mapping = [\r",
+							"  {\r",
+							"    \"categoryExternalId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce65\",\r",
+							"    \"categoryName\": \"Admissions\",\r",
+							"    \"isActive\": true,\r",
+							"    \"subCategoryList\": [\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"07f3014e-4dc9-4f9b-8c1a-5a66c03562a1\",\r",
+							"        \"categoryName\": \"Phone screen\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce24\",\r",
+							"        \"categoryName\": \"Patient correspondence\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"c3dcefb9-a322-48ca-bfd5-a117c081bd55\",\r",
+							"        \"categoryName\": \"Referral correspondence\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"4deee23a-9873-4268-ae14-479ec6052ebb\",\r",
+							"        \"categoryName\": \"Referral\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"82970c56-63cd-446c-9c74-c0e90aea1a82\",\r",
+							"        \"categoryName\": \"SCA\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"11e121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"categoryName\": \"Insurance verification\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"5ffd51a4-2d6c-4b88-8219-6fa5ea85b767\",\r",
+							"        \"categoryName\": \"Intake survey\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"e1710691-6d67-4d38-93ce-218f46850865\",\r",
+							"        \"categoryName\": \"Consent forms\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce22\",\r",
+							"        \"categoryName\": \"Medical records coordination\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"txe121e9-bba2-4bf6-a1a9-8e401e93f212\",\r",
+							"        \"categoryName\": \"Medical clearance\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce25\",\r",
+							"        \"categoryName\": \"Provider assignment\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce23\",\r",
+							"        \"categoryName\": \"Onboard\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"991178c1-cc4e-43f8-a5cd-538517ea238d\",\r",
+							"        \"categoryName\": \"Deferral\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"txe121e9-bba2-4bf6-a1a9-8e401e93f210\",\r",
+							"        \"categoryName\": \"General\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"        \"categoryName\": \"Assessment\",\r",
+							"        \"isActive\": false\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"9xe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"categoryName\": \"Enroll\",\r",
+							"        \"isActive\": false\r",
+							"      }\r",
+							"    ]\r",
+							"  },\r",
+							"  {\r",
+							"    \"categoryExternalId\": \"yd16e9b1-394c-470d-b03e-aa577f6fce2z\",\r",
+							"    \"categoryName\": \"Billing\",\r",
+							"    \"isActive\": true\r",
+							"  },\r",
+							"  {\r",
+							"    \"categoryExternalId\": \"35e121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"    \"categoryName\": \"Inquiry\",\r",
+							"    \"isActive\": true,\r",
+							"    \"subCategoryList\": [\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"969a9474-104e-445d-82ec-d7f9854f9799\",\r",
+							"        \"categoryName\": \"Qualifying call\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"9621e600-7048-4c4b-8eae-942848bb5985\",\r",
+							"        \"categoryName\": \"Insurance verification\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"a2883a35-9b8a-4103-ba80-dd03fe9975f5\",\r",
+							"        \"categoryName\": \"Referral\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"5d4dadd0-2a7b-4d3d-9a6e-eea7c7d74bec\",\r",
+							"        \"categoryName\": \"SCA\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"980e14bf-da9d-4c0b-ade9-56876f11a24f\",\r",
+							"        \"categoryName\": \"Admissions specialist handoff\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"45e121e9-bba2-4bf6-a1a9-8e401e93f2b2\",\r",
+							"        \"categoryName\": \"General\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"dxe121e9-bba4-4bf6-a1a9-8e401e93f2bp\",\r",
+							"        \"categoryName\": \"Initial outreach\",\r",
+							"        \"isActive\": false\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"3xe121e9-bba3-4bf6-a1a9-8e401e93f2be\",\r",
+							"        \"categoryName\": \"Inbound outreach\",\r",
+							"        \"isActive\": false\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rxe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"categoryName\": \"Phone screen\",\r",
+							"        \"isActive\": false\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"categoryName\": \"Correspondence\",\r",
+							"        \"isActive\": false\r",
+							"      }\r",
+							"    ]\r",
+							"  },\r",
+							"  {\r",
+							"    \"categoryExternalId\": \"td1259b1-394c-470d-b03e-aa577f6fce2y\",\r",
+							"    \"categoryName\": \"Outreach\",\r",
+							"    \"isActive\": true\r",
+							"  },\r",
+							"  {\r",
+							"    \"categoryExternalId\": \"rd12e9b1-394c-470d-b03e-aa577f6fce21\",\r",
+							"    \"categoryName\": \"Referral\",\r",
+							"    \"isActive\": true,\r",
+							"    \"subCategoryList\": [\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce21\",\r",
+							"        \"categoryName\": \"Correspondence\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-480d-b03e-aa577f6fce21\",\r",
+							"        \"categoryName\": \"General\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-490d-b03e-aa577f6fce21\",\r",
+							"        \"categoryName\": \"Inbound outreach\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-470d-b13e-aa577f6fce21\",\r",
+							"        \"categoryName\": \"Initial outreach\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-470d-b23e-aa577f6fce21\",\r",
+							"        \"categoryName\": \"Phone screen\",\r",
+							"        \"isActive\": true\r",
+							"      }\r",
+							"    ]\r",
+							"  },\r",
+							"  {\r",
+							"    \"categoryExternalId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce22\",\r",
+							"    \"categoryName\": \"Review\",\r",
+							"    \"isActive\": true,\r",
+							"    \"subCategoryList\": [\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"kd12e9b1-394c-470d-b03e-aa577f6fce2w\",\r",
+							"        \"categoryName\": \"Consult\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"md24e9b1-394c-470d-b03e-aa577f6fce2x\",\r",
+							"        \"categoryName\": \"Supervise\",\r",
+							"        \"isActive\": true\r",
+							"      }\r",
+							"    ]\r",
+							"  },\r",
+							"  {\r",
+							"    \"categoryExternalId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce13\",\r",
+							"    \"categoryName\": \"Treatment team\",\r",
+							"    \"isActive\": true,\r",
+							"    \"subCategoryList\": [\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"bd12e9b1-384c-470d-b03e-aa577f6fce15\",\r",
+							"        \"categoryName\": \"Assess\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"gd12e9b1-394c-470d-c23e-aa577f6fce19\",\r",
+							"        \"categoryName\": \"Care plan\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"7d12e9b1-364c-i70d-b03e-aa577f6fce1u\",\r",
+							"        \"categoryName\": \"Discharge\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"1412e9b1-394c-470d-b03e-aa577f6fce09\",\r",
+							"        \"categoryName\": \"Follow-up\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"bd12e9b2-394c-470d-b13e-aa577f6fce17\",\r",
+							"        \"categoryName\": \"Order labs\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"cd12e9b1-394c-480d-b04e-aa577f6fce16\",\r",
+							"        \"categoryName\": \"Prescribe meds\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"7d12e9b1-364c-i70d-b03e-aa578f6fce1u\",\r",
+							"        \"categoryName\": \"Reminder\",\r",
+							"        \"isActive\": true\r",
+							"      },\r",
+							"      {\r",
+							"        \"categoryExternalId\": \"qd12e9b1-494c-470d-b03e-aa578f6fce18\",\r",
+							"        \"categoryName\": \"Schedule appointment\",\r",
+							"        \"isActive\": true\r",
+							"      }\r",
+							"    ]\r",
+							"  }\r",
+							"];\r",
+							"}\r",
+							"if(pm.environment.name === \"dev\"){\r",
+							"    categories_mapping = [\r",
+							"    {\r",
+							"        \"categoryExternalId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce65\",\r",
+							"        \"categoryName\": \"Admissions\",\r",
+							"        \"isActive\": true,\r",
+							"        \"subCategoryList\": [\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"07f3014e-4dc9-4f9b-8c1a-5a66c03562a1\",\r",
+							"                \"categoryName\": \"Phone screen\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce24\",\r",
+							"                \"categoryName\": \"Patient correspondence\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"c3dcefb9-a322-48ca-bfd5-a117c081bd55\",\r",
+							"                \"categoryName\": \"Referral correspondence\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"4deee23a-9873-4268-ae14-479ec6052ebb\",\r",
+							"                \"categoryName\": \"Referral\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"82970c56-63cd-446c-9c74-c0e90aea1a82\",\r",
+							"                \"categoryName\": \"SCA\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"11e121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"                \"categoryName\": \"Insurance verification\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"5ffd51a4-2d6c-4b88-8219-6fa5ea85b767\",\r",
+							"                \"categoryName\": \"Intake survey\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"e1710691-6d67-4d38-93ce-218f46850865\",\r",
+							"                \"categoryName\": \"Consent forms\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce22\",\r",
+							"                \"categoryName\": \"Medical records coordination\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"txe121e9-bba2-4bf6-a1a9-8e401e93f212\",\r",
+							"                \"categoryName\": \"Medical clearance\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce25\",\r",
+							"                \"categoryName\": \"Provider assignment\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce23\",\r",
+							"                \"categoryName\": \"Onboard\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"991178c1-cc4e-43f8-a5cd-538517ea238d\",\r",
+							"                \"categoryName\": \"Deferral\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"txe121e9-bba2-4bf6-a1a9-8e401e93f210\",\r",
+							"                \"categoryName\": \"General\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"                \"categoryName\": \"Assessment\",\r",
+							"                \"isActive\": false\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"9xe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"                \"categoryName\": \"Enroll\",\r",
+							"                \"isActive\": false\r",
+							"            }\r",
+							"        ]\r",
+							"    },\r",
+							"    {\r",
+							"        \"categoryExternalId\": \"yd16e9b1-394c-470d-b03e-aa577f6fce2z\",\r",
+							"        \"categoryName\": \"Billing\",\r",
+							"        \"isActive\": true\r",
+							"    },\r",
+							"    {\r",
+							"        \"categoryExternalId\": \"35e121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"        \"categoryName\": \"Inquiry\",\r",
+							"        \"isActive\": true,\r",
+							"        \"subCategoryList\": [\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"969a9474-104e-445d-82ec-d7f9854f9799\",\r",
+							"                \"categoryName\": \"Qualifying call\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"9621e600-7048-4c4b-8eae-942848bb5985\",\r",
+							"                \"categoryName\": \"Insurance verification\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"a2883a35-9b8a-4103-ba80-dd03fe9975f5\",\r",
+							"                \"categoryName\": \"Referral\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"5d4dadd0-2a7b-4d3d-9a6e-eea7c7d74bec\",\r",
+							"                \"categoryName\": \"SCA\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"980e14bf-da9d-4c0b-ade9-56876f11a24f\",\r",
+							"                \"categoryName\": \"Admissions specialist handoff\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"45e121e9-bba2-4bf6-a1a9-8e401e93f2b2\",\r",
+							"                \"categoryName\": \"General\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"3xe121e9-bba3-4bf6-a1a9-8e401e93f2be\",\r",
+							"                \"categoryName\": \"Inbound outreach\",\r",
+							"                \"isActive\": false\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"dxe121e9-bba4-4bf6-a1a9-8e401e93f2bp\",\r",
+							"                \"categoryName\": \"Initial outreach\",\r",
+							"                \"isActive\": false\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rxe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"                \"categoryName\": \"Phone screen\",\r",
+							"                \"isActive\": false\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"                \"categoryName\": \"Correspondence\",\r",
+							"                \"isActive\": false\r",
+							"            }\r",
+							"        ]\r",
+							"    },\r",
+							"    {\r",
+							"        \"categoryExternalId\": \"td1259b1-394c-470d-b03e-aa577f6fce2y\",\r",
+							"        \"categoryName\": \"Outreach\",\r",
+							"        \"isActive\": true\r",
+							"    },\r",
+							"    {\r",
+							"        \"categoryExternalId\": \"rd12e9b1-394c-470d-b03e-aa577f6fce21\",\r",
+							"        \"categoryName\": \"Referral\",\r",
+							"        \"isActive\": true,\r",
+							"        \"subCategoryList\": [\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-470d-b43e-aa577f6fce21\",\r",
+							"                \"categoryName\": \"Correspondence\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-480d-b03e-aa577f6fce21\",\r",
+							"                \"categoryName\": \"General\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-490d-b03e-aa577f6fce21\",\r",
+							"                \"categoryName\": \"Inbound outreach\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-470d-b13e-aa577f6fce21\",\r",
+							"                \"categoryName\": \"Initial outreach\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"rd12e9b1-394c-470d-b23e-aa577f6fce21\",\r",
+							"                \"categoryName\": \"Phone screen\",\r",
+							"                \"isActive\": true\r",
+							"            }\r",
+							"        ]\r",
+							"    },\r",
+							"    {\r",
+							"        \"categoryExternalId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce22\",\r",
+							"        \"categoryName\": \"Review\",\r",
+							"        \"isActive\": true,\r",
+							"        \"subCategoryList\": [\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"kd12e9b1-394c-470d-b03e-aa577f6fce2w\",\r",
+							"                \"categoryName\": \"Consult\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"md24e9b1-394c-470d-b03e-aa577f6fce2x\",\r",
+							"                \"categoryName\": \"Supervise\",\r",
+							"                \"isActive\": true\r",
+							"            }\r",
+							"        ]\r",
+							"    },\r",
+							"    {\r",
+							"        \"categoryExternalId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce13\",\r",
+							"        \"categoryName\": \"Treatment team\",\r",
+							"        \"isActive\": true,\r",
+							"        \"subCategoryList\": [\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"bd12e9b1-384c-470d-b03e-aa577f6fce15\",\r",
+							"                \"categoryName\": \"Assess\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"gd12e9b1-394c-470d-c23e-aa577f6fce19\",\r",
+							"                \"categoryName\": \"Care plan\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"7d12e9b1-364c-i70d-b03e-aa577f6fce1u\",\r",
+							"                \"categoryName\": \"Discharge\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"1412e9b1-394c-470d-b03e-aa577f6fce09\",\r",
+							"                \"categoryName\": \"Follow-up\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"bd12e9b2-394c-470d-b13e-aa577f6fce17\",\r",
+							"                \"categoryName\": \"Order labs\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"cd12e9b1-394c-480d-b04e-aa577f6fce16\",\r",
+							"                \"categoryName\": \"Prescribe meds\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"7d12e9b1-364c-i70d-b03e-aa578f6fce1u\",\r",
+							"                \"categoryName\": \"Reminder\",\r",
+							"                \"isActive\": true\r",
+							"            },\r",
+							"            {\r",
+							"                \"categoryExternalId\": \"qd12e9b1-494c-470d-b03e-aa578f6fce18\",\r",
+							"                \"categoryName\": \"Schedule appointment\",\r",
+							"                \"isActive\": true\r",
+							"            }\r",
+							"        ]\r",
+							"    }\r",
+							"]\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate categories_mapping\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(categories_mapping);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "6d871c0f-3072-448a-b9d8-8bee575cf468"
+					}
+				}
+			],
+			"id": "e6c78e1c-a152-4bee-b4d1-0cbcc9eb88d6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/tasks/categories",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tasks/comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify commentExternalId is generated\", function () {\r",
+							"    pm.expect(jsonData.commentExternalId).length.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"commentExternalId\", jsonData.commentExternalId);"
+						],
+						"type": "text/javascript",
+						"id": "b86babb9-9373-4893-91c7-6a88c3c6474d"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var d = new Date().toLocaleString('en-US', {",
+							"    timeZone: 'Asia/Calcutta',",
+							"    hourCycle: 'h23',",
+							"    year: \"numeric\",",
+							"    month: \"2-digit\",",
+							"    day: \"2-digit\",",
+							"    hour: \"2-digit\",",
+							"    minute: \"2-digit\",",
+							"    second: \"2-digit\"",
+							"});",
+							"var date = d.split(\" \")[0].replace(\",\", \"\");",
+							"var time = d.split(\" \")[1];",
+							"",
+							"console.log(date);",
+							"console.log(time);",
+							"",
+							"var date = date.split(\"/\")[2] + \"-\" + date.split(\"/\")[0] + \"-\" + date.split(\"/\")[1];",
+							"",
+							"current_date_time = date + \" \" + time;",
+							"",
+							"pm.environment.set(\"current_date_time\", current_date_time);",
+							"",
+							"",
+							"if(pm.environment.name === \"qa\"){",
+							"    pm.environment.set(\"commentCreatedByUserId\", \"bd12e9b1-394c-470d-b03e-aa577f6fce65\");",
+							"    pm.environment.set(\"commentCreatedByUserName\", \"Bala 000analyst\");",
+							"}else if(pm.environment.name === \"dev\"){",
+							"    pm.environment.set(\"commentCreatedByUserId\", \"42bd1c96-995d-45c0-bd0b-cee0e167b864\");",
+							"    pm.environment.set(\"commentCreatedByUserName\", \"Balakrishna Deema\");",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"id": "498b05d0-417e-474b-9e1b-6bd7369bf8e5"
+					}
+				}
+			],
+			"id": "8a9df318-ce65-4038-ab2d-5f2e436285a6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"taskExternalId\": \"{{taskExternalId}}\",\n    \"commentContent\": \"{{task_comment_1}}\",\n    \"commentCreatedByUserId\": \"{{commentCreatedByUserId}}\",\n    \"commentCreatedByUserName\": \"{{commentCreatedByUserName}}\",\n    \"commentCreatedDateTime\":\"{{current_date_time}}\",\n    \"timeZoneId\":\"Asia/Calcutta\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/tasks/comment",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tasks/comment/{taskExternalId}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify commentExternalId is generated\", function () {\r",
+							"    pm.expect(jsonData.commentExternalId).length = 1;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify commentContent \", function () {\r",
+							"    pm.expect(jsonData[0].commentContent).to.eql(pm.variables.get(\"task_comment_1\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "fe393881-6180-49ca-96cd-063e8b162690"
+					}
+				}
+			],
+			"id": "0c8d6cfb-78a1-4d83-8a0d-bdbe93ce5704",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/tasks/comment/{{taskExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks",
+						"comment",
+						"{{taskExternalId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4892caca-7e93-4a78-9571-882700b4432b",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad2cf5cc-d5c7-40bf-80c2-777c76b30bb2",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//console.log(pm.response.body.toString);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify updated task details\", function () {\r",
+							"    pm.expect(jsonData.taskName).to.eql(pm.variables.get(\"task_name\") + \"_updated\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify that priority score was not overwritten\", function () {\r",
+							"    pm.expect(jsonData.taskPriorityScore).to.eql(pm.variables.get(\"task_priority_score\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "e5195da9-9894-4288-9d1a-bb827789f300",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskExternalId\": \"{{taskExternalId}}\",\n    \"taskName\": \"{{task_name}}_updated\",\n    \"taskDescription\": \"{{task_description}}\",\n    \"taskCategoryExternalId\": \"{{category_id}}\",\n    \"taskSubCategoryExternalId\": \"{{sub_category_id}}\",\n    \"taskAssignedUserId\": \"{{task_reassigned_userid}}\",\n    \"taskUpdatedByUserId\":\"{{taskUpdatedByUserId}}\",\n    \"taskUpdatedByUserName\": \"{{taskUpdatedByUserName}}\",\n    \"patientId\":\"{{patient_id}}\",\n    \"taskDueDate\": \"{{task_due_date}}\",\n    \"taskPriorityId\": \"{{task_priority_id}}\",\n    \"taskStatusId\": \"3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task count 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify open task count\", function () {\r",
+							"    pm.expect(jsonData.taskCount).to.eql(pm.variables.get(\"open_task_count\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "f7238318-8245-4f72-bac3-7a8388b22a5b"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"var task_name = pm.variables.get(\"task_name\");\r",
+							"console.log(task_name);"
+						],
+						"type": "text/javascript",
+						"id": "e6f68664-2792-4b41-874a-e7375c7014a3"
+					}
+				}
+			],
+			"id": "6d2c07d4-be1a-40a0-a16a-f0dafa5d6bd3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/tasks/count/{{task_assigned_userid}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks",
+						"count",
+						"{{task_assigned_userid}}"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task Invalid or Missing Mandatory fields",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "de6d77a6-2291-47e4-9664-afb5f7276f18",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9942a117-a0b2-4a4f-a71b-2805a7535842",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify error messages\", function () {\r",
+							"    pm.expect(jsonData._embedded.errors[0].message).to.eql(\"addTaskRequest.taskName: taskName can not be blank.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "6ed9507b-5982-4020-b415-8456b0b6fe0f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskName\": \"\",\n    \"taskDescription\": \"task1129Desctask1129\",\n    \"taskCategoryExternalId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce13\",\n    \"taskSubCategoryExternalId\": \"1412e9b1-394c-470d-b03e-aa577f6fce09\",\n    \"taskAssignedUserId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce65\",\n    \"taskCreatedByUserId\":\"bd12e9b1-394c-470d-b03e-aa577f6fce65\",\n    \"patientId\":\"27b373cb-ed6c-41eb-8255-1a2ad2701319\",\n    \"taskDueDate\": \"2023-12-13T14:58:20.000Z\",\n    \"taskPriorityId\": \"2\",\n    \"taskStatusId\": \"2\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task Invalid or Missing Mandatory values",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"id": "867a5930-b3c4-4977-a1ae-eb0abeb10ba0"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify error messages\", function () {\r",
+							"    pm.expect(jsonData._embedded.errors[0].message).to.eql(\"updateTaskRequest.taskName: taskName can not be blank.\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "26ceae2b-749a-4deb-9066-320a224af547"
+					}
+				}
+			],
+			"id": "7543c56f-7ebd-4fcf-809e-6b25b9e324ed",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskExternalId\": \"{{taskExternalId}}\",\n    \"taskName\": \"\",\n    \"taskDescription\": \"task1129Desctask1129Desc12\",\n    \"taskCategoryExternalId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce13\",\n    \"taskSubCategoryExternalId\": \"1412e9b1-394c-470d-b03e-aa577f6fce09\",\n    \"taskAssignedUserId\": \"bd12e9b1-394c-470d-b03e-aa577f6fce65\",\n    \"taskCreatedByUserId\":\"bd12e9b1-394c-470d-b03e-aa577f6fce66\",\n    \"taskUpdatedByUserId\":\"bd12e9b1-394c-470d-b03e-aa577f6fce66\",\n    \"taskUpdatedByUserName\": \"bala\",\n    \"patientId\":\"bd12e9b1-394c-470d-b03e-aa577f6fce67\",\n    \"taskDueDate\": \"2022-12-13T14:58:20.000Z\",\n    \"taskPriorityId\": \"1\",\n    \"taskStatusId\": \"3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Void Reasons",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d207877c-ef8d-46ec-9fb3-0cfc9f874154",
+						"exec": [
+							"var taskVoidReasons;\r",
+							"if(pm.environment.name === \"qa\"){\r",
+							"    taskVoidReasons = [\r",
+							"        {\r",
+							"        \"externalVoidReasonId\": \"f53489fa-928c-eaa3-afa6-7f8dc359f922\",\r",
+							"        \"voidReason\": \"Admin episode closed\",\r",
+							"        \"statusCode\": \"Void\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"44311fa6-d22f-6e18-a556-5ac927cba47d\",\r",
+							"            \"voidReason\": \"Contemplative\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"5ac48255-5e18-79f9-f76a-33d2e33a3f09\",\r",
+							"            \"voidReason\": \"Declined - Admin/Equip delay\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"8ae3f9a4-dad2-35e6-0826-f6aab16c73b3\",\r",
+							"            \"voidReason\": \"Declined - Chose HLOC (IOP/PHP/RTC)\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"18e390f9-c582-189f-0300-8158e0045dfe\",\r",
+							"            \"voidReason\": \"Declined - Chose new output team\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"3fd8a6dd-9384-3686-8a5c-cad3f37af36b\",\r",
+							"            \"voidReason\": \"Declined - Continue with current team\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"9bd9c206-3394-175f-0ee7-2b59d3005a19\",\r",
+							"            \"voidReason\": \"Declined - Unknown tx choice\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"c3fd794b-3d74-2418-4b11-ccafaba25e79\",\r",
+							"            \"voidReason\": \"Duplicate\",\r",
+							"            \"statusCode\": \"Void\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"61e651b2-99af-71d7-bc97-d4c52f4df4bf\",\r",
+							"            \"voidReason\": \"MIA - Lost contact\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"a1350cb9-e671-4c52-e27c-ae2fc2edfbce\",\r",
+							"            \"voidReason\": \"MIA - No contact\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"d6615dce-0f68-3f00-a7dd-fb31062c1671\",\r",
+							"            \"voidReason\": \"Made in error\",\r",
+							"            \"statusCode\": \"Void\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"7389a71c-2ddc-19d6-8e17-423b4534d298\",\r",
+							"            \"voidReason\": \"Not eligible - Wrong age\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"0f239f7e-f438-9d47-14af-e00a1189cb01\",\r",
+							"            \"voidReason\": \"Not eligible - Wrong state\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"722d42a0-c315-e294-68d7-25d92a026086\",\r",
+							"            \"voidReason\": \"Not qualified - Equip referred to clinical HLOC\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"87c4e1b5-6212-083d-0f4e-cf54aa8fb435\",\r",
+							"            \"voidReason\": \"Not qualified - Equip referred to medical HLOC\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"7334f6b2-6643-0512-6ee7-951188cc1161\",\r",
+							"            \"voidReason\": \"Not qualified - Family unwilling to participate in tx\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"c10f1f10-0027-2bff-b058-c70f8d20d1ac\",\r",
+							"            \"voidReason\": \"Not qualified - Financial - Can’t afford OOP $\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"2c6a9423-880e-47ab-d948-28484ecb51bf\",\r",
+							"            \"voidReason\": \"Not qualified - Financial - Insurance not in-network\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"1cad496c-f6fe-0632-012c-9541399cd511\",\r",
+							"            \"voidReason\": \"Not qualified - No eating disorder\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"c8440b53-70f5-76c1-7e96-20dc3c3d122e\",\r",
+							"            \"voidReason\": \"Not qualified - Not living with family\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        }\r",
+							"    ]\r",
+							"}else if(pm.environment.name === \"dev\"){\r",
+							"    taskVoidReasons = [\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"12099397-baa8-5aca-8612-845e7b6a089a\",\r",
+							"            \"voidReason\": \"Contemplative\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"e50351dd-81c8-b300-6157-b383c35b1144\",\r",
+							"            \"voidReason\": \"Declined - Admin/Equip delay\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"8c883ce9-48e5-0c0f-ec16-52b03afb6d0e\",\r",
+							"            \"voidReason\": \"Declined - Chose HLOC (IOP/PHP/RTC)\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"06472ad9-fd23-cc80-01cd-37a7f8ebc36e\",\r",
+							"            \"voidReason\": \"Declined - Chose new output team\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"cca68e9a-3ae7-c28c-d36a-103bb1ed8dbf\",\r",
+							"            \"voidReason\": \"Declined - Continue with current team\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"bd86b660-5c6f-0f88-8cff-713e4d6f11d8\",\r",
+							"            \"voidReason\": \"Declined - Unknown tx choice\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"ce5517bb-b9fd-a3d1-3ccb-3bfecd9f93a7\",\r",
+							"            \"voidReason\": \"Duplicate\",\r",
+							"            \"statusCode\": \"Void\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"cd7df4d3-eead-da1e-310b-c86714447ccb\",\r",
+							"            \"voidReason\": \"MIA - Lost contact\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"9e006e57-96d1-606f-606b-83c4657e8a8d\",\r",
+							"            \"voidReason\": \"MIA - No contact\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"efb8a14b-39c4-f5e1-93e4-fbb2e85bd023\",\r",
+							"            \"voidReason\": \"Made in error\",\r",
+							"            \"statusCode\": \"Void\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"65dfd254-61a1-6992-5f7e-1cbc614243a4\",\r",
+							"            \"voidReason\": \"Not eligible - Wrong age\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"f9f64958-306a-1229-4aeb-103c57896389\",\r",
+							"            \"voidReason\": \"Not eligible - Wrong state\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"b56d0b21-39d7-5fd7-d4a4-ca1c97a717f6\",\r",
+							"            \"voidReason\": \"Not qualified - Equip referred to clinical HLOC\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"724d1af8-d37b-1e60-4e59-2761adcea15e\",\r",
+							"            \"voidReason\": \"Not qualified - Equip referred to medical HLOC\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"1dc3f3e2-8eb1-0286-32ec-34f3be460b52\",\r",
+							"            \"voidReason\": \"Not qualified - Family unwilling to participate in tx\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"fc2486f0-f569-097d-3f6a-31f2837686c7\",\r",
+							"            \"voidReason\": \"Not qualified - Financial - Can’t afford OOP $\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"4ee19c18-93c7-ba06-4dfc-dd505f2e73b1\",\r",
+							"            \"voidReason\": \"Not qualified - Financial - Insurance not in-network\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"f8db653a-79dd-5d44-b17b-48b8d1294fc5\",\r",
+							"            \"voidReason\": \"Not qualified - No eating disorder\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        },\r",
+							"        {\r",
+							"            \"externalVoidReasonId\": \"39a9faa1-dfcf-9015-c05c-4ce20dadd0a8\",\r",
+							"            \"voidReason\": \"Not qualified - Not living with family\",\r",
+							"            \"statusCode\": \"Closed\"\r",
+							"        }\r",
+							"    ]\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate Equip source values\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(taskVoidReasons);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d05dd475-6194-47b9-827a-735f732f118c",
+						"exec": [
+							"\r",
+							"var task_name = pm.variables.get(\"task_name\");\r",
+							"console.log(task_name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "9350fd78-7c71-44d4-bcfe-c7d5e5e34d45",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/tasks/void-reason",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks",
+						"void-reason"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task - void",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "36d605b3-04c8-486a-9ec1-c11bb68a6efd",
+						"exec": [
+							"var date_timestamp = new Date().toISOString();\r",
+							"const task_priority_ids = [1, 2, 3];\r",
+							"\r",
+							"///// get random due date (today or future date) /////\r",
+							"var start = new Date();\r",
+							"var end = new Date(start.getFullYear()+1, 1, 1);\r",
+							"var task_due_date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));\r",
+							"var month = (task_due_date.getMonth() + 1) >= 10 ? task_due_date.getMonth() + 1 : \"0\" + (task_due_date.getMonth() + 1);\r",
+							"console.log(\"month: \" + month);\r",
+							"var day = (task_due_date.getDate() + 1) > 10 ? task_due_date.getDate() : \"0\" + task_due_date.getDate();\r",
+							"var task_due_date = task_due_date.getFullYear() + '-' + month + '-' + day;\r",
+							"task_due_date = task_due_date + \"T23:59:59.999Z\";\r",
+							"///// end - get random due date (today or future date) /////\r",
+							"\r",
+							"///// get random category and its sub_category\r",
+							"var category_id;\r",
+							"var sub_category_id;\r",
+							"\r",
+							"const category_names = [\r",
+							"    \"Admissions\",\r",
+							"    \"Billing\",\r",
+							"    \"Inquiry\",\r",
+							"    \"Outreach\",\r",
+							"    \"Referral\",\r",
+							"    \"Review\",\r",
+							"    \"Treatment team\"\r",
+							"];\r",
+							"\r",
+							"const category_ids = [\r",
+							"    \"bd12e9b1-394c-470d-b03e-aa577f6fce65\",\r",
+							"    \"yd16e9b1-394c-470d-b03e-aa577f6fce2z\",\r",
+							"    \"35e121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"    \"td1259b1-394c-470d-b03e-aa577f6fce2y\",\r",
+							"    \"rd12e9b1-394c-470d-b03e-aa577f6fce21\",\r",
+							"    \"bd12e9b1-394c-470d-b03e-aa577f6fce22\",\r",
+							"    \"bd12e9b1-394c-470d-b03e-aa577f6fce13\"\r",
+							"];\r",
+							"\r",
+							"var subcategories_names_map = {\r",
+							"    \"Admissions\": [\r",
+							"        \"Assessment\",\r",
+							"        \"Enroll\",\r",
+							"        \"General\",\r",
+							"        \"Insurance verification\",\r",
+							"        \"Medical clearance\",\r",
+							"        \"Medical records coordination\",\r",
+							"        \"Onboard\",\r",
+							"        \"Patient correspondence\",\r",
+							"        \"Phone screen\",\r",
+							"        \"Provider assignment\"\r",
+							"    ],\r",
+							"    \"Inquiry\": [\r",
+							"        \"Correspondence\",\r",
+							"        \"General\",\r",
+							"        \"Inbound outreach\",\r",
+							"        \"Initial outreach\",\r",
+							"        \"Insurance verification\",\r",
+							"        \"Phone screen\"\r",
+							"    ],\r",
+							"    \"Referral\": [\r",
+							"        \"Correspondence\",\r",
+							"        \"General\",\r",
+							"        \"Inbound outreach\",\r",
+							"        \"Initial outreach\",\r",
+							"        \"Phone screen\"\r",
+							"    ],\r",
+							"    \"Review\": [\r",
+							"        \"Consult\",\r",
+							"        \"Supervise\"\r",
+							"    ],\r",
+							"    \"Treatment Team\": [\r",
+							"        \"Assess\",\r",
+							"        \"Care plan\",\r",
+							"        \"Discharge\",\r",
+							"        \"Follow-up\",\r",
+							"        \"Order labs\",\r",
+							"        \"Prescribe meds\",\r",
+							"        \"Reminder\",\r",
+							"        \"Schedule appointment\"\r",
+							"    ]\r",
+							"}\r",
+							"\r",
+							"var subcategories_map = {\r",
+							"    \"Admissions\": [\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"        \"9xe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f210\",\r",
+							"        \"11e121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f212\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce22\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce23\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce24\",\r",
+							"        \"07f3014e-4dc9-4f9b-8c1a-5a66c03562a1\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce25\"\r",
+							"    ],\r",
+							"    \"Inquiry\": [\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"45e121e9-bba2-4bf6-a1a9-8e401e93f2b2\",\r",
+							"        \"3xe121e9-bba3-4bf6-a1a9-8e401e93f2be\",\r",
+							"        \"dxe121e9-bba4-4bf6-a1a9-8e401e93f2bp\",\r",
+							"        \"9621e600-7048-4c4b-8eae-942848bb5985\",\r",
+							"        \"rxe121e9-bba2-4bf6-a1a9-8e401e93f2b5\"\r",
+							"    ],\r",
+							"    \"Referral\": [\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-480d-b03e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-490d-b03e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-470d-b13e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-470d-b23e-aa577f6fce21\"\r",
+							"    ],\r",
+							"    \"Review\": [\r",
+							"        \"kd12e9b1-394c-470d-b03e-aa577f6fce2w\",\r",
+							"        \"md24e9b1-394c-470d-b03e-aa577f6fce2x\"\r",
+							"    ],\r",
+							"    \"Treatment Team\": [\r",
+							"        \"bd12e9b1-384c-470d-b03e-aa577f6fce15\",\r",
+							"        \"gd12e9b1-394c-470d-c23e-aa577f6fce19\",\r",
+							"        \"7d12e9b1-364c-i70d-b03e-aa577f6fce1u\",\r",
+							"        \"1412e9b1-394c-470d-b03e-aa577f6fce09\",\r",
+							"        \"bd12e9b2-394c-470d-b13e-aa577f6fce17\",\r",
+							"        \"cd12e9b1-394c-480d-b04e-aa577f6fce16\",\r",
+							"        \"7d12e9b1-364c-i70d-b03e-aa578f6fce1u\",\r",
+							"        \"qd12e9b1-494c-470d-b03e-aa578f6fce18\"\r",
+							"    ]\r",
+							"}\r",
+							"const category_index = Math.floor(Math.random() * category_names.length);\r",
+							"category_id = category_ids[category_index];\r",
+							"if (category_names[category_index] === \"Outreach\" || category_names[category_index] === \"Billing\") {\r",
+							"    sub_category_id = \"\";\r",
+							"} else {\r",
+							"    var subcategories_list = subcategories_map[category_names[category_index]];\r",
+							"    subcategory_list_index = Math.floor(Math.random() * subcategories_list.length);\r",
+							"    sub_category_id = subcategories_list[subcategory_list_index];\r",
+							"}\r",
+							"///// end - get random category and its sub_category ////////////////////\r",
+							"\r",
+							"pm.environment.set(\"task_name\", \"From Postman task name \" + date_timestamp + \" Equip Health\");\r",
+							"pm.environment.set(\"task_description\", \"task description \" + date_timestamp + \" Equip Health\");\r",
+							"pm.environment.set(\"category_id\", category_id);\r",
+							"pm.environment.set(\"sub_category_id\", sub_category_id);\r",
+							"pm.environment.set(\"patient_id\", \"27b373cb-ed6c-41eb-8255-1a2ad2701319\");\r",
+							"pm.environment.set(\"task_assigned_userid\", \"87a6b43f-1e22-4ff6-93ae-dc003fc9c0c5\");\r",
+							"pm.environment.set(\"task_assigned_username\", \"Bala Deema\");\r",
+							"pm.environment.set(\"task_createdby_userid\", \"bd12e9b1-394c-470d-b03e-aa577f6fce65\");\r",
+							"pm.environment.set(\"task_createdby_username\", \"Bala 000analyst\");\r",
+							"\r",
+							"pm.environment.set(\"task_due_date\", task_due_date);\r",
+							"pm.environment.set(\"task_priority_id\", task_priority_ids[Math.floor(Math.random() * task_priority_ids.length)]);\r",
+							"pm.environment.set(\"task_status_id\", \"1\");\r",
+							"pm.environment.set(\"task_comment_1\", \"task_comment_1\");\r",
+							"pm.environment.set(\"repeat\", false);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "695a6705-80e7-4348-9da2-eeeab90fb33c",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify taskExternalId is generated\", function () {\r",
+							"    pm.expect(jsonData.taskExternalId).length.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"taskExternalId\", jsonData.taskExternalId);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "a953fdd7-a210-4544-b3ac-acb015036304",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskName\": \"{{task_name}}\",\n    \"taskDescription\": \"{{task_description}}\",\n    \"taskCategoryExternalId\": \"{{category_id}}\",\n    \"taskSubCategoryExternalId\": \"{{sub_category_id}}\",\n    \"taskAssignedUserId\": \"{{task_assigned_userid}}\",\n    \"taskAssignedUserName\": \"{{task_assigned_username}}\",\n    \"taskCreatedByUserId\":\"{{task_createdby_userid}}\",\n    \"taskCreatedByUserName\":\"{{task_createdby_username}}\",\n    \"patientId\":\"{{patient_id}}\",\n    \"taskDueDate\": \"{{task_due_date}}\",\n    \"taskPriorityId\": \"{{task_priority_id}}\",\n    \"taskStatusId\": \"{{task_status_id}}\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task - void",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "31fe0a3c-c3d5-4f2a-a8e3-c965e16d887a",
+						"exec": [
+							"let ld = require('lodash');",
+							"var taskVoidReasons;",
+							"",
+							"if(pm.environment.name === \"qa\"){",
+							"    taskVoidReasons = [",
+							"        {",
+							"            \"externalVoidReasonId\": \"c3fd794b-3d74-2418-4b11-ccafaba25e79\",",
+							"            \"voidReason\": \"Duplicate\",",
+							"            \"statusCode\": \"Void\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"d6615dce-0f68-3f00-a7dd-fb31062c1671\",",
+							"            \"voidReason\": \"Made in error\",",
+							"            \"statusCode\": \"Void\"",
+							"        }",
+							"    ]",
+							"}else if(pm.environment.name === \"dev\"){",
+							"    taskVoidReasons = [",
+							"        {",
+							"            \"externalVoidReasonId\": \"ce5517bb-b9fd-a3d1-3ccb-3bfecd9f93a7\",",
+							"            \"voidReason\": \"Duplicate\",",
+							"            \"statusCode\": \"Void\"",
+							"        },",
+							"        {",
+							"                \"externalVoidReasonId\": \"efb8a14b-39c4-f5e1-93e4-fbb2e85bd023\",",
+							"                \"voidReason\": \"Made in error\",",
+							"                \"statusCode\": \"Void\"",
+							"        }",
+							"    ]",
+							"}",
+							"",
+							"let randomTaskVoidReason = ld.sample(taskVoidReasons);",
+							"let taskVoidReasonName = randomTaskVoidReason.voidReason;",
+							"let taskVoidReasonId = randomTaskVoidReason.externalVoidReasonId;",
+							"",
+							"pm.environment.set(\"void_reason_id\", taskVoidReasonId);",
+							"pm.environment.set(\"void_reason_name\", taskVoidReasonName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad6a872d-031b-41a1-988c-d0b2627b352e",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//console.log(pm.response.body.toString);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the the task status as void\", function () {\r",
+							"    pm.expect(jsonData.taskStatusId).to.eql(4);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "98af3801-0e7c-42a2-be9c-cdc3a9ca6db7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskExternalId\": \"{{taskExternalId}}\",\n    \"taskName\": \"{{task_name}}\",\n    \"taskDescription\": \"{{task_description}}\",\n    \"taskCategoryExternalId\": \"{{category_id}}\",\n    \"taskSubCategoryExternalId\": \"{{sub_category_id}}\",\n    \"taskAssignedUserId\": \"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\",\n    \"taskCreatedByUserId\":\"{{task_createdby_userid}}\",\n    \"taskUpdatedByUserId\":\"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\",\n    \"taskUpdatedByUserName\": \"Bala 000analyst\",\n    \"patientId\":\"{{patient_id}}\",\n    \"taskDueDate\": \"{{task_due_date}}\",\n    \"taskPriorityId\": \"{{task_priority_id}}\",\n    \"taskStatusId\": \"4\",\n    \"voidReasonExternalId\": \"{{void_reason_id}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get void task details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66bb4d68-1f50-4a62-b3c5-bddc5b90efde",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"//console.log(pm.response.body.toString);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify the the task status as void with reason\", function () {",
+							"    pm.expect(jsonData.data[0].status.taskStatusName).to.eql(\"Void\");",
+							"    pm.expect(jsonData.data[0].status.taskStatusId).to.eql(4);",
+							"    pm.expect(jsonData.data[0].voidReason).to.eql(pm.environment.get(\"void_reason_name\"));",
+							"    pm.expect(jsonData.data[0].voidReasonExternalId).to.eql(pm.environment.get(\"void_reason_id\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "24b5ba52-73e0-47aa-bf34-73578f0cf744",
+						"exec": [
+							"",
+							"if(pm.environment.name === \"qa\"){",
+							"    pm.environment.set(\"taxt_ext_id\", \"53dc4b12-3790-4069-89fb-ace794546bb6\");",
+							"}else if(pm.environment.name === \"dev\"){",
+							"    pm.environment.set(\"taxt_ext_id\", \"4598a261-afce-4485-aeb0-594bba71ee42\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c99e850e-6814-4d53-bff0-b0bdd547608e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/composition/tasks?filter-by=task-external-id::{{taskExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"composition",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "assignee_external_id::961e1047-924f-401c-bd76-926a74f2c888%26assignee_external_id::5418e4cb-40cf-4ece-bbe5-d5eca2599c39%26assignee_external_id::f8505e8d-61cd-4487-a5e9-db957576e063%26status::Void%26status::To do",
+							"description": "combination of multiple assignee and status",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "start-date::01/17/2022%2000:00:00%26end-date::01/17/2022%2023:59:59",
+							"description": "filter by date",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "task-category-external-id::yd16e9b1-394c-470d-b03e-aa577f6fce2z",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "task-external-id::{{taskExternalId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify void reason in task activity logs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b59caaac-f1a4-4ac3-b7cb-be3bd5787b36",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify void reason in task activity logs\", function () {",
+							"    pm.expect(jsonData[1].voidReason).to.eql(pm.environment.get(\"void_reason_name\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "3fe39385-a324-473f-b538-44fadeb576e0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/composition/tasks/activity/{{taskExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"composition",
+						"tasks",
+						"activity",
+						"{{taskExternalId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task - Close",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e0a1cca8-2dbe-43d3-ad55-9d9ebea5a4ba",
+						"exec": [
+							"var date_timestamp = new Date().toISOString();\r",
+							"const task_priority_ids = [1, 2, 3];\r",
+							"\r",
+							"///// get random due date (today or future date) /////\r",
+							"var start = new Date();\r",
+							"var end = new Date(start.getFullYear()+1, 1, 1);\r",
+							"var task_due_date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));\r",
+							"var month = (task_due_date.getMonth() + 1) >= 10 ? task_due_date.getMonth() + 1 : \"0\" + (task_due_date.getMonth() + 1);\r",
+							"console.log(\"month: \" + month);\r",
+							"var day = (task_due_date.getDate() + 1) > 10 ? task_due_date.getDate() : \"0\" + task_due_date.getDate();\r",
+							"var task_due_date = task_due_date.getFullYear() + '-' + month + '-' + day;\r",
+							"task_due_date = task_due_date + \"T23:59:59.999Z\";\r",
+							"///// end - get random due date (today or future date) /////\r",
+							"\r",
+							"///// get random category and its sub_category\r",
+							"var category_id;\r",
+							"var sub_category_id;\r",
+							"\r",
+							"const category_names = [\r",
+							"    \"Admissions\",\r",
+							"    \"Billing\",\r",
+							"    \"Inquiry\",\r",
+							"    \"Outreach\",\r",
+							"    \"Referral\",\r",
+							"    \"Review\",\r",
+							"    \"Treatment team\"\r",
+							"];\r",
+							"\r",
+							"const category_ids = [\r",
+							"    \"bd12e9b1-394c-470d-b03e-aa577f6fce65\",\r",
+							"    \"yd16e9b1-394c-470d-b03e-aa577f6fce2z\",\r",
+							"    \"35e121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"    \"td1259b1-394c-470d-b03e-aa577f6fce2y\",\r",
+							"    \"rd12e9b1-394c-470d-b03e-aa577f6fce21\",\r",
+							"    \"bd12e9b1-394c-470d-b03e-aa577f6fce22\",\r",
+							"    \"bd12e9b1-394c-470d-b03e-aa577f6fce13\"\r",
+							"];\r",
+							"\r",
+							"var subcategories_names_map = {\r",
+							"    \"Admissions\": [\r",
+							"        \"Assessment\",\r",
+							"        \"Enroll\",\r",
+							"        \"General\",\r",
+							"        \"Insurance verification\",\r",
+							"        \"Medical clearance\",\r",
+							"        \"Medical records coordination\",\r",
+							"        \"Onboard\",\r",
+							"        \"Patient correspondence\",\r",
+							"        \"Phone screen\",\r",
+							"        \"Provider assignment\"\r",
+							"    ],\r",
+							"    \"Inquiry\": [\r",
+							"        \"Correspondence\",\r",
+							"        \"General\",\r",
+							"        \"Inbound outreach\",\r",
+							"        \"Initial outreach\",\r",
+							"        \"Insurance verification\",\r",
+							"        \"Phone screen\"\r",
+							"    ],\r",
+							"    \"Referral\": [\r",
+							"        \"Correspondence\",\r",
+							"        \"General\",\r",
+							"        \"Inbound outreach\",\r",
+							"        \"Initial outreach\",\r",
+							"        \"Phone screen\"\r",
+							"    ],\r",
+							"    \"Review\": [\r",
+							"        \"Consult\",\r",
+							"        \"Supervise\"\r",
+							"    ],\r",
+							"    \"Treatment Team\": [\r",
+							"        \"Assess\",\r",
+							"        \"Care plan\",\r",
+							"        \"Discharge\",\r",
+							"        \"Follow-up\",\r",
+							"        \"Order labs\",\r",
+							"        \"Prescribe meds\",\r",
+							"        \"Reminder\",\r",
+							"        \"Schedule appointment\"\r",
+							"    ]\r",
+							"}\r",
+							"\r",
+							"var subcategories_map = {\r",
+							"    \"Admissions\": [\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b8\",\r",
+							"        \"9xe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f210\",\r",
+							"        \"11e121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f212\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce22\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce23\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce24\",\r",
+							"        \"07f3014e-4dc9-4f9b-8c1a-5a66c03562a1\",\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce25\"\r",
+							"    ],\r",
+							"    \"Inquiry\": [\r",
+							"        \"txe121e9-bba2-4bf6-a1a9-8e401e93f2b5\",\r",
+							"        \"45e121e9-bba2-4bf6-a1a9-8e401e93f2b2\",\r",
+							"        \"3xe121e9-bba3-4bf6-a1a9-8e401e93f2be\",\r",
+							"        \"dxe121e9-bba4-4bf6-a1a9-8e401e93f2bp\",\r",
+							"        \"9621e600-7048-4c4b-8eae-942848bb5985\",\r",
+							"        \"rxe121e9-bba2-4bf6-a1a9-8e401e93f2b5\"\r",
+							"    ],\r",
+							"    \"Referral\": [\r",
+							"        \"rd12e9b1-394c-470d-b43e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-480d-b03e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-490d-b03e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-470d-b13e-aa577f6fce21\",\r",
+							"        \"rd12e9b1-394c-470d-b23e-aa577f6fce21\"\r",
+							"    ],\r",
+							"    \"Review\": [\r",
+							"        \"kd12e9b1-394c-470d-b03e-aa577f6fce2w\",\r",
+							"        \"md24e9b1-394c-470d-b03e-aa577f6fce2x\"\r",
+							"    ],\r",
+							"    \"Treatment Team\": [\r",
+							"        \"bd12e9b1-384c-470d-b03e-aa577f6fce15\",\r",
+							"        \"gd12e9b1-394c-470d-c23e-aa577f6fce19\",\r",
+							"        \"7d12e9b1-364c-i70d-b03e-aa577f6fce1u\",\r",
+							"        \"1412e9b1-394c-470d-b03e-aa577f6fce09\",\r",
+							"        \"bd12e9b2-394c-470d-b13e-aa577f6fce17\",\r",
+							"        \"cd12e9b1-394c-480d-b04e-aa577f6fce16\",\r",
+							"        \"7d12e9b1-364c-i70d-b03e-aa578f6fce1u\",\r",
+							"        \"qd12e9b1-494c-470d-b03e-aa578f6fce18\"\r",
+							"    ]\r",
+							"}\r",
+							"const category_index = Math.floor(Math.random() * category_names.length);\r",
+							"category_id = category_ids[category_index];\r",
+							"if (category_names[category_index] === \"Outreach\" || category_names[category_index] === \"Billing\") {\r",
+							"    sub_category_id = \"\";\r",
+							"} else {\r",
+							"    var subcategories_list = subcategories_map[category_names[category_index]];\r",
+							"    subcategory_list_index = Math.floor(Math.random() * subcategories_list.length);\r",
+							"    sub_category_id = subcategories_list[subcategory_list_index];\r",
+							"}\r",
+							"///// end - get random category and its sub_category ////////////////////\r",
+							"\r",
+							"pm.environment.set(\"task_name\", \"From Postman task name \" + date_timestamp + \" Equip Health\");\r",
+							"pm.environment.set(\"task_description\", \"task description \" + date_timestamp + \" Equip Health\");\r",
+							"pm.environment.set(\"category_id\", category_id);\r",
+							"pm.environment.set(\"sub_category_id\", sub_category_id);\r",
+							"pm.environment.set(\"patient_id\", \"27b373cb-ed6c-41eb-8255-1a2ad2701319\");\r",
+							"pm.environment.set(\"task_assigned_userid\", \"87a6b43f-1e22-4ff6-93ae-dc003fc9c0c5\");\r",
+							"pm.environment.set(\"task_assigned_username\", \"Bala Deema\");\r",
+							"pm.environment.set(\"task_createdby_userid\", \"bd12e9b1-394c-470d-b03e-aa577f6fce65\");\r",
+							"pm.environment.set(\"task_createdby_username\", \"Bala 000analyst\");\r",
+							"\r",
+							"pm.environment.set(\"task_due_date\", task_due_date);\r",
+							"pm.environment.set(\"task_priority_id\", task_priority_ids[Math.floor(Math.random() * task_priority_ids.length)]);\r",
+							"pm.environment.set(\"task_status_id\", \"1\");\r",
+							"pm.environment.set(\"task_comment_1\", \"task_comment_1\");\r",
+							"pm.environment.set(\"repeat\", false);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "35558802-c966-400b-a2b2-06a7da3febd7",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify taskExternalId is generated\", function () {\r",
+							"    pm.expect(jsonData.taskExternalId).length.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"taskExternalId\", jsonData.taskExternalId);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "223f4356-1beb-478b-9c83-c3bb5f6f0316",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskName\": \"{{task_name}}\",\n    \"taskDescription\": \"{{task_description}}\",\n    \"taskCategoryExternalId\": \"{{category_id}}\",\n    \"taskSubCategoryExternalId\": \"{{sub_category_id}}\",\n    \"taskAssignedUserId\": \"{{task_assigned_userid}}\",\n    \"taskAssignedUserName\": \"{{task_assigned_username}}\",\n    \"taskCreatedByUserId\":\"{{task_createdby_userid}}\",\n    \"taskCreatedByUserName\":\"{{task_createdby_username}}\",\n    \"patientId\":\"{{patient_id}}\",\n    \"taskDueDate\": \"{{task_due_date}}\",\n    \"taskPriorityId\": \"{{task_priority_id}}\",\n    \"taskStatusId\": \"{{task_status_id}}\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task - Close",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8a90c185-fcbb-4bc5-8402-110fcc5585a9",
+						"exec": [
+							"let ld = require('lodash');",
+							"var taskCloseReasons;",
+							"",
+							"if(pm.environment.name === \"qa\"){",
+							"    taskCloseReasons = [",
+							"        {",
+							"            \"externalVoidReasonId\": \"44311fa6-d22f-6e18-a556-5ac927cba47d\",",
+							"            \"voidReason\": \"Contemplative\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"5ac48255-5e18-79f9-f76a-33d2e33a3f09\",",
+							"            \"voidReason\": \"Declined - Admin/Equip delay\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"8ae3f9a4-dad2-35e6-0826-f6aab16c73b3\",",
+							"            \"voidReason\": \"Declined - Chose HLOC (IOP/PHP/RTC)\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"18e390f9-c582-189f-0300-8158e0045dfe\",",
+							"            \"voidReason\": \"Declined - Chose new output team\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"3fd8a6dd-9384-3686-8a5c-cad3f37af36b\",",
+							"            \"voidReason\": \"Declined - Continue with current team\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"9bd9c206-3394-175f-0ee7-2b59d3005a19\",",
+							"            \"voidReason\": \"Declined - Unknown tx choice\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"61e651b2-99af-71d7-bc97-d4c52f4df4bf\",",
+							"            \"voidReason\": \"MIA - Lost contact\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"a1350cb9-e671-4c52-e27c-ae2fc2edfbce\",",
+							"            \"voidReason\": \"MIA - No contact\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"7389a71c-2ddc-19d6-8e17-423b4534d298\",",
+							"            \"voidReason\": \"Not eligible - Wrong age\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"0f239f7e-f438-9d47-14af-e00a1189cb01\",",
+							"            \"voidReason\": \"Not eligible - Wrong state\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"722d42a0-c315-e294-68d7-25d92a026086\",",
+							"            \"voidReason\": \"Not qualified - Equip referred to clinical HLOC\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"87c4e1b5-6212-083d-0f4e-cf54aa8fb435\",",
+							"            \"voidReason\": \"Not qualified - Equip referred to medical HLOC\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"7334f6b2-6643-0512-6ee7-951188cc1161\",",
+							"            \"voidReason\": \"Not qualified - Family unwilling to participate in tx\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"c10f1f10-0027-2bff-b058-c70f8d20d1ac\",",
+							"            \"voidReason\": \"Not qualified - Financial - Can’t afford OOP $\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"2c6a9423-880e-47ab-d948-28484ecb51bf\",",
+							"            \"voidReason\": \"Not qualified - Financial - Insurance not in-network\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"1cad496c-f6fe-0632-012c-9541399cd511\",",
+							"            \"voidReason\": \"Not qualified - No eating disorder\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"c8440b53-70f5-76c1-7e96-20dc3c3d122e\",",
+							"            \"voidReason\": \"Not qualified - Not living with family\",",
+							"            \"statusCode\": \"Closed\"",
+							"        }",
+							"    ]",
+							"}else if(pm.environment.name === \"dev\"){",
+							"    taskCloseReasons = [",
+							"        {",
+							"            \"externalVoidReasonId\": \"12099397-baa8-5aca-8612-845e7b6a089a\",",
+							"            \"voidReason\": \"Contemplative\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"e50351dd-81c8-b300-6157-b383c35b1144\",",
+							"            \"voidReason\": \"Declined - Admin/Equip delay\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"8c883ce9-48e5-0c0f-ec16-52b03afb6d0e\",",
+							"            \"voidReason\": \"Declined - Chose HLOC (IOP/PHP/RTC)\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"06472ad9-fd23-cc80-01cd-37a7f8ebc36e\",",
+							"            \"voidReason\": \"Declined - Chose new output team\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"cca68e9a-3ae7-c28c-d36a-103bb1ed8dbf\",",
+							"            \"voidReason\": \"Declined - Continue with current team\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"bd86b660-5c6f-0f88-8cff-713e4d6f11d8\",",
+							"            \"voidReason\": \"Declined - Unknown tx choice\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"cd7df4d3-eead-da1e-310b-c86714447ccb\",",
+							"            \"voidReason\": \"MIA - Lost contact\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"9e006e57-96d1-606f-606b-83c4657e8a8d\",",
+							"            \"voidReason\": \"MIA - No contact\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"",
+							"        {",
+							"            \"externalVoidReasonId\": \"65dfd254-61a1-6992-5f7e-1cbc614243a4\",",
+							"            \"voidReason\": \"Not eligible - Wrong age\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"f9f64958-306a-1229-4aeb-103c57896389\",",
+							"            \"voidReason\": \"Not eligible - Wrong state\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"b56d0b21-39d7-5fd7-d4a4-ca1c97a717f6\",",
+							"            \"voidReason\": \"Not qualified - Equip referred to clinical HLOC\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"724d1af8-d37b-1e60-4e59-2761adcea15e\",",
+							"            \"voidReason\": \"Not qualified - Equip referred to medical HLOC\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"1dc3f3e2-8eb1-0286-32ec-34f3be460b52\",",
+							"            \"voidReason\": \"Not qualified - Family unwilling to participate in tx\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"fc2486f0-f569-097d-3f6a-31f2837686c7\",",
+							"            \"voidReason\": \"Not qualified - Financial - Can’t afford OOP $\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"4ee19c18-93c7-ba06-4dfc-dd505f2e73b1\",",
+							"            \"voidReason\": \"Not qualified - Financial - Insurance not in-network\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"37b14da1-d874-4daa-67fd-fe032d86e470\",",
+							"            \"voidReason\": \"Not qualified - Financial - Insurance not in-network\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"f8db653a-79dd-5d44-b17b-48b8d1294fc5\",",
+							"            \"voidReason\": \"Not qualified - No eating disorder\",",
+							"            \"statusCode\": \"Closed\"",
+							"        },",
+							"        {",
+							"            \"externalVoidReasonId\": \"39a9faa1-dfcf-9015-c05c-4ce20dadd0a8\",",
+							"            \"voidReason\": \"Not qualified - Not living with family\",",
+							"            \"statusCode\": \"Closed\"",
+							"        }",
+							"    ]",
+							"}",
+							"",
+							"let randomTaskCloseReason = ld.sample(taskCloseReasons);",
+							"let taskCloseReasonName = randomTaskCloseReason.voidReason;",
+							"let taskCloseReasonId = randomTaskCloseReason.externalVoidReasonId;",
+							"",
+							"pm.environment.set(\"close_reason_id\", taskCloseReasonId);",
+							"pm.environment.set(\"close_reason_name\", taskCloseReasonName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0af15dba-a29b-4e73-9d9a-2cca7b75f30a",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//console.log(pm.response.body.toString);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the the task status as void\", function () {\r",
+							"    pm.expect(jsonData.taskStatusId).to.eql(5);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "198788a9-14a5-4c16-b85e-2d5c929b1676",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskExternalId\": \"{{taskExternalId}}\",\n    \"taskName\": \"{{task_name}}\",\n    \"taskDescription\": \"{{task_description}}\",\n    \"taskCategoryExternalId\": \"{{category_id}}\",\n    \"taskSubCategoryExternalId\": \"{{sub_category_id}}\",\n    \"taskAssignedUserId\": \"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\",\n    \"taskCreatedByUserId\":\"{{task_createdby_userid}}\",\n    \"taskUpdatedByUserId\":\"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\",\n    \"taskUpdatedByUserName\": \"Bala 000analyst\",\n    \"patientId\":\"{{patient_id}}\",\n    \"taskDueDate\": \"{{task_due_date}}\",\n    \"taskPriorityId\": \"{{task_priority_id}}\",\n    \"taskStatusId\": \"5\",\n    \"voidReasonExternalId\": \"{{close_reason_id}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/tasks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Closed task details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4dd67c34-4bd7-458e-a96e-c60df8f45974",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"//console.log(pm.response.body.toString);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify the the task status as void with reason\", function () {",
+							"    pm.expect(jsonData.data[0].status.taskStatusName).to.eql(\"Closed\");",
+							"    pm.expect(jsonData.data[0].status.taskStatusId).to.eql(5);",
+							"    pm.expect(jsonData.data[0].voidReason).to.eql(pm.environment.get(\"close_reason_name\"));",
+							"    pm.expect(jsonData.data[0].voidReasonExternalId).to.eql(pm.environment.get(\"close_reason_id\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f0028b3e-f943-4b93-a7bc-18a5daae4b6a",
+						"exec": [
+							"",
+							"if(pm.environment.name === \"qa\"){",
+							"    pm.environment.set(\"taxt_ext_id\", \"53dc4b12-3790-4069-89fb-ace794546bb6\");",
+							"}else if(pm.environment.name === \"dev\"){",
+							"    pm.environment.set(\"taxt_ext_id\", \"4598a261-afce-4485-aeb0-594bba71ee42\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "bd00ac5f-33c5-47a3-a354-16ee471906a8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/composition/tasks?filter-by=task-external-id::{{taskExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"composition",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "assignee_external_id::961e1047-924f-401c-bd76-926a74f2c888%26assignee_external_id::5418e4cb-40cf-4ece-bbe5-d5eca2599c39%26assignee_external_id::f8505e8d-61cd-4487-a5e9-db957576e063%26status::Void%26status::To do",
+							"description": "combination of multiple assignee and status",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "start-date::01/17/2022%2000:00:00%26end-date::01/17/2022%2023:59:59",
+							"description": "filter by date",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "task-category-external-id::yd16e9b1-394c-470d-b03e-aa577f6fce2z",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "task-external-id::{{taskExternalId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify close reason in task activity logs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f7c07aa-c9cc-4230-ae34-00f5711ecaf3",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify close reason in task activity logs\", function () {",
+							"    pm.expect(jsonData[1].voidReason).to.eql(pm.environment.get(\"close_reason_name\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "0334084b-14db-4f07-8470-bc8362eca7a8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/composition/tasks/activity/{{taskExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"composition",
+						"tasks",
+						"activity",
+						"{{taskExternalId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5990345e-687f-49dc-92cd-709a081f49b6",
+				"type": "text/javascript",
+				"exec": [
+					"// Refresh the OAuth token if necessary",
+					"console.log('Current environment: ' + pm.environment.name);",
+					"",
+					"if (pm.environment.name === \"qa\") {",
+					"    pm.environment.set(\"vesta_audience\", \"https://equip-qa.us.auth0.com/api/v2/\");",
+					"    pm.environment.set(\"token_tenant\", \"equip-qa\");",
+					"    pm.environment.set(\"coookieURL\", \"https://equip-qa.us.auth0.com\");",
+					"    pm.environment.set(\"vesta_client_id\", \"octk74sRPfVm7zJz314cMMzFHnGO3B2s\")",
+					"    pm.environment.set(\"token_host\", \"https://equip-qa.us.auth0.com\")",
+					"} else if (pm.environment.name === \"dev\") {",
+					"    pm.environment.set(\"vesta_audience\", \"https://equip-dev.us.auth0.com/api/v2/\");",
+					"    pm.environment.set(\"token_tenant\", \"equip-dev\");",
+					"    pm.environment.set(\"coookieURL\", \"https://equip-dev.us.auth0.com\");",
+					"    pm.environment.set(\"vesta_client_id\", \"hh9fZVGIShbS2xXdr7B0glheYEKOFFdw\")",
+					"    pm.environment.set(\"token_host\", \"https://equip-dev.us.auth0.com\")",
+					"}",
+					"",
+					"var tokenDate = new Date(2010, 1, 1);",
+					"var tokenTimestamp = pm.environment.get(\"OAuth_Timestamp\");",
+					"if (tokenTimestamp) {",
+					"    tokenDate = Date.parse(tokenTimestamp);",
+					"}",
+					"var expiresInTime = pm.environment.get(\"ExpiresInTime\");",
+					"if (!expiresInTime) {",
+					"    expiresInTime = 86400000; // Set default expiration time to 24 hours (in ms)",
+					"}",
+					"",
+					"if ((new Date() - tokenDate) >= expiresInTime || pm.environment.get(\"test-token\") === \"\") {",
+					"    // clearCookies();",
+					"    getToken();",
+					"}",
+					"",
+					"var tokenAuthorizationCode1;",
+					"var tokenAuthorizationCode2;",
+					"//Function to generate token",
+					"function getToken() {",
+					"    //Clear cookies",
+					"    const cookieJar = pm.cookies.jar();",
+					"    cookieJar.clear(pm.environment.get(\"coookieURL\"), () => {",
+					"        console.log(\"Cookies cleared!\");",
+					"        cookieJar.clear(pm.environment.get(\"coookieURL\") + '/usernamepassword/login', () => {",
+					"            console.log(\"CSRF cookies cleared!\");",
+					"",
+					"            console.log(\"Generating token...\")",
+					"            //GET authorization code",
+					"            pm.sendRequest({",
+					"                url: pm.environment.get(\"token_host\") + '/authorize?audience=' + pm.environment.get(\"vesta_audience\")",
+					"                    + '&response_type=code&client_id=' + pm.environment.get(\"vesta_client_id\")",
+					"                    + '&redirect_uri=https://*.equip.health',",
+					"                method: 'GET',",
+					"                header: {",
+					"                    'Accept': '*/*'",
+					"                }",
+					"            }, (err, res) => {",
+					"                let responseHeaderData = res.headers.get('Location').split('=');",
+					"                let token = responseHeaderData[1].split('&');",
+					"                tokenAuthorizationCode1 = token[0];",
+					"                console.log(tokenAuthorizationCode1);",
+					"",
+					"                //POST request to login to vesta",
+					"                let url = pm.environment.get(\"token_host\") + '/usernamepassword/login';",
+					"                pm.sendRequest({",
+					"                    url: url,",
+					"                    method: 'POST',",
+					"                    header: {",
+					"                        'Accept': '*/*',",
+					"                        'Content-Type': 'application/x-www-form-urlencoded',",
+					"                    },",
+					"                    body: {",
+					"                        mode: 'urlencoded',",
+					"                        urlencoded: [",
+					"                            { key: \"username\", value: pm.environment.get(\"vesta_username\") },",
+					"                            { key: \"password\", value: pm.environment.get(\"vesta_password\") },",
+					"                            { key: \"state\", value: tokenAuthorizationCode1 },",
+					"                            { key: \"tenant\", value: pm.environment.get(\"token_tenant\") },",
+					"                            { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
+					"                            { key: \"redirect_uri\", value: \"https://*.equip.health\" },",
+					"                            { key: \"response_type\", value: \"code\" },",
+					"                            { key: \"connection\", value: \"Username-Password-Authentication\" }",
+					"                        ]",
+					"                    }",
+					"                }, (err, res) => {",
+					"                    const $ = cheerio.load(res.text());",
+					"                    var wresult = ($(\"input\")[1])['attribs'].value; // get wresult",
+					"                    var wctx = ($(\"input\")[2])['attribs'].value; // get wctx",
+					"",
+					"                    //POST request to get resume state",
+					"                    let url = pm.environment.get(\"token_host\") + '/login/callback';",
+					"                    pm.sendRequest({",
+					"                        url: url,",
+					"                        method: 'POST',",
+					"                        header: {",
+					"                            'Accept': '*/*',",
+					"                            'Content-Type': 'application/x-www-form-urlencoded',",
+					"                        },",
+					"                        body: {",
+					"                            mode: 'urlencoded',",
+					"                            urlencoded: [",
+					"                                { key: \"wa\", value: \"wsignin1.0\" },",
+					"                                { key: \"wresult\", value: wresult },",
+					"                                { key: \"wctx\", value: wctx }",
+					"                            ]",
+					"                        }",
+					"                    }, (err, res) => {",
+					"                        //GET authorization code",
+					"                        pm.sendRequest({",
+					"                            url: pm.environment.get(\"token_host\")",
+					"                                + '/authorize?audience=' + pm.environment.get(\"vesta_audience\")",
+					"                                + '&response_type=code&client_id=' + pm.environment.get(\"vesta_client_id\")",
+					"                                + '&redirect_uri=https://*.equip.health',",
+					"                            method: 'GET',",
+					"                            header: {",
+					"                                'Accept': '*/*'",
+					"                            }",
+					"                        }, (err, res) => {",
+					"                            console.log(res);",
+					"                            let responseHeaderData = res.headers.get('Location').split('=');",
+					"                            let token = responseHeaderData[1].split('&');",
+					"                            // console.log(token[0]);",
+					"                            tokenAuthorizationCode2 = token[0];",
+					"                            // Get token using POST request",
+					"                            let url = pm.environment.get(\"token_host\") + '/oauth/token';",
+					"                            pm.sendRequest({",
+					"                                url: url,",
+					"                                method: 'POST',",
+					"                                header: {",
+					"                                    'Accept': '*/*',",
+					"                                    'Content-Type': 'application/x-www-form-urlencoded',",
+					"                                },",
+					"                                body: {",
+					"                                    mode: 'urlencoded',",
+					"                                    urlencoded: [",
+					"                                        { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
+					"                                        { key: \"code\", value: tokenAuthorizationCode2 },",
+					"                                        { key: \"audience\", value: pm.environment.get(\"vesta_audience\") },",
+					"                                        { key: \"grant_type\", value: \"authorization_code\" },",
+					"                                        { key: \"redirect_uri\", value: \"https://*.equip.health\" }]",
+					"                                }",
+					"                            }, (err, res) => {",
+					"                                console.log(res.json().access_token)",
+					"                                pm.environment.set(\"test-token\", res.json().access_token)",
+					"                                pm.environment.set(\"OAuth_Timestamp\", new Date());",
+					"",
+					"                                // Set the ExpiresInTime variable to the time given in the response if it exists",
+					"                                if (res.json().expires_in) {",
+					"                                    expiresInTime = res.json().expires_in * 1000;",
+					"                                }",
+					"                                pm.environment.set(\"ExpiresInTime\", expiresInTime);",
+					"                            })",
+					"                        });",
+					"                    });",
+					"",
+					"                });",
+					"            });",
+					"        });",
+					"    });",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f5da26c8-7740-4c7a-b2a1-7d4996923027",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

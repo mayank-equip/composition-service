@@ -1,0 +1,3287 @@
+{
+	"info": {
+		"_postman_id": "de14f261-bc2d-42c0-90e2-68b9845b7cb1",
+		"name": "assessment-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19609580-de14f261-bc2d-42c0-90e2-68b9845b7cb1"
+	},
+	"item": [
+		{
+			"name": "Soft delete assessment",
+			"item": [
+				{
+					"name": "Add Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f21c8ab9-2197-4843-b13e-5732620eab94",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify id is generated\", function () {",
+									"    pm.expect(jsonData.id).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.environment.set(\"patientId\", jsonData.id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "58d53e23-c20c-480d-9255-e13e3f66fda8",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"let gendersList = [",
+									"    \"Cis-gender male\",",
+									"    \"Cis-gender female\",",
+									"    \"Non-binary\",",
+									"    \"Other\",",
+									"    \"Unknown\",",
+									"    \"Transgender male\",",
+									"    \"Transgender female\"",
+									"];",
+									"",
+									"let pronounsList = [",
+									"    \"(F)ae/(F)aer/(F)aers\",",
+									"    \"Ey/Em/Eirs\",",
+									"    \"He/Him/His\",",
+									"    \"None\",",
+									"    \"Other\",",
+									"    \"She/Her/Hers\",",
+									"    \"They/Them/Theirs\",",
+									"    \"Xe/Xem/Xir\"",
+									"];",
+									"",
+									"let ethnicitiesList = [",
+									"    \"Asian\",",
+									"    \"Black/African American\",",
+									"    \"White/Caucasian\",",
+									"    \"Hispanic/Latinx\",",
+									"    \"Native American, Indian American, or Alaska Native\",",
+									"    \"Native Hawaiian or other Pacific Islander\",",
+									"    \"Middle Eastern or North African\",",
+									"    \"Prefer not to answer\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let languagesList = [",
+									"    \"Afrikaans\",",
+									"    \"American Sign Language (ASL)\",",
+									"    \"Armenian\",",
+									"    \"Bamanankan\",",
+									"    \"Bavarian\",",
+									"    \"Bengali\",",
+									"    \"Bhojpuri\",",
+									"    \"Burmese\",",
+									"    \"Cameroonian Pidgin\",",
+									"    \"Cebuano\",",
+									"    \"Chinese (Mandarin)\",",
+									"    \"Chinese (Wu/Shanghainese)\",",
+									"    \"Chinese (Yue/Cantonese)\",",
+									"    \"Chittagonian\",",
+									"    \"Czech\",",
+									"    \"Deccan\",",
+									"    \"Dutch\",",
+									"    \"Eastern Punjabi\",",
+									"    \"Egyptian Spoken Arabic\",",
+									"    \"English\",",
+									"    \"Filipino\",",
+									"    \"French\",",
+									"    \"Gan Chinese\",",
+									"    \"Greek\",",
+									"    \"Gujarati\",",
+									"    \"Hakka Chinese\",",
+									"    \"Hausa\",",
+									"    \"Hindi\",",
+									"    \"Hungarian\",",
+									"    \"Igbo\",",
+									"    \"Indonesian\",",
+									"    \"Iranian Persian\",",
+									"    \"Italian\",",
+									"    \"Japanese\",",
+									"    \"Javanese\",",
+									"    \"Jinyu Chinese\",",
+									"    \"Kannada\",",
+									"    \"Kazakh\",",
+									"    \"Khmer\",",
+									"    \"Korean\",",
+									"    \"Magahi\",",
+									"    \"Maithili\",",
+									"    \"Malay\",",
+									"    \"Malayalam\",",
+									"    \"Marathi\",",
+									"    \"Nepali\",",
+									"    \"Nigerian Fulfulde\",",
+									"    \"Nigerian Pidgin\",",
+									"    \"Northeastern Thai\",",
+									"    \"Northern Kurdish\",",
+									"    \"Northern Pashto\",",
+									"    \"Northern Uzbek\",",
+									"    \"Odia\",",
+									"    \"Persian\",",
+									"    \"Polish\",",
+									"    \"Portuguese\",",
+									"    \"Romanian\",",
+									"    \"Russian\",",
+									"    \"Sadri\",",
+									"    \"Saraiki\",",
+									"    \"Serbo-Croatian\",",
+									"    \"Sindhi\",",
+									"    \"Somali\",",
+									"    \"South Azerbaijani\",",
+									"    \"Southern Min Chinese\",",
+									"    \"Spanish\",",
+									"    \"Standard Arabic\",",
+									"    \"Standard German\",",
+									"    \"Sunda\",",
+									"    \"Swahili\",",
+									"    \"Swedish\",",
+									"    \"Sylheti\",",
+									"    \"Tagalog\",",
+									"    \"Tamil\",",
+									"    \"Telugu\",",
+									"    \"Thai\",",
+									"    \"Turkish\",",
+									"    \"Ukrainian\",",
+									"    \"Urdu\",",
+									"    \"Vietnamese\",",
+									"    \"Western Punjabi\",",
+									"    \"Xhosa\",",
+									"    \"Xiang Chinese\",",
+									"    \"Yiddish\",",
+									"    \"Yoruba\",",
+									"    \"Zulu\"",
+									"];",
+									"",
+									"let sexList = [",
+									"    \"Male\",",
+									"    \"Female\",",
+									"    \"Unknown\"",
+									"];",
+									"",
+									"let timezonesList = [",
+									"    \"Alaska Time\",",
+									"    \"Arizona\",",
+									"    \"Central Time\",",
+									"    \"Eastern Time\",",
+									"    \"Hawaii Standard Time\",",
+									"    \"Hawaii-Aleutian Time\",",
+									"    \"London/UK Time\",",
+									"    \"Mountain Time\",",
+									"    \"Pacific Time\"",
+									"];",
+									"",
+									"let contactPreferences = [",
+									"    \"Email\",",
+									"    \"No preference\",",
+									"    \"Phone\",",
+									"    \"SMS\",",
+									"    \"Unknown\"",
+									"];",
+									"",
+									"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+									"",
+									"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+									"",
+									"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+									"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+									"let zip = Math.floor(10000 + Math.random() * 90000);",
+									"",
+									"//Generate random Date of Birth in YYYY-MM-DD Format",
+									"function randomDate(start, end) {",
+									"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+									"}",
+									"let date = randomDate(new Date(1990, 00, 01), new Date());",
+									"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+									"",
+									"//Save the variables to be used in next request for validation",
+									"pm.environment.set(\"patientFirstName\", firstName);",
+									"pm.environment.set(\"patientLastName\", lastName);",
+									"pm.environment.set(\"patientEmail\", email);",
+									"pm.environment.set(\"patientPhoneNumber\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));",
+									"pm.environment.set(\"patientChosenName\", chosenName);",
+									"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+									"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+									"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+									"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+									"pm.environment.set(\"patientState\", ld.sample(statesList));",
+									"pm.environment.set(\"patientCountry\", \"US\");",
+									"pm.environment.set(\"patientZip\", zip.toString());",
+									"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+									"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(pronounsList, 3).sort()));",
+									"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(pronounsList, 3).sort()));",
+									"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+									"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "dc7353aa-1a9c-4664-b953-a51e2e4956b9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"{{patientPhoneNumber}}\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": {{patientPronounsOnRecord}},\n    \"pronounsOffRecord\": {{patientPronounsOffRecord}},\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/patients",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create assessment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ef2953e3-94e3-468a-a9a6-b53edeb8c0f6",
+								"exec": [
+									"const submitted_source_list = ['Web', 'Phone', 'Email'];",
+									"",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);",
+									"",
+									"pm.environment.set(\"userPhone\", \"+12073444381\");",
+									"if (pm.environment.name === \"dev\") {",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");",
+									"    pm.environment.set(\"providerUserId\", \"5832a752-4b0a-4a00-ae1e-935245cc642b\");",
+									"} else if (pm.environment.name === \"qa\") {",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");",
+									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "00c9cb90-08f8-47c5-b104-252fa2fb9a32",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify responseExternalId is generated\", function () {",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c81e322b-afc0-4868-a62b-15cc52ac40fd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"New\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\",\n    \"submittedUserId\": \"{{providerUserid}}\",\n    \"surveyName\": \"Intake\",\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"toUserFirstName\": \"{{patientFirstName}}\",\n    \"toUserLastName\": \"{{patientLastName}}\",\n    \"toUserPhone\": \"{{userPhone}}\",\n    \"userId\": \"{{patientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/assessments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete assessment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d452c561-1fe4-4453-b532-d392ffae3ebb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "aff0b587-927c-495d-88cb-9154b0d06302",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "039c08c3-2b0b-41db-baa1-09e6bcbad930",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/surveys/delete/survey/{{assessment_responseExternalId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"surveys",
+								"delete",
+								"survey",
+								"{{assessment_responseExternalId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get assessment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5c0900b1-fe0c-495b-a612-2f362c74a110",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "288f4ea5-0a33-4bb4-9b35-6a6d2c08e3ae",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify assessment count is zero\", function () {",
+									"    pm.expect(jsonData.count).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "34488bcd-4721-40b0-8e45-bfaa1796abf6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=surveyName::Intake%26userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}",
+									"disabled": true
+								},
+								{
+									"key": "filter-by",
+									"value": "surveyName::Intake%26userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "58583f53-c18d-4803-bb09-504a9aeea29e"
+		},
+		{
+			"name": "Verify surveys",
+			"item": [
+				{
+					"name": "Get survey list Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "caf625f1-f22e-48cf-ad08-dd82bb4449c9",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify id is generated\", function () {",
+									"    // pm.expect(jsonData.id).length.greaterThan(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "54c79673-9d73-43f8-8346-075d8746635e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{test-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/surveys",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"surveys"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "surveyName::FNS",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "2a1a8b8d-e530-4bb4-8040-804613dc6aeb"
+		},
+		{
+			"name": "Add Patient 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cf4e1715-c510-498f-b421-ada99685a5e4",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify id is generated\", function () {",
+							"    pm.expect(jsonData.id).length.greaterThan(0);",
+							"});",
+							"",
+							"pm.environment.set(\"patientId\", jsonData.id);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ef137eaa-b1fb-4a5f-9a2e-6f50782b4140",
+						"exec": [
+							"let ld = require('lodash');",
+							"",
+							"let gendersList = [",
+							"    \"Cis-gender male\",",
+							"    \"Cis-gender female\",",
+							"    \"Non-binary\",",
+							"    \"Other\",",
+							"    \"Unknown\",",
+							"    \"Transgender male\",",
+							"    \"Transgender female\"",
+							"];",
+							"",
+							"let pronounsList = [",
+							"    \"(F)ae/(F)aer/(F)aers\",",
+							"    \"Ey/Em/Eirs\",",
+							"    \"He/Him/His\",",
+							"    \"None\",",
+							"    \"Other\",",
+							"    \"She/Her/Hers\",",
+							"    \"They/Them/Theirs\",",
+							"    \"Xe/Xem/Xir\"",
+							"];",
+							"",
+							"let ethnicitiesList = [",
+							"    \"Asian\",",
+							"    \"Black/African American\",",
+							"    \"White/Caucasian\",",
+							"    \"Hispanic/Latinx\",",
+							"    \"Native American, Indian American, or Alaska Native\",",
+							"    \"Native Hawaiian or other Pacific Islander\",",
+							"    \"Middle Eastern or North African\",",
+							"    \"Prefer not to answer\",",
+							"    \"Other\"",
+							"];",
+							"",
+							"let languagesList = [",
+							"    \"Afrikaans\",",
+							"    \"American Sign Language (ASL)\",",
+							"    \"Armenian\",",
+							"    \"Bamanankan\",",
+							"    \"Bavarian\",",
+							"    \"Bengali\",",
+							"    \"Bhojpuri\",",
+							"    \"Burmese\",",
+							"    \"Cameroonian Pidgin\",",
+							"    \"Cebuano\",",
+							"    \"Chinese (Mandarin)\",",
+							"    \"Chinese (Wu/Shanghainese)\",",
+							"    \"Chinese (Yue/Cantonese)\",",
+							"    \"Chittagonian\",",
+							"    \"Czech\",",
+							"    \"Deccan\",",
+							"    \"Dutch\",",
+							"    \"Eastern Punjabi\",",
+							"    \"Egyptian Spoken Arabic\",",
+							"    \"English\",",
+							"    \"Filipino\",",
+							"    \"French\",",
+							"    \"Gan Chinese\",",
+							"    \"Greek\",",
+							"    \"Gujarati\",",
+							"    \"Hakka Chinese\",",
+							"    \"Hausa\",",
+							"    \"Hindi\",",
+							"    \"Hungarian\",",
+							"    \"Igbo\",",
+							"    \"Indonesian\",",
+							"    \"Iranian Persian\",",
+							"    \"Italian\",",
+							"    \"Japanese\",",
+							"    \"Javanese\",",
+							"    \"Jinyu Chinese\",",
+							"    \"Kannada\",",
+							"    \"Kazakh\",",
+							"    \"Khmer\",",
+							"    \"Korean\",",
+							"    \"Magahi\",",
+							"    \"Maithili\",",
+							"    \"Malay\",",
+							"    \"Malayalam\",",
+							"    \"Marathi\",",
+							"    \"Nepali\",",
+							"    \"Nigerian Fulfulde\",",
+							"    \"Nigerian Pidgin\",",
+							"    \"Northeastern Thai\",",
+							"    \"Northern Kurdish\",",
+							"    \"Northern Pashto\",",
+							"    \"Northern Uzbek\",",
+							"    \"Odia\",",
+							"    \"Persian\",",
+							"    \"Polish\",",
+							"    \"Portuguese\",",
+							"    \"Romanian\",",
+							"    \"Russian\",",
+							"    \"Sadri\",",
+							"    \"Saraiki\",",
+							"    \"Serbo-Croatian\",",
+							"    \"Sindhi\",",
+							"    \"Somali\",",
+							"    \"South Azerbaijani\",",
+							"    \"Southern Min Chinese\",",
+							"    \"Spanish\",",
+							"    \"Standard Arabic\",",
+							"    \"Standard German\",",
+							"    \"Sunda\",",
+							"    \"Swahili\",",
+							"    \"Swedish\",",
+							"    \"Sylheti\",",
+							"    \"Tagalog\",",
+							"    \"Tamil\",",
+							"    \"Telugu\",",
+							"    \"Thai\",",
+							"    \"Turkish\",",
+							"    \"Ukrainian\",",
+							"    \"Urdu\",",
+							"    \"Vietnamese\",",
+							"    \"Western Punjabi\",",
+							"    \"Xhosa\",",
+							"    \"Xiang Chinese\",",
+							"    \"Yiddish\",",
+							"    \"Yoruba\",",
+							"    \"Zulu\"",
+							"];",
+							"",
+							"let sexList = [",
+							"    \"Male\",",
+							"    \"Female\",",
+							"    \"Unknown\"",
+							"];",
+							"",
+							"let timezonesList = [",
+							"    \"Alaska Time\",",
+							"    \"Arizona\",",
+							"    \"Central Time\",",
+							"    \"Eastern Time\",",
+							"    \"Hawaii Standard Time\",",
+							"    \"Hawaii-Aleutian Time\",",
+							"    \"London/UK Time\",",
+							"    \"Mountain Time\",",
+							"    \"Pacific Time\"",
+							"];",
+							"",
+							"let contactPreferences = [",
+							"    \"Email\",",
+							"    \"No preference\",",
+							"    \"Phone\",",
+							"    \"SMS\",",
+							"    \"Unknown\"",
+							"];",
+							"",
+							"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+							"",
+							"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+							"",
+							"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+							"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+							"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+							"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+							"let zip = Math.floor(10000 + Math.random() * 90000);",
+							"",
+							"//Generate random Date of Birth in YYYY-MM-DD Format",
+							"function randomDate(start, end) {",
+							"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+							"}",
+							"let date = randomDate(new Date(1990, 00, 01), new Date());",
+							"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+							"",
+							"//Save the variables to be used in next request for validation",
+							"pm.environment.set(\"patientFirstName\", firstName);",
+							"pm.environment.set(\"patientLastName\", lastName);",
+							"pm.environment.set(\"patientEmail\", email);",
+							"pm.environment.set(\"patientPhoneNumber\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));",
+							"pm.environment.set(\"patientChosenName\", chosenName);",
+							"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+							"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+							"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+							"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+							"pm.environment.set(\"patientState\", ld.sample(statesList));",
+							"pm.environment.set(\"patientCountry\", \"US\");",
+							"pm.environment.set(\"patientZip\", zip.toString());",
+							"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+							"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+							"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+							"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+							"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+							"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+							"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(pronounsList, 3).sort()));",
+							"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(pronounsList, 3).sort()));",
+							"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+							"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+							"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "93a17eb5-1915-44b9-9c7b-3c9bc48efcbf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"{{patientPhoneNumber}}\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": {{patientPronounsOnRecord}},\n    \"pronounsOffRecord\": {{patientPronounsOffRecord}},\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users/patients",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create assessment - patient 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8cda9277-43cd-4e12-9e24-0cf7618e5879",
+						"exec": [
+							"",
+							"const submitted_source_list = ['Web', 'Phone', 'Email'];",
+							"",
+							"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);",
+							"// pm.environment.set(\"userEmail\", \"balakrishna@equip.health\");",
+							"pm.environment.set(\"userPhone\", \"+917842414959\");",
+							"pm.environment.set(\"providerFirstname\", \"Bala\");",
+							"pm.environment.set(\"providerLastname\", \"000analyst\");",
+							"pm.environment.set(\"providerUserid\", \"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "28434e7a-7bed-4c73-ad6d-afcfe2858aa2",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify responseExternalId is generated\", function () {",
+							"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.environment.set(\"assessment_responseExternalId\", jsonData.responseExternalId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "516d2ec9-ba95-4e8d-9971-bce353d783f5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"New\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\",\n    \"submittedUserId\": \"d74afcfb-9786-4dba-9139-c8bbc511783f\",\n    \"surveyName\": \"CET\",\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"toUserFirstName\": \"{{patientFirstName}}\",\n    \"toUserLastName\": \"{{patientLastName}}\",\n    \"toUserPhone\": \"{{userPhone}}\",\n    \"userId\": \"{{patientId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get survey list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a494381-f98f-4e39-a7bb-f28f9b1eda89",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify id is generated\", function () {",
+							"    // pm.expect(jsonData.id).length.greaterThan(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "b84bcc51-e7b6-460c-8de1-28c7a25dc5cd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/surveys?filter-by=surveyName::FNS",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"surveys"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "surveyName::FNS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get assessment - patient 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1db50b4b-008a-4f9c-bbff-eaa2b681a451",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "85a355d7-c059-4d56-9a47-25c645dc08dd",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment count\", function () {",
+							"    pm.expect(jsonData.count).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment responseExternalId\", function () {",
+							"    pm.expect(jsonData.assessments[0].responseExternalId).to.eql(pm.environment.get(\"assessment_responseExternalId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment status\", function () {",
+							"    pm.expect(jsonData.assessments[0].status).to.eql('New');",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submitted source\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedSource).to.eql(pm.environment.get(\"submittedSource\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey definition\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyDefinition).to.eql(JSON.parse(pm.environment.get(\"definition\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey external id\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyExternalId).to.eql(pm.environment.get(\"survey_ext_id\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey name\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyName).to.eql(pm.environment.get(\"survey_name\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment created date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userEmail\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserEmail).to.eql(pm.environment.get(\"userEmail\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userPhone\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserPhone).to.eql(pm.environment.get(\"userPhone\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userId\", function () {",
+							"    pm.expect(jsonData.assessments[0].userId).to.eql(pm.environment.get(\"patientId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submittedUserId\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedUserId).to.eql(pm.environment.get(\"createdByUserId\"));",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "26e03660-59c2-4db3-bd88-b2e9806494ff",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "surveyName::{{survey_name}}%26userId::{{patientId}}",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "userId::{{patientId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update assessment - patient 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "afc6ce3b-0e1f-40f5-bf53-46660b544d2a",
+						"exec": [
+							"",
+							"var updated_assessment_json_body = { firstName: \"Balakrishna\", lastName: \"Deema\", patientDOB: \"1989-08-22\", assignedGenderAtBirth: \"Male\", patientGender: \"cis gender-male\", patientPronouns: \"he/his/him\", patientEthnicity: \"Asian\", patientHouseholdIncome: \"$50,000 to $74,999\", patientEmail: \"balakrishna@equip.health\", patientPhone: \"7842414959\", patientMail: \"Asifnagar, hyderabad - 500030\", patientCity: \"Hyderabad\", patientState: \"Telangana\", patientZipcode: \"50034\", question2: \"Los vegas\", patientPreferredContact: [\"SMS\", \"Email\"] };",
+							"",
+							"pm.environment.set('updated_assessment_json_body', JSON.stringify(JSON.stringify(updated_assessment_json_body)));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e179dbe-40c4-4dcb-9602-d7a7cc090456",
+						"exec": [
+							"var jsonData = pm.response.text();",
+							"",
+							"console.log(\"jsonData: \" + jsonData);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response message\", function () {",
+							"    pm.expect(jsonData).to.equal(\"Survey response saved!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "cf197ce0-aab5-4fa9-87cb-43ed1b029629",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"jsonResults\": {{updated_assessment_json_body}},\n  \"status\": \"In progress\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments/{{assessment_responseExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments",
+						"{{assessment_responseExternalId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get assessment updated - patient 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3bb080fe-36c6-4b29-926a-9dcc18f89a16",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "08ab3d1f-24fa-473c-88c8-d1d15dbffed5",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment count\", function () {",
+							"    pm.expect(jsonData.count).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment responseExternalId\", function () {",
+							"    pm.expect(jsonData.assessments[0].responseExternalId).to.eql(pm.environment.get(\"assessment_responseExternalId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment status\", function () {",
+							"    pm.expect(jsonData.assessments[0].status).to.eql('In progress');",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submitted source\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedSource).to.eql(pm.environment.get(\"submittedSource\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey definition\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyDefinition).to.eql(JSON.parse(pm.environment.get(\"definition\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey jsonResults\", function () {",
+							"    pm.expect(jsonData.assessments[0].jsonResults).to.eql(JSON.parse(pm.environment.get(\"updated_assessment_json_body\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey external id\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyExternalId).to.eql(pm.environment.get(\"survey_ext_id\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey name\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyName).to.eql(pm.environment.get(\"survey_name\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment created date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userEmail\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserEmail).to.eql(pm.environment.get(\"userEmail\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userPhone\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserPhone).to.eql(pm.environment.get(\"userPhone\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userId\", function () {",
+							"    pm.expect(jsonData.assessments[0].userId).to.eql(pm.environment.get(\"patientId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submittedUserId\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedUserId).to.eql(pm.environment.get(\"createdByUserId\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "dbe59af2-b36f-4e9b-8de9-c2750c56dd96",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "surveyName::{{survey_name}}%26userId::{{patientId}}",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "userId::{{patientId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update assessment - patient - InComplete",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "78c1d355-3b7d-49b5-838a-b2176c7596d4",
+						"exec": [
+							"",
+							"var updated_assessment_json_body = { firstName: \"Balakrishna\", lastName: \"Deema\", patientDOB: \"1989-08-22\", assignedGenderAtBirth: \"Male\", patientGender: \"cis gender-male\", patientPronouns: \"he/his/him\", patientEthnicity: \"Asian\", patientHouseholdIncome: \"$50,000 to $74,999\", patientEmail: \"balakrishna@equip.health\", patientPhone: \"7842414959\", patientMail: \"Asifnagar, hyderabad - 500030\", patientCity: \"Hyderabad\", patientState: \"Telangana\", patientZipcode: \"50034\", question2: \"Los vegas\", patientPreferredContact: [\"SMS\", \"Email\"] };",
+							"",
+							"pm.environment.set('updated_assessment_json_body', JSON.stringify(JSON.stringify(updated_assessment_json_body)));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "22369c1b-bd9a-4177-9d27-58c0675eb34d",
+						"exec": [
+							"var jsonData = pm.response.text();",
+							"",
+							"console.log(\"jsonData: \" + jsonData);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response message\", function () {",
+							"    pm.expect(jsonData).to.equal(\"Survey response saved!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "bb2e99e6-4515-4db3-bc52-e335689d83ee",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"jsonResults\": {{updated_assessment_json_body}},\n  \"status\": \"InComplete\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments/{{assessment_responseExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments",
+						"{{assessment_responseExternalId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get assessment updated - patient InComplete",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "482bf233-2533-4fe0-b90d-237aad3eecaa",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a11172f8-670a-4fae-9827-ede6c41c82f7",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment count\", function () {",
+							"    pm.expect(jsonData.count).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment responseExternalId\", function () {",
+							"    pm.expect(jsonData.assessments[0].responseExternalId).to.eql(pm.environment.get(\"assessment_responseExternalId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment status\", function () {",
+							"    pm.expect(jsonData.assessments[0].status).to.eql('In progress');",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submitted source\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedSource).to.eql(pm.environment.get(\"submittedSource\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey definition\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyDefinition).to.eql(JSON.parse(pm.environment.get(\"definition\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey jsonResults\", function () {",
+							"    pm.expect(jsonData.assessments[0].jsonResults).to.eql(JSON.parse(pm.environment.get(\"updated_assessment_json_body\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey external id\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyExternalId).to.eql(pm.environment.get(\"survey_ext_id\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey name\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyName).to.eql(pm.environment.get(\"survey_name\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment created date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userEmail\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserEmail).to.eql(pm.environment.get(\"userEmail\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userPhone\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserPhone).to.eql(pm.environment.get(\"userPhone\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userId\", function () {",
+							"    pm.expect(jsonData.assessments[0].userId).to.eql(pm.environment.get(\"patientId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submittedUserId\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedUserId).to.eql(pm.environment.get(\"createdByUserId\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "8a29c33c-d9bd-47db-a180-bb754a1b5047",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "surveyName::{{survey_name}}%26userId::{{patientId}}",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "userId::{{patientId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update assessment - patient - Done Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "46b00e2d-dd2b-4fc2-b522-f2964b7aada6",
+						"exec": [
+							"",
+							"var updated_assessment_json_body = { firstName: \"Balakrishna\", lastName: \"Deema\", patientDOB: \"1989-08-22\", assignedGenderAtBirth: \"Male\", patientGender: \"cis gender-male\", patientPronouns: \"he/his/him\", patientEthnicity: \"Asian\", patientHouseholdIncome: \"$50,000 to $74,999\", patientEmail: \"balakrishna@equip.health\", patientPhone: \"7842414959\", patientMail: \"Asifnagar, hyderabad - 500030\", patientCity: \"Hyderabad\", patientState: \"Telangana\", patientZipcode: \"50034\", question2: \"Los vegas\", patientPreferredContact: [\"SMS\", \"Email\"] };",
+							"",
+							"pm.environment.set('updated_assessment_json_body', JSON.stringify(JSON.stringify(updated_assessment_json_body)));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1403a2f4-f61c-44f1-aa1d-59850ab1fe0d",
+						"exec": [
+							"var jsonData = pm.response.text();",
+							"",
+							"console.log(\"jsonData: \" + jsonData);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response message\", function () {",
+							"    pm.expect(jsonData).to.equal(\"Survey response saved!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "eb1bed21-c6c9-49d0-bc0c-73840174c5dc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"jsonResults\": {{updated_assessment_json_body}},\n  \"status\": \"Done\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments/{{assessment_responseExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments",
+						"{{assessment_responseExternalId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get assessment updated - patient Done",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aeddb008-47e8-4ec0-9b8b-93bf3ee293ea",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e9ca24b8-a9a9-4a0d-be58-05c26dabe008",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment count\", function () {",
+							"    pm.expect(jsonData.count).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment responseExternalId\", function () {",
+							"    pm.expect(jsonData.assessments[0].responseExternalId).to.eql(pm.environment.get(\"assessment_responseExternalId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment status\", function () {",
+							"    pm.expect(jsonData.assessments[7].status).to.eql('Done');",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submitted source\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedSource).to.eql(pm.environment.get(\"submittedSource\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey definition\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyDefinition).to.eql(JSON.parse(pm.environment.get(\"definition\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey jsonResults\", function () {",
+							"    pm.expect(jsonData.assessments[0].jsonResults).to.eql(JSON.parse(pm.environment.get(\"updated_assessment_json_body\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey external id\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyExternalId).to.eql(pm.environment.get(\"survey_ext_id\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey name\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyName).to.eql(pm.environment.get(\"survey_name\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment created date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userEmail\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserEmail).to.eql(pm.environment.get(\"userEmail\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userPhone\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserPhone).to.eql(pm.environment.get(\"userPhone\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userId\", function () {",
+							"    pm.expect(jsonData.assessments[0].userId).to.eql(pm.environment.get(\"patientId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submittedUserId\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedUserId).to.eql(pm.environment.get(\"createdByUserId\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "160a6e3a-d101-455e-b709-ef6d7b2d0dfe",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "surveyName::{{survey_name}}%26userId::{{patientId}}",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "userId::{{patientId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update assessment Edit user - patient 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d694fe40-0c9a-4a51-9b1b-d7f69af5480e",
+						"exec": [
+							"",
+							"var updated_assessment_json_body = { firstName: \"Balakrishna\", lastName: \"Deema\", patientDOB: \"1989-08-22\", assignedGenderAtBirth: \"Male\", patientGender: \"cis gender-male\", patientPronouns: \"he/his/him\", patientEthnicity: \"Asian\", patientHouseholdIncome: \"$50,000 to $74,999\", patientEmail: \"balakrishna@equip.health\", patientPhone: \"7842414959\", patientMail: \"Asifnagar, hyderabad - 500030\", patientCity: \"Hyderabad\", patientState: \"Telangana\", patientZipcode: \"50034\", question2: \"Los vegas\", patientPreferredContact: [\"SMS\", \"Email\"] };",
+							"",
+							"pm.environment.set('updated_assessment_json_body', JSON.stringify(JSON.stringify(updated_assessment_json_body)));",
+							"",
+							"pm.environment.set('updatedUserEmail', \"balakrishna@equip.health\");",
+							"pm.environment.set('updatedUserPhone', \"+917842414959\");",
+							"pm.environment.set('updatedPatientFirstname', pm.variables.replaceIn('{{$randomFirstName}}'));",
+							"pm.environment.set('updatedPatientLastname', pm.variables.replaceIn('{{$randomLastName}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5164c0d0-84d6-40fe-866f-2e71ab7a9041",
+						"exec": [
+							"var jsonData = pm.response.text();",
+							"",
+							"console.log(\"jsonData: \" + jsonData);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response message\", function () {",
+							"    pm.expect(jsonData).to.equal(\"Survey response user details saved!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "bc73a1a9-d0c7-4154-8d0a-a65663cde5f1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"toUserEmail\": \"{{updatedUserEmail}}\",\n    \"toUserFirstName\": \"{{updatedPatientFirstname}}\",\n    \"toUserLastName\": \"{{updatedPatientLastname}}\",\n    \"toUserPhone\": \"{{updatedUserPhone}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments/{{assessment_responseExternalId}}/edit-user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments",
+						"{{assessment_responseExternalId}}",
+						"edit-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create assessment - invalid survey name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "40b7b6f5-4b74-47f2-b194-a313f8bc9627",
+						"exec": [
+							"",
+							"",
+							"pm.environment.set(\"userEmail\", \"balakrishna@equip.health\");",
+							"pm.environment.set(\"userPhone\", \"+917842414959\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebc6d74c-e31e-4530-8248-f7a6976168cb",
+						"exec": [
+							"var jsonData = pm.response.text();",
+							"",
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response message\", function () {",
+							"    pm.expect(jsonData).to.equal(\"Error saving assessment - Unrecognized survey name\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "42b5ae37-c6af-491c-a872-c55ceb91787e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"New\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"surveyName\": \"1234567890\",\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"toUserFirstName\": \"{{patientFirstName}}\",\n  \"toUserLastName\": \"{{patientLastName}}\",\n  \"toUserPhone\": \"{{userPhone}}\",\n  \"userId\": \"{{patientId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Patient 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "06aa4e73-142f-4ab6-9121-6e3501e2dd28",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify id is generated\", function () {",
+							"    pm.expect(jsonData.id).length.greaterThan(0);",
+							"});",
+							"",
+							"pm.environment.set(\"patientId2\", jsonData.id);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2d23c0d6-ec37-4f19-878a-d8f53fb9d811",
+						"exec": [
+							"let ld = require('lodash');",
+							"",
+							"let gendersList = [",
+							"    \"Cis-gender male\",",
+							"    \"Cis-gender female\",",
+							"    \"Non-binary\",",
+							"    \"Other\",",
+							"    \"Unknown\",",
+							"    \"Transgender male\",",
+							"    \"Transgender female\"",
+							"];",
+							"",
+							"let pronounsList = [",
+							"    \"He/Him/His\",",
+							"    \"She/Her/Hers\",",
+							"    \"They/Them/Theirs\",",
+							"    \"Other\"",
+							"];",
+							"",
+							"let ethnicitiesList = [",
+							"    \"Asian\",",
+							"    \"Black/African American\",",
+							"    \"White/Caucasian\",",
+							"    \"Hispanic/Latinx\",",
+							"    \"Native American, Indian American, or Alaska Native\",",
+							"    \"Native Hawaiian or other Pacific Islander\",",
+							"    \"Middle Eastern or North African\",",
+							"    \"Prefer not to answer\",",
+							"    \"Other\"",
+							"];",
+							"",
+							"let languagesList = [",
+							"    \"English\",",
+							"    \"Spanish\",",
+							"    \"Chinese\",",
+							"    \"French\",",
+							"    \"Tagalog\",",
+							"    \"Vietnamese\",",
+							"    \"Korean\",",
+							"    \"German\",",
+							"    \"Russian\",",
+							"    \"Italian\",",
+							"    \"Portuguese\",",
+							"    \"Polish\",",
+							"    \"Japanese\",",
+							"    \"Persian\",",
+							"    \"Greek\",",
+							"    \"Serbo-Croatian\",",
+							"    \"Armenian\",",
+							"    \"Yiddish\",",
+							"    \"American Sign Language (ASL)\"",
+							"];",
+							"",
+							"let sexList = [",
+							"    \"Male\",",
+							"    \"Female\"",
+							"];",
+							"",
+							"let timezonesList = [",
+							"    \"Hawaii Standard Time\",",
+							"    \"Hawaii-Aleutian Time\",",
+							"    \"Alaska Time\",",
+							"    \"Pacific Time\",",
+							"    \"Arizona\",",
+							"    \"Mountain Time\",",
+							"    \"Central Time\",",
+							"    \"Eastern Time\"",
+							"];",
+							"",
+							"let contactPreferences = [\"Email\", \"No preference\", \"Phone\", \"Unknown\"];",
+							"",
+							"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+							"",
+							"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+							"",
+							"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+							"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+							"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+							"let email = \"qa\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+							"let zip = Math.floor(10000 + Math.random() * 90000);",
+							"",
+							"//Generate random Date of Birth in YYYY-MM-DD Format",
+							"function randomDate(start, end) {",
+							"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+							"}",
+							"let date = randomDate(new Date(1990, 00, 01), new Date());",
+							"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+							"",
+							"//Save the variables to be used in next request for validation",
+							"pm.environment.set(\"patientFirstName2\", firstName);",
+							"pm.environment.set(\"patientLastName2\", lastName);",
+							"pm.environment.set(\"patientEmail\", email);",
+							"pm.environment.set(\"patientPhoneNumber\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));",
+							"pm.environment.set(\"patientChosenName\", chosenName);",
+							"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+							"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+							"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+							"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+							"pm.environment.set(\"patientState\", ld.sample(statesList));",
+							"pm.environment.set(\"patientCountry\", \"US\");",
+							"pm.environment.set(\"patientZip\", zip.toString());",
+							"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+							"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+							"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+							"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+							"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+							"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+							"pm.environment.set(\"patientPronounsOnRecord\", ld.sample(pronounsList));",
+							"pm.environment.set(\"patientPronounsOffRecord\", ld.sample(pronounsList));",
+							"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+							"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+							"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "12556aea-e1c8-4891-96ce-b555776db8c8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"{{patientFirstName}}\",\n    \"lastName\": \"{{patientLastName}}\",\n    \"dateOfBirth\": \"{{patientDateOfBirth}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"ethnicities\": {{patientEthnicities}},\n    \"phoneNumber\": \"{{patientPhoneNumber}}\",\n    \"chosenName\": \"{{patientChosenName}}\",\n    \"languages\": {{patientLanguages}},\n    \"genderOnRecord\": \"{{patientGenderOnRecord}}\",\n    \"genderOffRecord\": \"{{patientGenderOffRecord}}\",\n    \"pronounsOnRecord\": \"{{patientPronounsOnRecord}}\",\n    \"pronounsOffRecord\": \"{{patientPronounsOffRecord}}\",\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"state\": \"{{patientState}}\",\n    \"zip\": \"{{patientZip}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users/patients",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get survey list - update survey",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b0f84fc2-ee6f-43ff-882c-58afeb680182",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f238465-c471-425c-aa57-0f78fe85da88",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify survey count\", function () {",
+							"    pm.expect(jsonData.count).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Verify survey Created by\", function () {",
+							"    pm.expect(jsonData.surveys[0].createdByUserId).to.eql(pm.environment.get(\"createdByUserId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey Created date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.surveys[0].createdDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify survey updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.surveys[0].createdDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify survey definition\", function () {",
+							"    pm.expect(JSON.stringify(jsonData.surveys[0].definition)).to.eql(pm.environment.get(\"updated_definition\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey description\", function () {",
+							"    pm.expect(jsonData.surveys[0].description).to.eql(pm.environment.get(\"updated_survey_description\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey fromEmail\", function () {",
+							"    pm.expect(jsonData.surveys[0].fromEmail).to.eql(pm.environment.get(\"fromEmail\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey name\", function () {",
+							"    pm.expect(jsonData.surveys[0].name).to.eql(pm.environment.get(\"survey_name\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey schema\", function () {",
+							"    pm.expect(JSON.stringify(jsonData.surveys[0].schema)).to.eql(pm.environment.get(\"updated_schema\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey status\", function () {",
+							"    pm.expect(jsonData.surveys[0].status).to.eql(pm.environment.get(\"survey_status\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey surveyExternalId\", function () {",
+							"    pm.expect(jsonData.surveys[0].surveyExternalId).to.eql(pm.environment.get(\"survey_ext_id\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.surveys[0].createdDate).to.contains(d);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "45114f3c-5050-4757-9e09-fa90e213ba53",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/surveys?filter-by=surveyName::{{survey_name}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"surveys"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "surveyName::{{survey_name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create assessment - patient2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8032be03-12db-43eb-9deb-a2e01740b443",
+						"exec": [
+							"",
+							"const submitted_source_list = ['Web', 'Phone', 'Email'];",
+							"",
+							"pm.environment.set(\"submittedSource2\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);",
+							"pm.environment.set(\"userEmail2\", \"balakrishna@equip.health\");",
+							"pm.environment.set(\"userPhone2\", \"+917842414959\");",
+							"pm.environment.set(\"providerFirstname\", \"Bala\");",
+							"pm.environment.set(\"providerLastname\", \"000analyst\");",
+							"pm.environment.set(\"providerUserid\", \"f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9f3c0438-4879-4979-8d8e-b1654d452cc4",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify responseExternalId is generated\", function () {",
+							"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.environment.set(\"assessment_responseExternalId2\", jsonData.responseExternalId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "6b54cc62-5379-4ff7-9127-5c39daa2ba8d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"New\",\n  \"submittedSource\": \"{{submittedSource2}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"surveyName\": \"{{survey_name}}\",\n  \"toUserEmail\": \"{{userEmail2}}\",\n  \"toUserFirstName\": \"{{patientFirstName2}}\",\n  \"toUserLastName\": \"{{patientLastName2}}\",\n  \"toUserPhone\": \"{{userPhone2}}\",\n  \"userId\": \"{{patientId2}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get assessment - patient2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86bcd940-a690-498d-bd3e-16c3b9f867d1",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment count\", function () {",
+							"    pm.expect(jsonData.count).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment responseExternalId\", function () {",
+							"    pm.expect(jsonData.assessments[0].responseExternalId).to.eql(pm.environment.get(\"assessment_responseExternalId2\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment status\", function () {",
+							"    pm.expect(jsonData.assessments[0].status).to.eql('New');",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submitted source\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedSource).to.eql(pm.environment.get(\"submittedSource2\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey definition\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyDefinition).to.eql(JSON.parse(pm.environment.get(\"updated_definition\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey external id\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyExternalId).to.eql(pm.environment.get(\"survey_ext_id\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey name\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyName).to.eql(pm.environment.get(\"survey_name\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment created date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userEmail\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserEmail).to.eql(pm.environment.get(\"userEmail2\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userPhone\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserPhone).to.eql(pm.environment.get(\"userPhone2\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userId\", function () {",
+							"    pm.expect(jsonData.assessments[0].userId).to.eql(pm.environment.get(\"patientId2\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName2\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserLastName).to.eql(pm.environment.get(\"patientLastName2\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submittedUserId\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedUserId).to.eql(pm.environment.get(\"createdByUserId\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a6b3bcb0-bce4-4e99-bc7f-ab756a831d9c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "d4523ebe-0e69-4de7-85d8-4a37bb4b6d3a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments?filter-by=surveyName::{{survey_name}}%26userId::{{patientId2}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "userId::{{patientId2}}",
+							"disabled": true
+						},
+						{
+							"key": "filter-by",
+							"value": "surveyName::{{survey_name}}%26userId::{{patientId2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get assessment - patient 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b1b14280-a67b-49f7-a8c1-af29259beb46",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f6a0bb09-b0bb-4fa1-bf2d-ed774fce4868",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment count\", function () {",
+							"    pm.expect(jsonData.count).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment responseExternalId\", function () {",
+							"    pm.expect(jsonData.assessments[0].responseExternalId).to.eql(pm.environment.get(\"assessment_responseExternalId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment status\", function () {",
+							"    pm.expect(jsonData.assessments[0].status).to.eql('In progress');",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submitted source\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedSource).to.eql(pm.environment.get(\"submittedSource\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey definition\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyDefinition).to.eql(JSON.parse(pm.environment.get(\"definition\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey external id\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyExternalId).to.eql(pm.environment.get(\"survey_ext_id\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey name\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyName).to.eql(pm.environment.get(\"survey_name\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userEmail\", function () {",
+							"    pm.expect(jsonData.assessments[0].userEmail).to.eql(pm.environment.get(\"toUserEmail\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userPhone\", function () {",
+							"    pm.expect(jsonData.assessments[0].userPhone).to.eql(pm.environment.get(\"toUserPhone\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userId\", function () {",
+							"    pm.expect(jsonData.assessments[0].userId).to.eql(pm.environment.get(\"patientId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserFirstName).to.eql(pm.environment.get(\"updatedPatientFirstname\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserLastName).to.eql(pm.environment.get(\"updatedPatientLastname\"));",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "02f742d3-bbb8-4423-afe1-5e946fd03c31",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments?filter-by=surveyName::{{survey_name}}%26userId::{{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "surveyName::{{survey_name}}%26userId::{{patientId}}"
+						},
+						{
+							"key": "filter-by",
+							"value": "userId::{{patientId}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "complete assessment - invalid assessment ext id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e7a684d7-0ffc-46bf-8a95-58521a697552",
+						"exec": [
+							"",
+							"var complete_assessment_json_body = { \"firstName\": \"venkatesh\", \"lastName\": \"a\", \"patientDOB\": \"1989-01-01\", \"assignedGenderAtBirth\": \"Male\", \"patientGender\": \"cis gender-male\", \"patientPronouns\": \"he/his/him\", \"patientEthnicity\": \"Native Hawaiian or other pacific islander\", \"patientHouseholdIncome\": \"$75,000 to $99,999\", \"patientEmail\": \"venky@equip.health\", \"patientPhone\": \"9209374937\", \"patientMail\": \"sdf\", \"patientCity\": \"sdf\", \"patientState\": \"sdgf\", \"patientZipcode\": \"90009\", \"question2\": \"sdfsd\", \"patientPreferredContact\": [\"SMS\", \"Email\"], \"familyTreatmentSupport\": \"0\", \"providerName\": \"medical provider\", \"providerAddress\": \"3-24\", \"providerCity\": \"medical provider city\", \"providerState\": \"mp state\", \"providerZip\": \"sdf\", \"providerEmail\": \"medicalp@gmail.com\", \"providerPhone\": \"0980\", \"lastAppointment\": \"2020-09-09\", \"pharmacyName\": \"preferred pharmacy\", \"medicalConditions\": [\"other\"], \"medicalConditions-Comment\": \"hiper thyroid\", \"physicalSymptoms\": [\"other\"], \"physicalSymptoms-Comment\": \"other symptoms\", \"surgeries\": [\"other\"], \"surgeries-Comment\": \"other surgery\", \"hospitalized\": \"No\", \"currentMedications\": \"No\", \"allergies\": \"No\", \"onsetMenstruation\": \"none\", \"onsetSymptoms\": \"2021-01-02\", \"EDdiagnoses\": [\"other\"], \"EDdiagnoses-Comment\": \"other diagnoses\", \"EDtreatment\": [\"none\"], \"currentTherapsit\": \"No\", \"prescription\": \"No\", \"EDsymptoms\": [\"binge-eating\"], \"caloryIntake\": \"89\", \"food\": [\"other\"], \"food-Comment\": \"other food\", \"height\": \"5.5\", \"weight\": \"70\", \"highestWeight\": \"100\", \"highestDate\": \"2019-02-03\", \"lowestWeight\": \"30\", \"question10\": \"2017-08-09\", \"psychiatricDiagnoses\": [\"depression\"], \"psychiatricSymptoms\": [\"none\"], \"suicideHistory\": \"No\", \"safetyConcerns\": \"No\", \"aggression\": \"No\", \"trauma\": \"No\", \"familyConditions\": [\"none\"], \"suicide\": \"Yes\", \"suicideInfo\": \"additional information\", \"school\": [\"Charter school\"], \"question18\": \"a\", \"accommodations\": [\"504 plan\", \"individualized education program (IEP)\"], \"activities\": [\"other\"], \"activities-Comment\": \"other activity\", \"patientSiblings\": \"No\", \"livingSituation\": [\"other\"], \"livingSituation-Comment\": \"current living situation\" }",
+							"",
+							"pm.environment.set('complete_assessment_json_body', JSON.stringify(JSON.stringify(complete_assessment_json_body)));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f072207-1be3-4408-9814-0f06ce5b99a6",
+						"exec": [
+							"var jsonData = pm.response.text();",
+							"",
+							"console.log(\"jsonData: \" + jsonData);",
+							"",
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response\", function () {",
+							"    pm.expect(jsonData).to.equal(\"Assessment not found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "b2867c60-5093-4a2d-9395-f63d8b1d8e80",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userEmail\": \"{{userEmail}}\",\n  \"userName\": \"{{patientFirstName}}\",\n  \"jsonResults\": {{complete_assessment_json_body}},\n  \"responseExternalId\": \"1234567890\",\n  \"status\": \"Done\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"toUserEmail\": \"{{userEmail}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments/1234567890",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments",
+						"1234567890"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "complete assessment - patient 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "53396ed1-16fc-4b49-9776-117edf3d3db1",
+						"exec": [
+							"",
+							"var complete_assessment_json_body = { \"firstName\": \"venkatesh\", \"lastName\": \"a\", \"patientDOB\": \"1989-01-01\", \"assignedGenderAtBirth\": \"Male\", \"patientGender\": \"cis gender-male\", \"patientPronouns\": \"he/his/him\", \"patientEthnicity\": \"Native Hawaiian or other pacific islander\", \"patientHouseholdIncome\": \"$75,000 to $99,999\", \"patientEmail\": \"venky@equip.health\", \"patientPhone\": \"9209374937\", \"patientMail\": \"sdf\", \"patientCity\": \"sdf\", \"patientState\": \"sdgf\", \"patientZipcode\": \"90009\", \"question2\": \"sdfsd\", \"patientPreferredContact\": [\"SMS\", \"Email\"], \"familyTreatmentSupport\": \"0\", \"providerName\": \"medical provider\", \"providerAddress\": \"3-24\", \"providerCity\": \"medical provider city\", \"providerState\": \"mp state\", \"providerZip\": \"sdf\", \"providerEmail\": \"medicalp@gmail.com\", \"providerPhone\": \"0980\", \"lastAppointment\": \"2020-09-09\", \"pharmacyName\": \"preferred pharmacy\", \"medicalConditions\": [\"other\"], \"medicalConditions-Comment\": \"hiper thyroid\", \"physicalSymptoms\": [\"other\"], \"physicalSymptoms-Comment\": \"other symptoms\", \"surgeries\": [\"other\"], \"surgeries-Comment\": \"other surgery\", \"hospitalized\": \"No\", \"currentMedications\": \"No\", \"allergies\": \"No\", \"onsetMenstruation\": \"none\", \"onsetSymptoms\": \"2021-01-02\", \"EDdiagnoses\": [\"other\"], \"EDdiagnoses-Comment\": \"other diagnoses\", \"EDtreatment\": [\"none\"], \"currentTherapsit\": \"No\", \"prescription\": \"No\", \"EDsymptoms\": [\"binge-eating\"], \"caloryIntake\": \"89\", \"food\": [\"other\"], \"food-Comment\": \"other food\", \"height\": \"5.5\", \"weight\": \"70\", \"highestWeight\": \"100\", \"highestDate\": \"2019-02-03\", \"lowestWeight\": \"30\", \"question10\": \"2017-08-09\", \"psychiatricDiagnoses\": [\"depression\"], \"psychiatricSymptoms\": [\"none\"], \"suicideHistory\": \"No\", \"safetyConcerns\": \"No\", \"aggression\": \"No\", \"trauma\": \"No\", \"familyConditions\": [\"none\"], \"suicide\": \"Yes\", \"suicideInfo\": \"additional information\", \"school\": [\"Charter school\"], \"question18\": \"a\", \"accommodations\": [\"504 plan\", \"individualized education program (IEP)\"], \"activities\": [\"other\"], \"activities-Comment\": \"other activity\", \"patientSiblings\": \"No\", \"livingSituation\": [\"other\"], \"livingSituation-Comment\": \"current living situation\" }",
+							"",
+							"pm.environment.set('complete_assessment_json_body', JSON.stringify(JSON.stringify(complete_assessment_json_body)));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b0b5f2d-1617-4b7a-9442-8596d0f41f7c",
+						"exec": [
+							"var jsonData = pm.response.text();",
+							"",
+							"console.log(\"jsonData: \" + jsonData);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response\", function () {",
+							"    pm.expect(jsonData).to.equal(\"Survey response saved!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "98847c3e-a416-4a5f-afea-ea085f85d7b9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"toUserEmail\": \"{{updatedUserEmail}}\",\n  \"jsonResults\": {{complete_assessment_json_body}},\n  \"status\": \"Done\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments/{{assessment_responseExternalId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments",
+						"{{assessment_responseExternalId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get assessment complete - patient 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1a39f351-2501-4fb8-bb29-275318dd666a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee32b21e-7964-45cf-b1df-5ce24b717787",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment count\", function () {",
+							"    pm.expect(jsonData.count).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment responseExternalId\", function () {",
+							"    pm.expect(jsonData.assessments[0].responseExternalId).to.eql(pm.environment.get(\"assessment_responseExternalId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment status\", function () {",
+							"    pm.expect(jsonData.assessments[0].status).to.eql('Done');",
+							"});",
+							"",
+							"pm.test(\"Verify assessment submitted source\", function () {",
+							"    pm.expect(jsonData.assessments[0].submittedSource).to.eql(pm.environment.get(\"submittedSource\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey definition\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyDefinition).to.eql(JSON.parse(pm.environment.get(\"definition\")));",
+							"});",
+							"",
+							"pm.test(\"Verify survey external id\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyExternalId).to.eql(pm.environment.get(\"survey_ext_id\"));",
+							"});",
+							"",
+							"pm.test(\"Verify survey name\", function () {",
+							"    pm.expect(jsonData.assessments[0].surveyName).to.eql(pm.environment.get(\"survey_name\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment updated date\", function () {",
+							"    var d = new Date();",
+							"    d.setDate(d.getDate());",
+							"    d = d.toISOString().slice(0, 10);",
+							"    d = d.split(\"T\")[0];",
+							"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userEmail\", function () {",
+							"    pm.expect(jsonData.assessments[0].userEmail).to.eql(pm.environment.get(\"toUserEmail\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userPhone\", function () {",
+							"    pm.expect(jsonData.assessments[0].userPhone).to.eql(pm.environment.get(\"toUserPhone\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment userId\", function () {",
+							"    pm.expect(jsonData.assessments[0].userId).to.eql(pm.environment.get(\"patientId\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserFirstName).to.eql(pm.environment.get(\"updatedPatientFirstname\"));",
+							"});",
+							"",
+							"pm.test(\"Verify assessment toUserFirstName\", function () {",
+							"    pm.expect(jsonData.assessments[0].toUserLastName).to.eql(pm.environment.get(\"updatedPatientLastname\"));",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "3245845b-98f3-4987-9128-de04b39842e4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments?filter-by=surveyName::{{survey_name}}%26userId::{{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					],
+					"query": [
+						{
+							"key": "filter-by",
+							"value": "surveyName::{{survey_name}}%26userId::{{patientId}}"
+						},
+						{
+							"key": "filter-by",
+							"value": "userId::{{patientId}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create assessment - invalid submitted source name",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3eb25953-8e33-4c09-9e54-3eaa5540f547",
+						"exec": [
+							"",
+							"const submitted_source_list = ['Web', 'Phone', 'Email'];",
+							"",
+							"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);",
+							"pm.environment.set(\"userEmail\", \"balakrishna@equip.health\");",
+							"pm.environment.set(\"userPhone\", \"+917842414959\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "352699d6-8fbe-44ee-87af-88d4432abdaa",
+						"exec": [
+							"var jsonData = pm.response.text();",
+							"",
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response message\", function () {",
+							"    pm.expect(jsonData).to.equal(\"Unrecognized submitted source name\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "beeed0ae-35bc-4586-bae5-8ecee86aba31",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{test-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"New\",\n  \"submittedSource\": \"Gmail\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"surveyName\": \"{{survey_name}}\",\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"toUserFirstName\": \"{{patientFirstName}}\",\n  \"toUserLastName\": \"{{patientLastName}}\",\n  \"toUserPhone\": \"{{userPhone}}\",\n  \"userId\": \"{{patientId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/assessments",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"assessments"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1ffbba86-28ad-46f2-a2aa-882342b9c4ed",
+				"type": "text/javascript",
+				"exec": [
+					"// Refresh the OAuth token if necessary",
+					"console.log('Current environment: ' + pm.environment.name);",
+					"",
+					"if (pm.environment.name === \"qa\") {",
+					"    pm.environment.set(\"vesta_audience\", \"https://equip-qa.us.auth0.com/api/v2/\");",
+					"    pm.environment.set(\"token_tenant\", \"equip-qa\");",
+					"    pm.environment.set(\"coookieURL\", \"https://equip-qa.us.auth0.com\");",
+					"    pm.environment.set(\"vesta_client_id\", \"octk74sRPfVm7zJz314cMMzFHnGO3B2s\")",
+					"    pm.environment.set(\"token_host\", \"https://equip-qa.us.auth0.com\")",
+					"} else if (pm.environment.name === \"dev\") {",
+					"    pm.environment.set(\"vesta_audience\", \"https://equip-dev.us.auth0.com/api/v2/\");",
+					"    pm.environment.set(\"token_tenant\", \"equip-dev\");",
+					"    pm.environment.set(\"coookieURL\", \"https://equip-dev.us.auth0.com\");",
+					"    pm.environment.set(\"vesta_client_id\", \"hh9fZVGIShbS2xXdr7B0glheYEKOFFdw\")",
+					"    pm.environment.set(\"token_host\", \"https://equip-dev.us.auth0.com\")",
+					"}",
+					"",
+					"var tokenDate = new Date(2010, 1, 1);",
+					"var tokenTimestamp = pm.environment.get(\"OAuth_Timestamp\");",
+					"if (tokenTimestamp) {",
+					"    tokenDate = Date.parse(tokenTimestamp);",
+					"}",
+					"var expiresInTime = pm.environment.get(\"ExpiresInTime\");",
+					"if (!expiresInTime) {",
+					"    expiresInTime = 86400000; // Set default expiration time to 24 hours (in ms)",
+					"}",
+					"",
+					"if ((new Date() - tokenDate) >= expiresInTime || pm.environment.get(\"test-token\") === \"\") {",
+					"    // clearCookies();",
+					"    getToken();",
+					"}",
+					"",
+					"var tokenAuthorizationCode1;",
+					"var tokenAuthorizationCode2;",
+					"//Function to generate token",
+					"function getToken() {",
+					"    //Clear cookies",
+					"    const cookieJar = pm.cookies.jar();",
+					"    cookieJar.clear(pm.environment.get(\"coookieURL\"), () => {",
+					"        console.log(\"Cookies cleared!\");",
+					"        cookieJar.clear(pm.environment.get(\"coookieURL\") + '/usernamepassword/login', () => {",
+					"            console.log(\"CSRF cookies cleared!\");",
+					"",
+					"            console.log(\"Generating token...\")",
+					"            //GET authorization code",
+					"            pm.sendRequest({",
+					"                url: pm.environment.get(\"token_host\") + '/authorize?audience=' + pm.environment.get(\"vesta_audience\")",
+					"                    + '&response_type=code&client_id=' + pm.environment.get(\"vesta_client_id\")",
+					"                    + '&redirect_uri=https://*.equip.health',",
+					"                method: 'GET',",
+					"                header: {",
+					"                    'Accept': '*/*'",
+					"                }",
+					"            }, (err, res) => {",
+					"                let responseHeaderData = res.headers.get('Location').split('=');",
+					"                let token = responseHeaderData[1].split('&');",
+					"                tokenAuthorizationCode1 = token[0];",
+					"                console.log(tokenAuthorizationCode1);",
+					"",
+					"                //POST request to login to vesta",
+					"                let url = pm.environment.get(\"token_host\") + '/usernamepassword/login';",
+					"                pm.sendRequest({",
+					"                    url: url,",
+					"                    method: 'POST',",
+					"                    header: {",
+					"                        'Accept': '*/*',",
+					"                        'Content-Type': 'application/x-www-form-urlencoded',",
+					"                    },",
+					"                    body: {",
+					"                        mode: 'urlencoded',",
+					"                        urlencoded: [",
+					"                            { key: \"username\", value: pm.environment.get(\"vesta_username\") },",
+					"                            { key: \"password\", value: pm.environment.get(\"vesta_password\") },",
+					"                            { key: \"state\", value: tokenAuthorizationCode1 },",
+					"                            { key: \"tenant\", value: pm.environment.get(\"token_tenant\") },",
+					"                            { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
+					"                            { key: \"redirect_uri\", value: \"https://*.equip.health\" },",
+					"                            { key: \"response_type\", value: \"code\" },",
+					"                            { key: \"connection\", value: \"Username-Password-Authentication\" }",
+					"                        ]",
+					"                    }",
+					"                }, (err, res) => {",
+					"                    const $ = cheerio.load(res.text());",
+					"                    var wresult = ($(\"input\")[1])['attribs'].value; // get wresult",
+					"                    var wctx = ($(\"input\")[2])['attribs'].value; // get wctx",
+					"",
+					"                    //POST request to get resume state",
+					"                    let url = pm.environment.get(\"token_host\") + '/login/callback';",
+					"                    pm.sendRequest({",
+					"                        url: url,",
+					"                        method: 'POST',",
+					"                        header: {",
+					"                            'Accept': '*/*',",
+					"                            'Content-Type': 'application/x-www-form-urlencoded',",
+					"                        },",
+					"                        body: {",
+					"                            mode: 'urlencoded',",
+					"                            urlencoded: [",
+					"                                { key: \"wa\", value: \"wsignin1.0\" },",
+					"                                { key: \"wresult\", value: wresult },",
+					"                                { key: \"wctx\", value: wctx }",
+					"                            ]",
+					"                        }",
+					"                    }, (err, res) => {",
+					"                        //GET authorization code",
+					"                        pm.sendRequest({",
+					"                            url: pm.environment.get(\"token_host\")",
+					"                                + '/authorize?audience=' + pm.environment.get(\"vesta_audience\")",
+					"                                + '&response_type=code&client_id=' + pm.environment.get(\"vesta_client_id\")",
+					"                                + '&redirect_uri=https://*.equip.health',",
+					"                            method: 'GET',",
+					"                            header: {",
+					"                                'Accept': '*/*'",
+					"                            }",
+					"                        }, (err, res) => {",
+					"                            console.log(res);",
+					"                            let responseHeaderData = res.headers.get('Location').split('=');",
+					"                            let token = responseHeaderData[1].split('&');",
+					"                            // console.log(token[0]);",
+					"                            tokenAuthorizationCode2 = token[0];",
+					"                            // Get token using POST request",
+					"                            let url = pm.environment.get(\"token_host\") + '/oauth/token';",
+					"                            pm.sendRequest({",
+					"                                url: url,",
+					"                                method: 'POST',",
+					"                                header: {",
+					"                                    'Accept': '*/*',",
+					"                                    'Content-Type': 'application/x-www-form-urlencoded',",
+					"                                },",
+					"                                body: {",
+					"                                    mode: 'urlencoded',",
+					"                                    urlencoded: [",
+					"                                        { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
+					"                                        { key: \"code\", value: tokenAuthorizationCode2 },",
+					"                                        { key: \"audience\", value: pm.environment.get(\"vesta_audience\") },",
+					"                                        { key: \"grant_type\", value: \"authorization_code\" },",
+					"                                        { key: \"redirect_uri\", value: \"https://*.equip.health\" }]",
+					"                                }",
+					"                            }, (err, res) => {",
+					"                                console.log(res.json().access_token)",
+					"                                pm.environment.set(\"test-token\", res.json().access_token)",
+					"                                pm.environment.set(\"OAuth_Timestamp\", new Date());",
+					"",
+					"                                // Set the ExpiresInTime variable to the time given in the response if it exists",
+					"                                if (res.json().expires_in) {",
+					"                                    expiresInTime = res.json().expires_in * 1000;",
+					"                                }",
+					"                                pm.environment.set(\"ExpiresInTime\", expiresInTime);",
+					"                            })",
+					"                        });",
+					"                    });",
+					"",
+					"                });",
+					"            });",
+					"        });",
+					"    });",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1a3f91d1-094c-4a2a-851c-d6b2f7821bee",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
