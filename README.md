@@ -1,1 +1,1 @@
-# composition-service
+# equip-api-automation
