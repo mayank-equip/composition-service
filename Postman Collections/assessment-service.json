@@ -67,13 +67,13 @@
 									"",
 									"pm.environment.set(\"patientId\", jsonData.id);",
 									"",
-									""
+									"pm.environment.set(\"req\", pm.request)"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
-					"_postman_id": "8c4b6fd1-a3e4-4dca-b146-7956fcddb354",
+					"id": "8c4b6fd1-a3e4-4dca-b146-7956fcddb354",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -151,7 +151,7 @@
 							}
 						}
 					],
-					"_postman_id": "765eb4a3-e83b-4bc9-8465-4c0d99511bb2",
+					"id": "765eb4a3-e83b-4bc9-8465-4c0d99511bb2",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -208,7 +208,7 @@
 							}
 						}
 					],
-					"_postman_id": "0c539d3f-1356-4468-b7fc-f3993f39faf0",
+					"id": "0c539d3f-1356-4468-b7fc-f3993f39faf0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -271,7 +271,7 @@
 							}
 						}
 					],
-					"_postman_id": "f2560d81-9e71-4453-9659-0d6c32604b10",
+					"id": "f2560d81-9e71-4453-9659-0d6c32604b10",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -333,7 +333,7 @@
 							}
 						}
 					],
-					"_postman_id": "858a8e79-f1e6-4c05-be5f-4c42675e2b34",
+					"id": "858a8e79-f1e6-4c05-be5f-4c42675e2b34",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -379,7 +379,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "3c9b5961-000b-4f33-9e8f-605fb4cb0f18"
+			"id": "3c9b5961-000b-4f33-9e8f-605fb4cb0f18"
 		},
 		{
 			"name": "Create assessments with invalid data",
@@ -426,7 +426,7 @@
 							}
 						}
 					],
-					"_postman_id": "52519645-ece9-47a2-ad5a-0f5968de06d9",
+					"id": "52519645-ece9-47a2-ad5a-0f5968de06d9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -494,7 +494,7 @@
 							}
 						}
 					],
-					"_postman_id": "139e8248-1b6b-4664-be6f-3b737eff67b3",
+					"id": "139e8248-1b6b-4664-be6f-3b737eff67b3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -557,7 +557,7 @@
 							}
 						}
 					],
-					"_postman_id": "5cbc9adc-bf9f-48da-a76f-9456e165e149",
+					"id": "5cbc9adc-bf9f-48da-a76f-9456e165e149",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -607,7 +607,7 @@
 							}
 						}
 					],
-					"_postman_id": "29ea1dde-c35f-4c04-8025-890dde2aded8",
+					"id": "29ea1dde-c35f-4c04-8025-890dde2aded8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -670,7 +670,7 @@
 							}
 						}
 					],
-					"_postman_id": "c5c48951-d77a-4003-a23c-eb89a18653cc",
+					"id": "c5c48951-d77a-4003-a23c-eb89a18653cc",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -697,7 +697,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "dae5daf7-399a-405b-a096-1c83532d41b4"
+			"id": "dae5daf7-399a-405b-a096-1c83532d41b4"
 		},
 		{
 			"name": "Create and send assessment to the patient",
@@ -757,7 +757,7 @@
 							}
 						}
 					],
-					"_postman_id": "41d92d29-c1db-4e6f-b260-36a9f67f8ee8",
+					"id": "41d92d29-c1db-4e6f-b260-36a9f67f8ee8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -821,7 +821,7 @@
 							}
 						}
 					],
-					"_postman_id": "ccd8506a-a515-491a-8f14-a0e8da2c6d12",
+					"id": "ccd8506a-a515-491a-8f14-a0e8da2c6d12",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -898,7 +898,7 @@
 							}
 						}
 					],
-					"_postman_id": "240ca5d0-a70d-46b4-8060-59aa7924ed91",
+					"id": "240ca5d0-a70d-46b4-8060-59aa7924ed91",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -961,7 +961,7 @@
 							}
 						}
 					],
-					"_postman_id": "9d71b6c3-cad8-4c43-9ed0-c232a892dcfb",
+					"id": "9d71b6c3-cad8-4c43-9ed0-c232a892dcfb",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1089,7 +1089,7 @@
 							}
 						}
 					],
-					"_postman_id": "b727a74e-7169-46be-a6d0-b101a5ba19da",
+					"id": "b727a74e-7169-46be-a6d0-b101a5ba19da",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1135,7 +1135,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "b580a643-8980-4bdc-a614-e48140fd7c79"
+			"id": "b580a643-8980-4bdc-a614-e48140fd7c79"
 		},
 		{
 			"name": "Verify survey data",
@@ -1285,7 +1285,7 @@
 					}
 				}
 			],
-			"_postman_id": "1f10eb7e-9e19-4c4a-a7ab-5cd97e5c613e",
+			"id": "1f10eb7e-9e19-4c4a-a7ab-5cd97e5c613e",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -1343,7 +1343,59 @@
 					}
 				}
 			],
-			"_postman_id": "700762a1-c771-49e8-a8d4-ac9652ea5440",
+			"id": "700762a1-c771-49e8-a8d4-ac9652ea5440",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{test-token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{patientEmail}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{host}}/assessments/{{assessment_responseExternalId}}/verify"
+			},
+			"response": []
+		},
+		{
+			"name": "Verify email verification OTP Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c60467c1-6154-4412-b2c1-92b6ad7cbf02",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response message\", function () {",
+							"    pm.expect(jsonData.message).to.include('Code has been sent to');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c2f41c9a-2af2-42f1-9549-f6d631bfa7d8",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
