@@ -1283,6 +1283,16 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a45b365b-7cfa-435f-a8f1-78dbb603211b",
+						"exec": [
+							"pm.sendRequest(pm.environment.get(\"addPatientRequest\"));"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"id": "1f10eb7e-9e19-4c4a-a7ab-5cd97e5c613e",
