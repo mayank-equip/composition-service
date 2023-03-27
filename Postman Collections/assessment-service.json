@@ -65,7 +65,9 @@
 									"    pm.expect(jsonData.id).length.greaterThan(0);",
 									"});",
 									"",
-									"pm.environment.set(\"patientId\", jsonData.id);"
+									"pm.environment.set(\"patientId\", jsonData.id);",
+									"",
+									"pm.environment.set(\"addPatientRequest\", pm.request);"
 								],
 								"type": "text/javascript"
 							}
@@ -1287,7 +1289,14 @@
 					"script": {
 						"id": "a45b365b-7cfa-435f-a8f1-78dbb603211b",
 						"exec": [
-							""
+							"pm.sendRequest(pm.environment.get(\"requestAddPatient\"), (error, response) => {",
+							"    if (error) {",
+							"        console.log(error);",
+							"    } else {",
+							"        console.log(response);",
+							"        pm.environment.set(\"patientId\", response.id)",
+							"    }",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -1352,6 +1361,58 @@
 				}
 			],
 			"id": "700762a1-c771-49e8-a8d4-ac9652ea5440",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{test-token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{patientEmail}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{host}}/assessments/{{assessment_responseExternalId}}/verify"
+			},
+			"response": []
+		},
+		{
+			"name": "Verify email verification OTP Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c60467c1-6154-4412-b2c1-92b6ad7cbf02",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 4000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+							"});",
+							"",
+							"pm.test(\"Verify response message\", function () {",
+							"    pm.expect(jsonData.message).to.include('Code has been sent to');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "c2f41c9a-2af2-42f1-9549-f6d631bfa7d8",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
