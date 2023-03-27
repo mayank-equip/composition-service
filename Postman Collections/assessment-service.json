@@ -67,7 +67,7 @@
 									"",
 									"pm.environment.set(\"patientId\", jsonData.id);",
 									"",
-									"pm.environment.set(\"req\", pm.request)"
+									"pm.environment.set(\"addPatientRequest\", pm.request);"
 								],
 								"type": "text/javascript"
 							}
