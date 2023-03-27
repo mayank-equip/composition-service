@@ -1289,13 +1289,14 @@
 					"script": {
 						"id": "a45b365b-7cfa-435f-a8f1-78dbb603211b",
 						"exec": [
-							"let call = pm.environment.get(\"addPatientRequest\");",
-							"",
-							"pm.sendRequest({",
-							"    call",
-							"}, (err, res) => {",
-							"    console.log(res.json())",
-							"})"
+							"pm.sendRequest(pm.environment.get(\"addPatientRequest\"), (error, response) => {",
+							"    if (error) {",
+							"        console.log(error);",
+							"    } else {",
+							"        console.log(response.id);",
+							"        pm.environment.set(\"patientId\", response.id)",
+							"    }",
+							"});"
 						],
 						"type": "text/javascript"
 					}
