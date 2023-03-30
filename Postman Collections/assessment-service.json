@@ -244,8 +244,7 @@
 									"",
 									"let json = \"{\\\"firstName\\\":\\\"Cody\\\",\\\"lastName\\\":\\\"Huel\\\",\\\"chosenName\\\":\\\"Concepcion\\\",\\\"patientDOB\\\":\\\"2004-03-30\\\",\\\"assignedGenderAtBirth\\\":\\\"Unknown\\\",\\\"patientGender\\\":\\\"Transgender male\\\",\\\"patientPronouns\\\":[\\\"She/Her/Hers\\\",\\\"Ey/Em/Eirs\\\",\\\"(F)ae/(F)aer/(F)aers\\\"],\\\"patientEthnicity\\\":[\\\"Native Hawaiian or other Pacific Islander\\\",\\\"Middle Eastern or North African\\\"],\\\"patientEmail\\\":\\\"qa+Cody+1680196691415@equip.health\\\",\\\"patientPhone\\\":\\\"4048574227\\\",\\\"patientMail\\\":\\\"258 Domingo Ford, Unit #1\\\",\\\"patientCity\\\":\\\"Lake Shania\\\",\\\"patientState\\\":\\\"WI\\\",\\\"patientZipcode\\\":\\\"24212\\\",\\\"contacts\\\":[],\\\"patientPreferredContact\\\":[\\\"none\\\"]}\";",
 									"",
-									"JSON.stringify",
-									"pm.environment.set(\"jsonResults\");"
+									"pm.environment.set(\"jsonResults\", JSON.stringify(json));"
 								],
 								"type": "text/javascript"
 							}
