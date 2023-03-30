@@ -687,7 +687,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"toUserFirstName\": \"{{patientFirstName}}\",\n    \"toUserLastName\": \"{{patientLastName}}\",\n    \"toUserPhone\": \"{{userPhone}}\"\n}",
+							"raw": "{\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"toUserFirstName\": \"{{patientFirstName}}\",\n    \"toUserLastName\": \"{{patientLastName}}\",\n    \"toUserPhone\": \"2\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
