@@ -390,25 +390,9 @@
 					"name": "Invalid survey status",
 					"event": [
 						{
-							"listen": "prerequest",
-							"script": {
-								"id": "85e3fb0e-f038-4fcb-a7d2-b6e55c8a661a",
-								"exec": [
-									"let ld = require('lodash');",
-									"",
-									"const submitted_source_list = ['Web', 'Phone', 'Email'];",
-									"",
-									"pm.environment.set(\"submittedSource\", ld.sample(submitted_source_list));",
-									"pm.environment.set(\"userEmail\", \"qa@equip.health\");",
-									"pm.environment.set(\"userPhone\", \"+917842414959\");"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
 							"listen": "test",
 							"script": {
-								"id": "aaaeb827-364c-4224-9604-e1347a83d486",
+								"id": "13a36c84-e4bf-4469-9818-d32ece9474cb",
 								"exec": [
 									"var jsonData = pm.response.text();",
 									"",
@@ -423,6 +407,22 @@
 									"pm.test(\"Verify response message\", function () {",
 									"    pm.expect(pm.response.text()).to.equal(\"Survey status not found\");",
 									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d15391a1-2797-4df7-b0cb-0ff637b4c549",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"const submitted_source_list = ['Web', 'Phone', 'Email'];",
+									"",
+									"pm.environment.set(\"submittedSource\", ld.sample(submitted_source_list));",
+									"pm.environment.set(\"userEmail\", \"qa@equip.health\");",
+									"pm.environment.set(\"userPhone\", \"+917842414959\");"
 								],
 								"type": "text/javascript"
 							}
