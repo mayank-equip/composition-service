@@ -284,7 +284,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"jsonResults\": {{jsonResults}},\n    \"status\": \"{{assessmentStatus}}\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserId\": \"{{providerUserId}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\"\n}",
+							"raw": "{\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"status\": \"{{assessmentStatus}}\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserId\": \"{{providerUserId}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
