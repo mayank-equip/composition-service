@@ -240,7 +240,8 @@
 							"script": {
 								"id": "e5cc84a1-d326-4bb0-ad47-9da54e316ece",
 								"exec": [
-									"pm.environment.set(\"assessmentStatus\", \"In progress\");"
+									"pm.environment.set(\"assessmentStatus\", \"In progress\");",
+									"pm.environment.set(\"jsonResults\", \"{\\\"firstName\\\":\\\"Cody\\\",\\\"lastName\\\":\\\"Huel\\\",\\\"chosenName\\\":\\\"Concepcion\\\",\\\"patientDOB\\\":\\\"2004-03-30\\\",\\\"assignedGenderAtBirth\\\":\\\"Unknown\\\",\\\"patientGender\\\":\\\"Transgender male\\\",\\\"patientPronouns\\\":[\\\"She/Her/Hers\\\",\\\"Ey/Em/Eirs\\\",\\\"(F)ae/(F)aer/(F)aers\\\"],\\\"patientEthnicity\\\":[\\\"Native Hawaiian or other Pacific Islander\\\",\\\"Middle Eastern or North African\\\"],\\\"patientEmail\\\":\\\"qa+Cody+1680196691415@equip.health\\\",\\\"patientPhone\\\":\\\"4048574227\\\",\\\"patientMail\\\":\\\"258 Domingo Ford, Unit #1\\\",\\\"patientCity\\\":\\\"Lake Shania\\\",\\\"patientState\\\":\\\"WI\\\",\\\"patientZipcode\\\":\\\"24212\\\",\\\"contacts\\\":[],\\\"patientPreferredContact\\\":[\\\"none\\\"]}\");"
 								],
 								"type": "text/javascript"
 							}
@@ -284,7 +285,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"status\": \"{{assessmentStatus}}\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserId\": \"{{providerUserId}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\"\n}",
+							"raw": "{\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"jsonResults\": {{jsonResults}},\n    \"status\": \"{{assessmentStatus}}\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserId\": \"{{providerUserId}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
