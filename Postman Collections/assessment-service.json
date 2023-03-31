@@ -1454,7 +1454,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "8d5c435a-1ad8-42e1-a0d8-18e7a5d119fc",
+				"id": "8096bdb0-5174-41b3-864b-78a57191a78c",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1629,7 +1629,7 @@
 					"//     \"Transgender female\"",
 					"// ];",
 					"",
-					"let pronounsList = [",
+					"pm.environment.set(\"pronounsList\", [",
 					"    \"(F)ae/(F)aer/(F)aers\",",
 					"    \"Ey/Em/Eirs\",",
 					"    \"He/Him/His\",",
@@ -1638,7 +1638,7 @@
 					"    \"She/Her/Hers\",",
 					"    \"They/Them/Theirs\",",
 					"    \"Xe/Xem/Xir\"",
-					"];",
+					"]);",
 					"",
 					"let ethnicitiesList = [",
 					"    \"Asian\",",
@@ -1792,7 +1792,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "8e8f0e33-242d-4e08-accd-24804579f70b",
+				"id": "4a10f060-9652-486b-9895-8ae1a479f01b",
 				"type": "text/javascript",
 				"exec": [
 					""
