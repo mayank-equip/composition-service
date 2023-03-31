@@ -1465,12 +1465,9 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "bd64f010-bb5e-41b6-b128-12e2594a7df9",
+				"id": "3ac8029a-7974-44aa-ba0a-3ecc259c79c0",
 				"type": "text/javascript",
 				"exec": [
-					"//Define libraries",
-					"let ld = require('lodash');",
-					"",
 					"// Refresh the OAuth token if necessary",
 					"console.log('Current environment: ' + pm.environment.name);",
 					"",
@@ -1809,7 +1806,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "f5714c0a-de4f-45a5-8211-144ef65495e6",
+				"id": "6cc0b110-0e4e-490e-a6ed-4bf91400cada",
 				"type": "text/javascript",
 				"exec": [
 					""
