@@ -1467,7 +1467,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "eae983ce-ed13-4941-9564-04e7bb66659c",
+				"id": "ec6a50ab-fc14-43dd-af77-4bd5a4bb1a83",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1783,9 +1783,13 @@
 					"    ]",
 					"));",
 					"",
-					"pm.environment.set(\"\", JSON.stringify(",
+					"pm.environment.set(\"contactPreferences\", JSON.stringify(",
 					"    [",
-					"",
+					"        \"Email\",",
+					"        \"No preference\",",
+					"        \"Phone\",",
+					"        \"SMS\",",
+					"        \"Unknown\"",
 					"    ]",
 					"));",
 					"",
@@ -1801,16 +1805,10 @@
 					"    ]",
 					"));",
 					"",
-					"let timezonesList = [",
 					"",
-					"];",
 					"",
 					"let contactPreferences = [",
-					"    \"Email\",",
-					"    \"No preference\",",
-					"    \"Phone\",",
-					"    \"SMS\",",
-					"    \"Unknown\"",
+					"",
 					"];",
 					"",
 					"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
@@ -1822,7 +1820,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "2db5a5de-1774-4302-b833-dfe669c7648c",
+				"id": "6da81679-436e-4c00-a44a-ba89bbea62f3",
 				"type": "text/javascript",
 				"exec": [
 					""
