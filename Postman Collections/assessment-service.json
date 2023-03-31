@@ -443,7 +443,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"status\": \"invalidStatus\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"surveyName\": \"Intake\",\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"toUserFirstName\": \"{{patientFirstName}}\",\n  \"toUserLastName\": \"{{patientLastName}}\",\n  \"toUserPhone\": \"{{userPhone}}\",\n  \"userId\": \"{{patientId}}\"\n}",
+							"raw": "{\n  \"status\": \"invalidStatus\",\n  \"submittedSource\": \"\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"surveyName\": \"Intake\",\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"toUserFirstName\": \"{{patientFirstName}}\",\n  \"toUserLastName\": \"{{patientLastName}}\",\n  \"toUserPhone\": \"{{userPhone}}\",\n  \"userId\": \"{{patientId}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
