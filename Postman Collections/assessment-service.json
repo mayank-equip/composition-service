@@ -1454,7 +1454,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "a808ac23-287c-4f0c-9c92-54699a84da3e",
+				"id": "0332aa82-2e8d-4c6b-bba7-8df80048d3fb",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1643,17 +1643,19 @@
 					"    ]",
 					"));",
 					"",
-					"let ethnicitiesList = [",
-					"    \"Asian\",",
-					"    \"Black/African American\",",
-					"    \"White/Caucasian\",",
-					"    \"Hispanic/Latinx\",",
-					"    \"Native American, Indian American, or Alaska Native\",",
-					"    \"Native Hawaiian or other Pacific Islander\",",
-					"    \"Middle Eastern or North African\",",
-					"    \"Prefer not to answer\",",
-					"    \"Other\"",
-					"];",
+					"pm.environment.set(\"ethnicitiesList\", JSON.stringify(",
+					"    [",
+					"        \"Asian\",",
+					"        \"Black/African American\",",
+					"        \"White/Caucasian\",",
+					"        \"Hispanic/Latinx\",",
+					"        \"Native American, Indian American, or Alaska Native\",",
+					"        \"Native Hawaiian or other Pacific Islander\",",
+					"        \"Middle Eastern or North African\",",
+					"        \"Prefer not to answer\",",
+					"        \"Other\"",
+					"    ]",
+					"));",
 					"",
 					"let languagesList = [",
 					"    \"Afrikaans\",",
@@ -1793,7 +1795,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "a396654a-f486-42e6-93a3-b35986187e73",
+				"id": "085b9323-d532-4ca8-bb39-bb45ded521ea",
 				"type": "text/javascript",
 				"exec": [
 					""
