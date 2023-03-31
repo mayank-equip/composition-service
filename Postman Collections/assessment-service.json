@@ -1467,7 +1467,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "a607025d-ad14-4561-8227-aaad52d157d1",
+				"id": "9df5df2c-e5a5-4e3e-8e1c-d496d6dcfa39",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1799,23 +1799,18 @@
 					"    ]",
 					"));",
 					"",
-					"pm.environment.set(\"\", JSON.stringify(",
+					"pm.environment.set(\"addressLine2List\", JSON.stringify(",
 					"    [",
-					"",
+					"        \"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"",
 					"    ]",
-					"));",
-					"",
-					"",
-					"let statesList = [];",
-					"",
-					"var addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];"
+					"));"
 				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "3c214cc9-79ba-4ccf-9226-a69c654ad980",
+				"id": "9d4ae0ac-e0a2-437a-b5a6-8754b0f98bab",
 				"type": "text/javascript",
 				"exec": [
 					""
