@@ -1467,7 +1467,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "ec6a50ab-fc14-43dd-af77-4bd5a4bb1a83",
+				"id": "a607025d-ad14-4561-8227-aaad52d157d1",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1793,9 +1793,9 @@
 					"    ]",
 					"));",
 					"",
-					"pm.environment.set(\"\", JSON.stringify(",
+					"pm.environment.set(\"statesList\", JSON.stringify(",
 					"    [",
-					"",
+					"        \"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"",
 					"    ]",
 					"));",
 					"",
@@ -1806,12 +1806,7 @@
 					"));",
 					"",
 					"",
-					"",
-					"let contactPreferences = [",
-					"",
-					"];",
-					"",
-					"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+					"let statesList = [];",
 					"",
 					"var addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];"
 				]
@@ -1820,7 +1815,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "6da81679-436e-4c00-a44a-ba89bbea62f3",
+				"id": "3c214cc9-79ba-4ccf-9226-a69c654ad980",
 				"type": "text/javascript",
 				"exec": [
 					""
