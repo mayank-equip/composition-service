@@ -1454,7 +1454,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "0332aa82-2e8d-4c6b-bba7-8df80048d3fb",
+				"id": "e43e543a-4e07-45e0-8ec3-00c789197569",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1778,7 +1778,7 @@
 					"",
 					"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
 					"pm.environment.set(\"patientState\", ld.sample(statesList));",
-					"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+					"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"ethnicitiesList\")), 2).sort()));",
 					"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
 					"pm.environment.set(\"patientGenderOnRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
 					"pm.environment.set(\"patientGenderOffRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
@@ -1795,7 +1795,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "085b9323-d532-4ca8-bb39-bb45ded521ea",
+				"id": "119d14c9-ebf9-48c9-9584-d94022f9d7b9",
 				"type": "text/javascript",
 				"exec": [
 					""
