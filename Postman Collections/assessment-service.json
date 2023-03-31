@@ -636,7 +636,7 @@
 					"response": []
 				},
 				{
-					"name": "Invalid userId",
+					"name": "No userId",
 					"event": [
 						{
 							"listen": "test",
