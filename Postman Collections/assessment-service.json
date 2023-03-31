@@ -41,7 +41,20 @@
 									"pm.environment.set(\"patientCountry\", \"US\");",
 									"pm.environment.set(\"patientZip\", zip.toString());",
 									"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
-									"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));"
+									"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+									"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+									"pm.environment.set(\"patientState\", ld.sample(statesList));",
+									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"ethnicitiesList\")), 2).sort()));",
+									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
+									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
+									"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort()));",
+									"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort()));",
+									"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+									"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));",
+									"",
+									"// console.log(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort());"
 								],
 								"type": "text/javascript"
 							}
