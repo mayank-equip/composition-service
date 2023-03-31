@@ -654,7 +654,7 @@
 									"});",
 									"",
 									"pm.test(\"Verify response message\", function () {",
-									"    pm.expect(pm.response.text()).to.equal(\"Survey status not found\");",
+									"    pm.expect(pm.response.text()).to.equal(\"saveAssessment.request.userId: userId is required\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -692,7 +692,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"status\": \"New\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"surveyName\": \"Intake\",\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"toUserFirstName\": \"{{patientFirstName}}\",\n  \"toUserLastName\": \"{{patientLastName}}\",\n  \"toUserPhone\": \"{{userPhone}}\",\n  \"userId\": \"1234\"\n}",
+							"raw": "{\n  \"status\": \"New\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"surveyName\": \"Intake\",\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"toUserFirstName\": \"{{patientFirstName}}\",\n  \"toUserLastName\": \"{{patientLastName}}\",\n  \"toUserPhone\": \"{{userPhone}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
