@@ -636,6 +636,74 @@
 					"response": []
 				},
 				{
+					"name": "Invalid userId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13a36c84-e4bf-4469-9818-d32ece9474cb",
+								"exec": [
+									"var jsonData = pm.response.text();",
+									"",
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify response message\", function () {",
+									"    pm.expect(pm.response.text()).to.equal(\"Survey status not found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d15391a1-2797-4df7-b0cb-0ff637b4c549",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"const submitted_source_list = ['Web', 'Phone', 'Email'];",
+									"",
+									"pm.environment.set(\"submittedSource\", ld.sample(submitted_source_list));",
+									"pm.environment.set(\"userEmail\", \"qa@equip.health\");",
+									"pm.environment.set(\"userPhone\", \"+917842414959\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ab704783-cef8-42d2-a576-c51f698a71c6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"invalidStatus\",\n  \"submittedSource\": \"{{submittedSource}}\",\n  \"submittedUserFirstName\": \"{{providerFirstname}}\",\n  \"submittedUserLastName\": \"{{providerLastname}}\",\n  \"submittedUserId\": \"{{createdByUserId}}\",\n  \"surveyName\": \"Intake\",\n  \"toUserEmail\": \"{{userEmail}}\",\n  \"toUserFirstName\": \"{{patientFirstName}}\",\n  \"toUserLastName\": \"{{patientLastName}}\",\n  \"toUserPhone\": \"{{userPhone}}\",\n  \"userId\": \"{{patientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
 					"name": "Edit user details with invalid responseExternalId",
 					"event": [
 						{
