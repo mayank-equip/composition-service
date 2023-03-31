@@ -1467,7 +1467,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "9df5df2c-e5a5-4e3e-8e1c-d496d6dcfa39",
+				"id": "b71cf1e6-1b26-480d-a5d8-d8108fe10870",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1803,14 +1803,26 @@
 					"    [",
 					"        \"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"",
 					"    ]",
-					"));"
+					"));",
+					"",
+					"pm.environment.set(\"patientAddressLine2\", ld.sample(JSON.parse(pm.environment.get(\"addressLine2List\"))));",
+					"pm.environment.set(\"patientState\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
+					"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"ethnicitiesList\")), 2).sort()));",
+					"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+					"pm.environment.set(\"patientGenderOnRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
+					"pm.environment.set(\"patientGenderOffRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
+					"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort()));",
+					"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort()));",
+					"pm.environment.set(\"patientSex\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
+					"pm.environment.set(\"patientTimezone\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
+					"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
 				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "9d4ae0ac-e0a2-437a-b5a6-8754b0f98bab",
+				"id": "eadb9de7-30de-4c5e-9d2c-135f8a1ff423",
 				"type": "text/javascript",
 				"exec": [
 					""
