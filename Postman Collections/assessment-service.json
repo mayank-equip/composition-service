@@ -1454,7 +1454,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "83d44c25-1272-43c3-8add-17ee825e0d5b",
+				"id": "45676ba8-7aa9-47c0-ad06-b70c749a77ba",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1784,7 +1784,7 @@
 					"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));",
 					"",
 					"let newv = JSON.parse(pm.environment.get(\"gendersList\"));",
-					"console.log(newv);",
+					"console.log(JSON.parse(newv));",
 					""
 				]
 			}
@@ -1792,7 +1792,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "8cc25403-1afd-47a9-9879-13cfbcb3f5b2",
+				"id": "17433beb-9930-4c2d-9af4-58b162464b7a",
 				"type": "text/javascript",
 				"exec": [
 					""
