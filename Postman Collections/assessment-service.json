@@ -52,9 +52,7 @@
 									"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort()));",
 									"pm.environment.set(\"patientSex\", ld.sample(JSON.parse(pm.environment.get(\"sexList\"))));",
 									"pm.environment.set(\"patientTimezone\", ld.sample(JSON.parse(pm.environment.get(\"timezonesList\"))));",
-									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"contactPreferences\")), 2).sort()));",
-									"",
-									"// console.log(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort());"
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"contactPreferences\")), 2).sort()));"
 								],
 								"type": "text/javascript"
 							}
