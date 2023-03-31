@@ -1454,7 +1454,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "811d90c2-a03e-40e3-b3b2-435f0df5f01d",
+				"id": "0f0a0a89-5795-4efa-82f5-8bb41b173109",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1785,14 +1785,14 @@
 					"",
 					"let newv = JSON.parse(JSON.parse(pm.environment.get(\"gendersList\")));",
 					"console.log(ld.sample(JSON.parse(JSON.parse(pm.environment.get(\"gendersList\")))));",
-					"console.log(ld.sample(JSON.parse(JSON.parse(pm.environment.get(\"pronounsList\")))));"
+					"console.log(ld.sample(JSON.parse(pm.environment.get(\"pronounsList\"))));"
 				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "eaf9aa3f-6415-4f92-a142-a4f321a61a80",
+				"id": "1d3332b5-24f9-4d26-bc65-91a36edd0d01",
 				"type": "text/javascript",
 				"exec": [
 					""
