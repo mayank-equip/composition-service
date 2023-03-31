@@ -1454,7 +1454,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "eb7a471c-0551-42aa-b5cf-c8f4e217a6ba",
+				"id": "f9c1510c-04d5-4fe0-a10a-2c8f915fbdf3",
 				"type": "text/javascript",
 				"exec": [
 					"//Define libraries",
@@ -1781,14 +1781,17 @@
 					"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(pronounsList, 3).sort()));",
 					"pm.environment.set(\"patientSex\", ld.sample(sexList));",
 					"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
-					"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+					"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));",
+					"",
+					"console.log(pm.environment.get(\"gendersList\"));",
+					""
 				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "0a0eb0c2-121e-411b-bc75-89aed31e7b1a",
+				"id": "1a845ad3-e036-48ff-afac-61218d5ed53f",
 				"type": "text/javascript",
 				"exec": [
 					""
