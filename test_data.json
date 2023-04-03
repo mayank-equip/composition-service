@@ -123,7 +123,7 @@
       "Female",
       "Unknown"
     ],
-    "timeZone": [
+    "time_zone": [
       "Alaska Time",
       "Arizona",
       "Central Time",
@@ -134,7 +134,7 @@
       "Mountain Time",
       "Pacific Time"
     ],
-    "contactPreferences": [
+    "contact_preferences": [
       "Email",
       "No preference",
       "Phone",
@@ -198,32 +198,32 @@
       "Unknown"
     ],
     "providerType": [
-      "Therapist",
-      "Dietitian",
+      "Admissions Operations",
+      "Admissions Specialist",
+      "Admissions Supervisor",
+      "Analyst",
+      "Billing Specialist",
+      "Care Coordinator",
+      "Client Success",
       "Clinical Ops",
+      "Clinical Supervisor",
+      "Dietitian",
+      "Family Experience Navigator",
       "Family Mentor",
+      "Insurance Specialist",
+      "Medical Assistant",
+      "Nurse Practitioner",
+      "Patient Service Representative",
       "Peer Mentor",
       "Physician",
-      "Psychiatrist",
-      "Billing Specialist",
-      "Analyst",
-      "Admissions Specialist",
-      "Clinical Supervisor",
-      "Family Experience Navigator",
-      "Insurance Specialist",
-      "Patient Service Representative",
+      "Physician Assistant",
+      "Practice Coordinator",
       "Product Support",
       "Provider Partnerships",
-      "Client Success",
-      "Physician Assistant",
-      "Care Coordinator",
-      "Nurse Practitioner",
-      "Practice Coordinator",
-      "Medical Assistant",
-      "Registered Nurse",
       "Psychiatric Nurse Practitioner",
-      "Admissions Operations",
-      "Admissions Supervisor"
+      "Psychiatrist",
+      "Registered Nurse",
+      "Therapist"
     ],
     "region": [
       "Northeast",
@@ -236,6 +236,28 @@
       "provider",
       "patient",
       "support"
+    ],
+    "equipSource": [
+      "Colleague (please specify)",
+      "Conference (please specify)",
+      "Dietitian",
+      "Doctor/clinician",
+      "Eating disorder organization",
+      "Equip employee",
+      "Equip event/webinar",
+      "Equip patient/family",
+      "Friend or family member",
+      "Google/search",
+      "Hospital/medical center",
+      "Insurance/Health Plan",
+      "Networking event",
+      "Newsletter",
+      "Other (please specify)",
+      "Press",
+      "School",
+      "Social media",
+      "Speaking engagement/webinar",
+      "Therapist"
     ]
   },
   "clinicalDataService": {
@@ -280,6 +302,64 @@
       "Enrolled",
       "In-treatment",
       "Closed"
+    ],
+    "insuranceVerificationStatus": [
+      "Not ready",
+      "Ready for review",
+      "Verification in progress",
+      "Pre-authorization in progress",
+      "Approved",
+      "Denied"
+    ],
+    "medicalClearanceStatus": [
+      "Not ready",
+      "Ready for review",
+      "In progress",
+      "Cleared",
+      "Not cleared"
+    ],
+    "noteStatus": [
+      "draft",
+      "signed",
+      "void"
+    ],
+    "noteType": [
+      "Admissions",
+      "Authorization",
+      "Billing",
+      "Care coordination",
+      "Consent forms",
+      "Custody agreement",
+      "FEN introduction",
+      "Informed consent",
+      "Inquiry",
+      "Insurance",
+      "Insurance card",
+      "Intake session",
+      "Medical clearance",
+      "Medical records",
+      "Patient follow-up",
+      "Phone screen",
+      "Presenting problem",
+      "Provider assignment",
+      "Provider follow-up",
+      "Qualifying call",
+      "Referral",
+      "Referral correspondance",
+      "Release of information",
+      "Treatment consent",
+      "Treatment session"
+    ],
+    "noteVoidReason": [
+      "Duplicate",
+      "Made in error"
+    ],
+    "observationInterpretations": [
+      "Normal",
+      "Abnormal",
+      "High",
+      "Low",
+      "N/A"
     ]
   }
 }
