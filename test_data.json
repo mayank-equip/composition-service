@@ -1,4 +1,110 @@
 {
+  "assessment_service": {
+    "assessment_status": [
+      "New",
+      "In progress",
+      "Done",
+      "Requested",
+      "Void",
+      "Incomplete"
+    ],
+    "submitted_source": [
+      "Email",
+      "Phone",
+      "Task service",
+      "Web"
+    ],
+    "survey": [
+      {
+        "name": "PSEA",
+        "description": "Parental Self-efficacy Assessment (PSEA) - Description"
+      },
+      {
+        "name": "Eating Disorder Severity",
+        "description": "Eating Disorder Severity - Description"
+      },
+      {
+        "name": "ARFID Severity: Parent",
+        "description": "ARFID Severity: Parent - Description"
+      },
+      {
+        "name": "PHQ-2/9",
+        "description": "PHQ-2/9 - Description"
+      },
+      {
+        "name": "NPS",
+        "description": "NPS - Description"
+      },
+      {
+        "name": "Patient Experience",
+        "description": "Patient Experience - Description"
+      },
+      {
+        "name": "C-SSRS (L/R) Screen",
+        "description": "C-SSRS (L/R) Screen - Description"
+      },
+      {
+        "name": "C-SSRS (SLC) Screen",
+        "description": "C-SSRS (SLC) Screen - Description"
+      },
+      {
+        "name": "Burden Assessment Scale (BAS)",
+        "description": "Burden Assessment Scale (BAS) - Description"
+      },
+      {
+        "name": "GAD-2/7",
+        "description": "GAD-2/7 - Description"
+      },
+      {
+        "name": "Admissions NPS",
+        "description": "Admissions NPS - Description"
+      },
+      {
+        "name": "Weekly ED Symptom Tracker",
+        "description": "Weekly ED Symptom Tracker - Description"
+      },
+      {
+        "name": "Weekly ED Symptom Tracker (ARFID)",
+        "description": "Weekly ED Symptom Tracker (ARFID) - Description"
+      },
+      {
+        "name": "C-SSRS - Lifetime/Recent",
+        "description": "Columbia Suicide Severity Rating Scale (C-SSRS) - Lifetime/Recent - Description"
+      },
+      {
+        "name": "(C-SSRS) - Since Last Contact",
+        "description": "Columbia Suicide Severity Rating Scale (C-SSRS) - Since Last Contact - Description"
+      },
+      {
+        "name": "Therapist Intake",
+        "description": "Therapist Intake - Description"
+      },
+      {
+        "name": "Intake",
+        "description": ""
+      },
+      {
+        "name": "ARFID Severity: Self",
+        "description": "ARFID Severity: Self - Description"
+      },
+      {
+        "name": "NIAS",
+        "description": "NIAS - Description"
+      },
+      {
+        "name": "FNS",
+        "description": "Food Neophobia Scale (FNS) - Description"
+      },
+      {
+        "name": "CET",
+        "description": "Compulsive Exercise Test (CET) - Description"
+      }
+    ],
+    "survey_status": [
+      "Active",
+      "Inactive"
+    ]
+  },
   "user_service": {
     "genders": [
       "Cis-gender male",
@@ -139,62 +245,6 @@
       "No preference",
       "Phone",
       "SMS",
-      "Unknown"
-    ],
-    "states": [
-      "AK",
-      "AL",
-      "AZ",
-      "AR",
-      "CA",
-      "CO",
-      "CT",
-      "DE",
-      "DC",
-      "FL",
-      "GA",
-      "HI",
-      "ID",
-      "IL",
-      "IN",
-      "IA",
-      "KS",
-      "KY",
-      "LA",
-      "ME",
-      "MD",
-      "MA",
-      "MI",
-      "MN",
-      "MS",
-      "MO",
-      "MT",
-      "NE",
-      "NV",
-      "NH",
-      "NJ",
-      "NM",
-      "NY",
-      "NC",
-      "ND",
-      "OH",
-      "OK",
-      "OR",
-      "PA",
-      "PR",
-      "RI",
-      "SC",
-      "SD",
-      "TN",
-      "TX",
-      "UT",
-      "VT",
-      "VA",
-      "WA",
-      "WV",
-      "WI",
-      "WY",
-      "Outside US",
       "Unknown"
     ],
     "provider_type": [
@@ -360,6 +410,343 @@
       "High",
       "Low",
       "N/A"
+    ],
+    "observation_sources": [
+      "Manual",
+      "BodyTrace"
+    ],
+    "observation_statuses": [
+      "Final",
+      "Corrected",
+      "Void"
+    ],
+    "observation_types": [
+      "Blood pressure",
+      "Heart rate",
+      "Height",
+      "Weight"
+    ],
+    "observation_void_reasons": [
+      "Duplicate",
+      "Made in error"
+    ],
+    "patient_relation_to_subscriber": [
+      "Cadaver Donor",
+      "Child",
+      "Child (Father's Ins., Ins. not Financially Respons.)",
+      "Child (Father's Insurance)",
+      "Child (Ins. not Financial Respons.)",
+      "Child (Mother's Ins., Ins. not Financially Respons.)",
+      "Child (Mother's Insurance)",
+      "Dependent of a Minor Dependent",
+      "Emancipated Minor",
+      "Employee",
+      "Father",
+      "Foster Child",
+      "Grandchild",
+      "Grandparent",
+      "Handicapped Dependent",
+      "Injured Plaintiff",
+      "Life Partner",
+      "Mother",
+      "Nephew or Niece",
+      "Organ Donor",
+      "Other",
+      "Self",
+      "Significant Other",
+      "Sponsored Dependent",
+      "Spouse",
+      "Stepson or Stepdaughter",
+      "Stepson or Stepdaughter (Stepfather's Insurance)",
+      "Stepson or Stepdaughter (Stepmother's Insurance)",
+      "Unknown",
+      "Ward"
+    ],
+    "position": [
+      "Lying down",
+      "Sitting",
+      "Standing",
+      "Unknown"
+    ],
+    "psych_clearance_status": [
+      "Not ready",
+      "Ready for review",
+      "In progress",
+      "Cleared",
+      "Not cleared",
+      "Not needed"
+    ],
+    "status_reason_closed": [
+      "Contemplative",
+      "Declined - Chose HLOC (IOP/PHP/RTC)",
+      "Declined - Chose new outpt team",
+      "Declined - Continue w current team",
+      "Declined - Equip admin delay - Insurance",
+      "Declined - Equip admin delay - Med clearance",
+      "Declined - Equip admin delay - Other",
+      "Declined - Unknown tx choice",
+      "Discharged - AEA - Inpatient Med",
+      "Discharged - AEA - Inpatient Psych",
+      "Discharged - AEA - No care",
+      "Discharged - AEA - Outpatient",
+      "Discharged - AEA - PHP/IOP",
+      "Discharged - AEA - RTC",
+      "Discharged - Admin - Change in payor",
+      "Discharged - Admin - Disengaged",
+      "Discharged - Admin - Financial",
+      "Discharged - Clinical need - Inpatient Med",
+      "Discharged - Clinical need - Inpatient Psych",
+      "Discharged - Clinical need - Non-ED HLOC",
+      "Discharged - Clinical need - Non-ED Outpatient",
+      "Discharged - Clinical need - Outpatient",
+      "Discharged - Clinical need - PHP/IOP",
+      "Discharged - Clinical need - RTC",
+      "Discharged - In remission - No care",
+      "Discharged - In remission - Non-ED HLOC",
+      "Discharged - In remission - Non-ED Outpatient",
+      "Discharged - In remission - Outpatient",
+      "Discharged - In remission - Relapse prevention",
+      "MIA - Lost contact",
+      "MIA - No contact",
+      "Never Started",
+      "Not eligible - Wrong age",
+      "Not eligible - Wrong state",
+      "Not qualified - Equip referred to clinical HLOC",
+      "Not qualified - Equip referred to medical HLOC",
+      "Not qualified - Family unwilling to participate in tx",
+      "Not qualified - Financial - Can't afford OOP $",
+      "Not qualified - Financial - Insurance not in-network",
+      "Not qualified - No eating disorder",
+      "Not qualified - Not living with family"
+    ],
+    "status_reason_paused": [
+      "HLOC - Inpatient Med",
+      "HLOC - Inpatient Psych",
+      "Other"
+    ],
+    "treatment_program": [
+      "Equip treatment",
+      "Freeform",
+      "Relapse prevention",
+      "Equip Adult"
+    ],
+    "states": [
+      {
+        "statecode": "AK",
+        "statename": "Alaska"
+      },
+      {
+        "statecode": "AL",
+        "statename": "Alabama"
+      },
+      {
+        "statecode": "AZ",
+        "statename": "Arizona"
+      },
+      {
+        "statecode": "AR",
+        "statename": "Arkansas"
+      },
+      {
+        "statecode": "CA",
+        "statename": "California"
+      },
+      {
+        "statecode": "CO",
+        "statename": "Colorado"
+      },
+      {
+        "statecode": "CT",
+        "statename": "Connecticut"
+      },
+      {
+        "statecode": "DE",
+        "statename": "Delaware"
+      },
+      {
+        "statecode": "DC",
+        "statename": "District of Columbia"
+      },
+      {
+        "statecode": "FL",
+        "statename": "Florida"
+      },
+      {
+        "statecode": "GA",
+        "statename": "Georgia"
+      },
+      {
+        "statecode": "HI",
+        "statename": "Hawaii"
+      },
+      {
+        "statecode": "ID",
+        "statename": "Idaho"
+      },
+      {
+        "statecode": "IL",
+        "statename": "Illinois"
+      },
+      {
+        "statecode": "IN",
+        "statename": "Indiana"
+      },
+      {
+        "statecode": "IA",
+        "statename": "Iowa"
+      },
+      {
+        "statecode": "KS",
+        "statename": "Kansas"
+      },
+      {
+        "statecode": "KY",
+        "statename": "Kentucky"
+      },
+      {
+        "statecode": "LA",
+        "statename": "Louisiana"
+      },
+      {
+        "statecode": "ME",
+        "statename": "Maine"
+      },
+      {
+        "statecode": "MD",
+        "statename": "Maryland"
+      },
+      {
+        "statecode": "MA",
+        "statename": "Massachusetts"
+      },
+      {
+        "statecode": "MI",
+        "statename": "Michigan"
+      },
+      {
+        "statecode": "MN",
+        "statename": "Minnesota"
+      },
+      {
+        "statecode": "MS",
+        "statename": "Mississippi"
+      },
+      {
+        "statecode": "MO",
+        "statename": "Missouri"
+      },
+      {
+        "statecode": "MT",
+        "statename": "Montana"
+      },
+      {
+        "statecode": "NE",
+        "statename": "Nebraska"
+      },
+      {
+        "statecode": "NV",
+        "statename": "Nevada"
+      },
+      {
+        "statecode": "NH",
+        "statename": "New Hampshire"
+      },
+      {
+        "statecode": "NJ",
+        "statename": "New Jersey"
+      },
+      {
+        "statecode": "NM",
+        "statename": "New Mexico"
+      },
+      {
+        "statecode": "NY",
+        "statename": "New York"
+      },
+      {
+        "statecode": "NC",
+        "statename": "North Carolina"
+      },
+      {
+        "statecode": "ND",
+        "statename": "North Dakota"
+      },
+      {
+        "statecode": "OH",
+        "statename": "Ohio"
+      },
+      {
+        "statecode": "OK",
+        "statename": "Oklahoma"
+      },
+      {
+        "statecode": "OR",
+        "statename": "Oregon"
+      },
+      {
+        "statecode": "PA",
+        "statename": "Pennsylvania"
+      },
+      {
+        "statecode": "PR",
+        "statename": "Puerto Rico"
+      },
+      {
+        "statecode": "RI",
+        "statename": "Rhode Island"
+      },
+      {
+        "statecode": "SC",
+        "statename": "South Carolina"
+      },
+      {
+        "statecode": "SD",
+        "statename": "South Dakota"
+      },
+      {
+        "statecode": "TN",
+        "statename": "Tennessee"
+      },
+      {
+        "statecode": "TX",
+        "statename": "Texas"
+      },
+      {
+        "statecode": "UT",
+        "statename": "Utah"
+      },
+      {
+        "statecode": "VT",
+        "statename": "Vermont"
+      },
+      {
+        "statecode": "VA",
+        "statename": "Virginia"
+      },
+      {
+        "statecode": "WA",
+        "statename": "Washington"
+      },
+      {
+        "statecode": "WV",
+        "statename": "West Virginia"
+      },
+      {
+        "statecode": "WI",
+        "statename": "Wisconsin"
+      },
+      {
+        "statecode": "WY",
+        "statename": "Wyoming"
+      },
+      {
+        "statecode": "Outside US",
+        "statename": "Outside US"
+      },
+      {
+        "statecode": "Unknown",
+        "statename": "Unknown"
+      }
     ]
   }
 }
