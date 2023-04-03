@@ -1,5 +1,5 @@
 {
-  "userService": {
+  "user_service": {
     "genders": [
       "Cis-gender male",
       "Cis-gender female",
@@ -197,7 +197,7 @@
       "Outside US",
       "Unknown"
     ],
-    "providerType": [
+    "provider_type": [
       "Admissions Operations",
       "Admissions Specialist",
       "Admissions Supervisor",
@@ -232,12 +232,12 @@
       "West",
       "Midwest"
     ],
-    "userType": [
+    "user_type": [
       "provider",
       "patient",
       "support"
     ],
-    "equipSource": [
+    "equip_source": [
       "Colleague (please specify)",
       "Conference (please specify)",
       "Dietitian",
@@ -260,7 +260,7 @@
       "Therapist"
     ]
   },
-  "clinicalDataService": {
+  "clinical_data_service": {
     "activityWith": [
       "Case Manager",
       "School",
@@ -269,7 +269,7 @@
       "payor",
       "provider"
     ],
-    "adminEpisodeLevel": [
+    "admin_episode_level": [
       "Blue",
       "Green",
       "Orange",
@@ -278,32 +278,32 @@
       "Teal",
       "Yellow"
     ],
-    "communicationMethod": [
+    "communication_method": [
       "chat",
       "email",
       "inbound phone",
       "outbound phone",
       "video"
     ],
-    "diagnosisStatus": [
+    "diagnosis_status": [
       "active",
       "preliminary",
       "resolved",
       "void"
     ],
-    "diagnosisStatusReason": [
+    "diagnosis_status_reason": [
       "Added in error",
       "More appropriate/specific diagnosis available",
       "Wrong diagnosis/code"
     ],
-    "episodeStatus": [
+    "episode_status": [
       "New",
       "Assessing",
       "Enrolled",
       "In-treatment",
       "Closed"
     ],
-    "insuranceVerificationStatus": [
+    "insurance_verification_status": [
       "Not ready",
       "Ready for review",
       "Verification in progress",
@@ -311,19 +311,19 @@
       "Approved",
       "Denied"
     ],
-    "medicalClearanceStatus": [
+    "medical_clearance_status": [
       "Not ready",
       "Ready for review",
       "In progress",
       "Cleared",
       "Not cleared"
     ],
-    "noteStatus": [
+    "note_status": [
       "draft",
       "signed",
       "void"
     ],
-    "noteType": [
+    "note_type": [
       "Admissions",
       "Authorization",
       "Billing",
@@ -350,11 +350,11 @@
       "Treatment consent",
       "Treatment session"
     ],
-    "noteVoidReason": [
+    "note_void_reason": [
       "Duplicate",
       "Made in error"
     ],
-    "observationInterpretations": [
+    "observation_interpretations": [
       "Normal",
       "Abnormal",
       "High",
