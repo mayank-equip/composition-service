@@ -1479,7 +1479,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "a6a274b0-33c6-4338-83bb-5f7ff797cabd",
+				"id": "f42047fc-ad4e-4612-848e-4d076f7980bb",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1650,7 +1650,7 @@
 					"    var jsonData1 = res.json();",
 					"    console.log(jsonData1.gendersList);",
 					"    // pm.environment.set(\"gendersList\", jsonData1.gendersList);",
-					"",
+					"    pm.environment.set(\"jsonData1\", jsonData1);",
 					"})",
 					"",
 					"// pm.environment.set(\"gendersList\", JSON.stringify(",
@@ -1833,7 +1833,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "062f3b7c-6a34-4649-ac47-88aa124470ed",
+				"id": "51900f2f-2164-4a2d-a4d8-a6aa5282b7e4",
 				"type": "text/javascript",
 				"exec": [
 					""
