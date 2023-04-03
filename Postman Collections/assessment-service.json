@@ -1473,7 +1473,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "3ac8029a-7974-44aa-ba0a-3ecc259c79c0",
+				"id": "1d83e83c-71c0-4db2-a5c0-dd16e4ef171e",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1633,6 +1633,17 @@
 					"        });",
 					"    });",
 					"}",
+					"",
+					"pm.sendRequest({",
+					"    url: 'https://raw.githubusercontent.com/mayank-equip/equip-api-automation/main/test_data.json',",
+					"    method: 'GET',",
+					"    header: {",
+					"        'Accept': '*/*'",
+					"    }",
+					"}, (err, res) => {",
+					"    let jsonData = res.json();",
+					"    console.log(jsonData.gendersList);",
+					"})",
 					"",
 					"pm.environment.set(\"gendersList\", JSON.stringify(",
 					"    [",
@@ -1814,7 +1825,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "6cc0b110-0e4e-490e-a6ed-4bf91400cada",
+				"id": "8aa5aaf7-4c4d-4472-ba43-01f2c5d3b819",
 				"type": "text/javascript",
 				"exec": [
 					""
