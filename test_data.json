@@ -1,32 +1,34 @@
 {
-  "gendersList": [
-    "Cis-gender male",
-    "Cis-gender female",
-    "Non-binary",
-    "Other",
-    "Unknown",
-    "Transgender male",
-    "Transgender female"
-  ],
-  "pronounsList": [
-    "(F)ae/(F)aer/(F)aers",
-    "Ey/Em/Eirs",
-    "He/Him/His",
-    "None",
-    "Other",
-    "She/Her/Hers",
-    "They/Them/Theirs",
-    "Xe/Xem/Xir"
-  ],
-  "ethnicitiesList": [
-    "Asian",
-    "Black/African American",
-    "White/Caucasian",
-    "Hispanic/Latinx",
-    "Native American, Indian American, or Alaska Native",
-    "Native Hawaiian or other Pacific Islander",
-    "Middle Eastern or North African",
-    "Prefer not to answer",
-    "Other"
-  ]
+  "user-service": {
+    "genders": [
+      "Cis-gender male",
+      "Cis-gender female",
+      "Non-binary",
+      "Other",
+      "Unknown",
+      "Transgender male",
+      "Transgender female"
+    ],
+    "pronouns": [
+      "(F)ae/(F)aer/(F)aers",
+      "Ey/Em/Eirs",
+      "He/Him/His",
+      "None",
+      "Other",
+      "She/Her/Hers",
+      "They/Them/Theirs",
+      "Xe/Xem/Xir"
+    ],
+    "ethnicities": [
+      "Asian",
+      "Black/African American",
+      "White/Caucasian",
+      "Hispanic/Latinx",
+      "Native American, Indian American, or Alaska Native",
+      "Native Hawaiian or other Pacific Islander",
+      "Middle Eastern or North African",
+      "Prefer not to answer",
+      "Other"
+    ]
+  }
 }
