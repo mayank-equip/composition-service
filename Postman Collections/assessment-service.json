@@ -62,7 +62,7 @@
 							"script": {
 								"id": "0d4147b9-d496-4bc8-bd98-5cb744b7fab7",
 								"exec": [
-									"var jsonData = pm.response.json();",
+									"let jsonData = pm.response.json();",
 									"",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -70,6 +70,14 @@
 									"",
 									"pm.test(\"Response time is less than 4000ms\", function () {",
 									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Response has a JSON body\", function () {",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Content-Type header is application/json\", () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
 									"});",
 									"",
 									"pm.test(\"Verify id is generated\", function () {",
