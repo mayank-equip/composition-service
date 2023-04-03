@@ -1374,8 +1374,7 @@
 							"",
 							"pm.test(\"Verify survey data\", function () {",
 							"    pm.expect(jsonData).to.be.eql(expectedResponse);",
-							"});",
-							"console.log(pm.environment.get(\"jsonData1\").gendersList);"
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -1480,7 +1479,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f42047fc-ad4e-4612-848e-4d076f7980bb",
+				"id": "7274671f-65c6-423a-857b-f9ec12a7a2a3",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1651,20 +1650,20 @@
 					"    var jsonData1 = res.json();",
 					"    console.log(jsonData1.gendersList);",
 					"    // pm.environment.set(\"gendersList\", jsonData1.gendersList);",
-					"    pm.environment.set(\"jsonData1\", jsonData1);",
+					"    // pm.environment.set(\"jsonData1\", jsonData1);",
 					"})",
 					"",
-					"// pm.environment.set(\"gendersList\", JSON.stringify(",
-					"//     [",
-					"//         \"Cis-gender male\",",
-					"//         \"Cis-gender female\",",
-					"//         \"Non-binary\",",
-					"//         \"Other\",",
-					"//         \"Unknown\",",
-					"//         \"Transgender male\",",
-					"//         \"Transgender female\"",
-					"//     ]",
-					"// ));",
+					"pm.environment.set(\"gendersList\", JSON.stringify(",
+					"    [",
+					"        \"Cis-gender male\",",
+					"        \"Cis-gender female\",",
+					"        \"Non-binary\",",
+					"        \"Other\",",
+					"        \"Unknown\",",
+					"        \"Transgender male\",",
+					"        \"Transgender female\"",
+					"    ]",
+					"));",
 					"",
 					"pm.environment.set(\"pronounsList\", JSON.stringify(",
 					"    [",
@@ -1834,7 +1833,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "51900f2f-2164-4a2d-a4d8-a6aa5282b7e4",
+				"id": "52fd9462-3735-48f2-8df7-09a5248a04e1",
 				"type": "text/javascript",
 				"exec": [
 					""
