@@ -1374,7 +1374,8 @@
 							"",
 							"pm.test(\"Verify survey data\", function () {",
 							"    pm.expect(jsonData).to.be.eql(expectedResponse);",
-							"});"
+							"});",
+							"console.log(pm.environment.get(\"jsonData1\").gendersList);"
 						],
 						"type": "text/javascript"
 					}
