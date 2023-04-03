@@ -1,0 +1,4754 @@
+[
+  {
+    "key": "host",
+    "value": "https://api-qa.np.equip.health",
+    "enabled": true
+  },
+  {
+    "key": "token-host",
+    "value": "https://equip-qa.us.auth0.com",
+    "enabled": true
+  },
+  {
+    "key": "task_name",
+    "value": "From Postman task name 2022-04-08T01:23:13.939Z Equip Health",
+    "enabled": true
+  },
+  {
+    "key": "task_description",
+    "value": "task description 2022-04-08T01:23:13.939Z Equip Health",
+    "enabled": true
+  },
+  {
+    "key": "category_id",
+    "value": "bd12e9b1-394c-470d-b03e-aa577f6fce65",
+    "enabled": true
+  },
+  {
+    "key": "sub_category_id",
+    "value": "11e121e9-bba2-4bf6-a1a9-8e401e93f2b5",
+    "enabled": true
+  },
+  {
+    "key": "task_assigned_userid",
+    "value": "87a6b43f-1e22-4ff6-93ae-dc003fc9c0c5",
+    "enabled": true
+  },
+  {
+    "key": "task_createdby_userid",
+    "value": "bd12e9b1-394c-470d-b03e-aa577f6fce65",
+    "enabled": true
+  },
+  {
+    "key": "task_due_date",
+    "value": "2022-04-22 23:59:59",
+    "enabled": true
+  },
+  {
+    "key": "task_priority_id",
+    "value": 3,
+    "enabled": true
+  },
+  {
+    "key": "task_status_id",
+    "value": "1",
+    "enabled": true
+  },
+  {
+    "key": "taskExternalId",
+    "value": "a3e02698-8ece-4357-9449-5bf85b8ab1fa",
+    "enabled": true
+  },
+  {
+    "key": "task_counter_1",
+    "value": "",
+    "enabled": true
+  },
+  {
+    "key": "commentExternalId",
+    "value": "",
+    "enabled": true
+  },
+  {
+    "key": "id",
+    "value": "52197f6d-26f5-4201-b122-01effd81bb29",
+    "enabled": true
+  },
+  {
+    "key": "task_comment_1",
+    "value": "task_comment_1",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "repeat",
+    "value": false,
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Auth_Url",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "OAuth_Timestamp",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ExpiresInTime",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "capacity",
+    "value": "full-time",
+    "enabled": true
+  },
+  {
+    "key": "hoursPerWeek",
+    "value": 40,
+    "enabled": true
+  },
+  {
+    "key": "patientFirstName",
+    "value": "Daphne",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientLastName",
+    "value": "Schowalter",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientEmail",
+    "value": "DaphneSchowalter@equip.health",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientMobile",
+    "value": "+1 404-620-9281",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "AdditionalNotes",
+    "value": "Use the 1080p HDD transmitter, then you can connect the online port!",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "dob",
+    "value": "2012-03-11",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "equipSourceExternalId",
+    "value": "5f421bef-4643-492a-9fb9-7f52cdf0f58f",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientState",
+    "value": "TN",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquirerFirstName",
+    "value": "Larue",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquirerLastName",
+    "value": "Skiles",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relation",
+    "value": "Other",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Email",
+    "value": "balakrishna@equip.health",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Mobile",
+    "value": "+1 523-746-5208",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "tellUsMore",
+    "value": "The COM port is down, hack the virtual driver so we can override the AI hard drive!",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "age",
+    "value": 34,
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "state",
+    "value": "Tennessee",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "referrerFirstName",
+    "value": "Rod",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "referrerEmail",
+    "value": "balakrishna@equip.health",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "referrerMobile",
+    "value": "+1 444-737-6295",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "referralExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "carerName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "carerMobile",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_category_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_status",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientPhoneNumber",
+    "value": "305-955-7655",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientChosenName",
+    "value": "Devon Goodwin",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientGender",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientPronouns",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientDateOfBirth",
+    "value": "2006-04-21",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientAddressLine1",
+    "value": "237 Walter Club",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientAddressLine2",
+    "value": "addressLine2",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientCity",
+    "value": "Celestineberg",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientCountry",
+    "value": "US",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientZip",
+    "value": "803798",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientLatitude",
+    "value": "60.9733",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientLongitude",
+    "value": "-10.1381",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "current_date_time",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientPreferredContact",
+    "value": "both",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "equipSourceName",
+    "value": "Google/Search",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "noteExternalId",
+    "value": "c37fbc37-4aaa-401b-b5f8-8430a7aea243",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "authoredByProviderExternalId",
+    "value": "f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ff",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientEthnicities",
+    "value": "[\"Native Hawaiian or other Pacific Islander\",\"Asian\"]",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientLanguages",
+    "value": "[\"French\",\"Polish\"]",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientGenderOnRecord",
+    "value": "Unknown",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientGenderOffRecord",
+    "value": "Transgender male",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientPronounsOnRecord",
+    "value": "He/Him/His",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientPronounsOffRecord",
+    "value": "They/Them/Theirs",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientSex",
+    "value": "Male",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientTimezone",
+    "value": "Pacific Time",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "patientContactPreferences",
+    "value": "[\"No preference\",\"Unknown\"]",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "referrerLastName",
+    "value": "Jenkins",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "contactPatientDirectly",
+    "value": "Carer",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "affiliation",
+    "value": "Google inc. india pvt ltd, 111 8th Ave, APT 1074, Tennessee, Tennessee, 85283",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CarerName",
+    "value": "Mohr",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CarerMobile",
+    "value": "+1 321-269-9001",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "cdsEpisodeStatus",
+    "value": "Enrolled",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsTreatmentProgramName",
+    "value": "Freeform",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsStatusReason",
+    "value": "HLOC - Inpatient Psych",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsEpisodeStartDate",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsEpisodeClosedDate",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsLengthInWeeks",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsLevel",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsAuthorizationDetails",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsAuthorizationNumber",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsCoverageExternalId",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsCoverageStartDate",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsCoverageEndDate",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsExternalId",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsPayor",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsPayorProgram",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsCoverageActive",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsCoverageGroupId",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "cdsStateCode",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "open_task_count",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payorExternalId",
+    "value": "001b3d9b-090e-1ee1-53c5-3b0e6efb2159",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "category_name",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "sub_category_name",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_assigned_username",
+    "value": "Bala Deema",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_createdby_username",
+    "value": "Bala 000analyst",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payorName",
+    "value": "Optum",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_updatedby_userid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_updatedby_username",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_due_date2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_name2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_priority_id2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "category_id2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "sub_category_id2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "category_name2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "sub_category_name2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_assigned_userid2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patient_id2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_assigned_userid3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patient_id3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_assigned_username2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "void_reason_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "void_reason_name",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "definition",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "schema",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "survey_ext_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "survey_name",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "survey_description",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "createdByUserId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "fromEmail",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "survey_status",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updated_definition",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updated_schema",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updated_survey_description",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "submittedSource",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "userEmail",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "userPhone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "assessment_responseExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "survey_ext_id_new",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updated_assessment_json_body",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "complete_assessment_json_body",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "group_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriber_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_name",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_program_name",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "response_text",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactFirstName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLastName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relation_to_patient1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isLivesWithPatient1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactEmailId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactMobile1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_contactPreferences1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactGender1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactPronoun1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_languages1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isInquiryReferralSubmitted1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientId_contact",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactFirstName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLastName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relation_to_patient2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isLivesWithPatient2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactEmailId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactMobile2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_contactPreferences2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactGender2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactPronoun2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_languages2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isInquiryReferralSubmitted2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactFirstName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLastName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relation_to_patient",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isLivesWithPatient",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactEmailId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactMobile",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_contactPreferences",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactGender",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactPronoun",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_languages",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isInquiryReferralSubmitted",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_timezone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "information_source",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pageSize",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pageSizes",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patient_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactFirstName3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLastName3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relation_to_patient3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isLivesWithPatient3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactEmailId3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactMobile3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_contactPreferences3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactGender3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactPronoun3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContact_languages3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isInquiryReferralSubmitted3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactId3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "group_id1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriber_id1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_name1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_program_name1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientState1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UpdatedCoverageExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CoverageExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payorExternalIds",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "AffiliationName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLatitude",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLongitude",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactCity1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactState1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactCountry1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactZip1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "AffiliationName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLatitude1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLongitude1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine1_1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine2_1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "AffiliationName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLatitude2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLongitude2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine1_2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine2_2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactCity2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactState2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactCountry2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactZip2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "AffiliationName_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLatitude_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLongitude_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine1_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine2_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactCity_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactState_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactCountry_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactZip_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "AffiliationName3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLatitude3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactLongitude3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine1_3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactAddressLine2_3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactCity3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactState3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactCountry3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactZip3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerFirstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerLastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerUserid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updatedUserEmail",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updatedUserPhone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updatedPatientFirstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updatedPatientLastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientFirstName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientLastName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientDiagnosis",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "clinicalProfileId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "submittedSource2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "userEmail2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "userPhone2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "assessment_responseExternalId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "noteCommunicationMethod",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "noteStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "noteTitle",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "noteContent",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "activityWithName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "noteType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isActive",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isConfidential",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "fileName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "attachmentExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "voidReason",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "voidReasonExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "episodeExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "cdsPausedStatusReason",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "cdsClosedStatusReason",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "externalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "attachmentUploadUrl",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "diagnosisId",
+    "value": "",
+    "enabled": true
+  },
+  {
+    "key": "group_id2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriber_id2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_name2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_program_name2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientState2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CoverageExternalId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "group_id3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriber_id3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_name3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_program_name3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientState3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CoverageExternalId3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "coverageExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filNoteType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filNoteTypes",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filNoteStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filNoteStatuses",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "createdByProviderExternalId",
+    "value": "73f92e85-9596-46e0-aa18-2708cc8d7fc2",
+    "enabled": true
+  },
+  {
+    "key": "providerid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientFirstName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientState",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPayor",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientStatuses",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderTimezone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderTimezones",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderRegion",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderRegions",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderRole",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderRoles",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderUserStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderUserStatuses",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderAppAccess",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filProviderAppAccesses",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientAdminEpisodeStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientAdminEpisodeStatuses",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPrimaryDiagnosis",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPrimaryDiagnoses",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientAdmitStartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientAdmitEndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerFirstName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerLastName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerEmail",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerPhoneNumber",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerTimezone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerRegion",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerCapacity",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerHoursPerWeek",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerAccountStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerRoles",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "btDeviceDateActive",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "btDeviceType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "firstName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "lastName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "email",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "phoneNumber",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "timezone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "region",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "accountStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "roles",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "taskUpdatedByUserId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "taskUpdatedByUserName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "commentCreatedByUserId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "commentCreatedByUserName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "taxt_ext_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filCoverageType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filCoverageTypes",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filMedCleranceStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filMedClearanceStatuses",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filInsuranceStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filInsuranceStatuses",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "assigneeUserId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "assigneeUserName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "primaryDiagnosis",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "primary_diagnosis",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ppr_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ppr_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ppr_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "admissions_specialist_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "admissions_specialist_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "admissions_specialist_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FEN_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FEN_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FEN_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Dietitian_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Dietitian_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Dietitian_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PeerMentor_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PeerMentor_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PeerMentor_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Therapist_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Therapist_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Therapist_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FamilyMentor_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FamilyMentor_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FamilyMentor_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Physician_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Physician_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Physician_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Psychiatrist_providerId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Psychiatrist_firstname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Psychiatrist_lastname",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "QualifyingCallNoteExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "QualifyingCallNoteTitle",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "QualifyingCallNoteContent",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PhoneScreenNoteExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PhoneScreenNoteTitle",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PhoneScreenNoteContent",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PresentingProblemNoteExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PresentingProblemNoteTitle",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "PresentingProblemNoteContent",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ConsentFormsNoteExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ConsentFormsNoteTitle",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ConsentFormsNoteContent",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FENIntroductionNoteExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FENIntroductionNoteTitle",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "FENIntroductionNoteContent",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "medicalClearanceStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "insuranceVerificationStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientExternalIds",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "careTeamMemberId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientStates",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPayor",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPayors",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPayorProgram",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPayorPrograms",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientLastName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientEmail1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientPhoneNumber1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientChosenName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientDateOfBirth1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientAddressLine11",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientAddressLine21",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientCity1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientCountry1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientZip1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientLatitude1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientLongitude1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientEthnicities1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientLanguages1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientGenderOnRecord1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientGenderOffRecord1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientPronounsOnRecord1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientPronounsOffRecord1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientSex1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientTimezone1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactPreferences1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_externalid1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_externalid2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_externalid3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "scale_device_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "BP_device_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "utc_time",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "observation_interpretation",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "observation_status",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "observation_type",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "observation_position",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerUserName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "heartRatetObservationid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "weightObservationid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "heightObservationid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "BPDObservationid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "BPSObservationid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "groupdId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriberId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriberRelationToPatient",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriberFirstName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriberLastName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriberDateOfBirth",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerServicesPhoneNumber",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "coverageStartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "coverageEndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "medicalClearanceRequestedDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "medicalClearanceCompletedDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "insuranceVerificationRequestedDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "insuranceVerificationCompletedDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientChosenName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactOfficePhone1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactOfficePhoneExt1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactDepartment1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isGuarantor1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isOngoingProvider1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isGuarantor1_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "isOngoingProvider1_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerFirstName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerLastName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientAge",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "group_id4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "subscriber_id4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_name4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Coverage4StartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Coverage4EndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_externalid4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientState4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerServicesPhoneNumber4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationFirstName4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationLastName4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationDateOfBirth4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientFirstNameCoverage",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryreferral_create_date_time",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "carerEmail",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Coverage1StartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Coverage1EndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerServicesPhoneNumber1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patient_relation1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationFirstName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationLastName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationDateOfBirth1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relationWithPatient",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquirerEmail",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquirerMobile",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquirerPhone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "informationSource",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientPhone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "referrerPhone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "affiliationCity",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "affiliationState",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "carerPhone",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relationWithPatientId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relationWithPatientName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_program1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "coverageExternalId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPayor1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_program2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "coverageExternalId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPayor2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "firstInquiryReferralDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "supportId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "close_reason_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "close_reason_name",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerId",
+    "value": "f64a7075-a2bb-4c6c-8d2d-b8ac9a7f1ffc",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "providerId2",
+    "value": "2a41dd6d-abba-440a-83a1-958ebb1dbde6",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "groupId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "stateCode",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payorProgram",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "primaryDiagnosisId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "primaryDiagnosisAbbreviation",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "allProviders",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "task_priority_score",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "psrextid",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "authorizationStartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "authorizationEndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "alternative_id1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "userId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "calendarId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "profileName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "sub",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryCreatedDateTime",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "appointmentStartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "appointmentStartDateTime",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "appointmentEndDateTime",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "appointmentExtId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "appointmentTypeExtIdQualifyingCall",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "alternative_id2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Coverage2StartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Coverage2EndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerServicesPhoneNumber2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patient_relation2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationFirstName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationLastName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationDateOfBirth2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "alternative_id3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Coverage3StartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Coverage3EndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerServicesPhoneNumber3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patient_relation3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationFirstName3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationLastName3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "RelationDateOfBirth3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "alternative_id4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "payor_externa4id1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CoverageExternalId4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "authorizationNumber",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedStartDate_1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedEndDate_1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedReason_1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "adminEpisodeCount",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "alternativeId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientRelationToSubscriber",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedStartDate_2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedEndDate_2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedReason_2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskDescription",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskAssignee",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskDuedate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskPriority",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskStatusId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskCategory",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskSubCategory",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskPriorityId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskCategoryExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskSubCategoryExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskAssignedUserId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskUpdatedByUserId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "inquiryTaskUpdatedByUserName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CarerFirstName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CarerLastName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "raName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "raLatitude",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "raLongitude",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "raAddressLine1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "raAddressLine2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "raCity",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "raState",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "raZipCode",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "vesta_client_id",
+    "value": "octk74sRPfVm7zJz314cMMzFHnGO3B2s",
+    "type": "secret",
+    "enabled": true
+  },
+  {
+    "key": "vesta_audience",
+    "value": "https://equip-qa.us.auth0.com/api/v2/",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "tokenAuthorizationCode",
+    "value": "hKFo2SBTNlkzSl9RRlM1a0FiWDJTTDZXa0ZaamFrNF9SZl9LX6Fur3VuaXZlcnNhbC1sb2dpbqN0aWTZIDlfTk9fN3p4aEtIWXdPRnBFQW5CMENtOVppLXZWVUp3o2NpZNkgb2N0azc0c1JQZlZtN3pKejMxNGNNTXpGSG5HTzNCMnM",
+    "type": "secret",
+    "enabled": true
+  },
+  {
+    "key": "vesta_username",
+    "value": "",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "vesta_password",
+    "value": "",
+    "type": "secret",
+    "enabled": true
+  },
+  {
+    "key": "providerExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "admissionTeamExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "careTeamExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relationToPatientSubCategory",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactChosenName2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactDateOfBirth2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactPrefix1_updated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientFirstLastAndChosenName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ElementTokenPublic",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "startDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "endDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ElementTokenInternal",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerExternalIdForAdmissionTeam",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerExternalIdForCareTeam",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "valadation",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerType1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerType2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "eventType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "messageId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "message",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "priority",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "notificationAction",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "reportId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "messageId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "message1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "priority1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "senderExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "senderFirstName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "senderLastName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "senderType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "receiverExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "receiverFirstName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "receiverLastName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "receiverType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "notificationExternalId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "totalCount",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "totalUnreadCount",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "messageId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "message2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "priority2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "notificationExternalId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "messageId3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "message3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "priority3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "notificationExternalId3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerExternalIdForCareTeam1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerExternalIdForCareTeam2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerExternalIdForCareTeam3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerExternalIdForCareTeam4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerExternalIdForCareTeam5",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "diagnosisSearchString",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedDetailsExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "statusReason",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedStartDate_3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedEndDate_3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedReason_3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "calendar_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "nonce",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "csrf",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "wresult",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "wctx",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "resumeState",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "resumeCode",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "tokenTenant",
+    "value": "equip-qa",
+    "enabled": true
+  },
+  {
+    "key": "myequip_client_id",
+    "value": "qLNIlWVQB78MiRuwGenV7N68YivUOl5R",
+    "enabled": true
+  },
+  {
+    "key": "tokenAuthorizationCode2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "token_client_id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "token_client_secret",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "token_audience",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "token_host",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "token_tenant",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "coookieURL",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerIdForAdmin",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerIdForAdvanceAccess",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerIdForGenralAccess",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "supportemail",
+    "value": "vaduvala%2b1234@equip.health",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "supportExternalIdEmail",
+    "value": "b93fd10b-75f7-4d75-8f99-b6e6b6f19785",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "UUID",
+    "value": "47b30d4f-d641-e2b9-fe84-f2b7c3ae21e2",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "UserId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId1_username",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId1_password",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserFirstname1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserLastname1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserType1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId2_username",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId2_password",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserFirstname2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserLastname2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserType2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "senderUsername",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "senderPassword",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "receiverUsername",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "receiverpassword",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "receiverPassword",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId3_username",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId3_password",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserFirstname3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserLastname3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserType3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId4_username",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserId4_password",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserFirstname4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserLastname4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserType4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "insuranceVerificationStatus1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "notificationsList",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "insuranceVerificationStatus2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "insuranceVerificationStatus3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "insuranceVerificationStatus4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "insuranceVerificationStatus5",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "medicalClearanceStatus1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "medicalClearanceStatus2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "medicalClearanceStatus3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "medicalClearanceStatus4",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "medicalClearanceStatus5",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "origin",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "myequip-token",
+    "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlFkTTJ3YWJnRFZBR0E2Z0t5cjhGeSJ9.eyJodHRwczovL2FwcC5lcXVpcC5oZWFsdGgvcm9sZXMiOltdLCJodHRwczovL2FwcC5lcXVpcC5oZWFsdGgvcGVybWlzc2lvbnMiOltdLCJpc3MiOiJodHRwczovL2VxdWlwLWRldi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjM2OGU3NTY2NjRlMGM5YmRmMzE0NjIzIiwiYXVkIjpbImh0dHBzOi8vZXF1aXAtZGV2LnVzLmF1dGgwLmNvbS9hcGkvdjIvIiwiaHR0cHM6Ly9lcXVpcC1kZXYudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY3MzQzMjgwNiwiZXhwIjoxNjczNTE5MjA2LCJhenAiOiJ2Znd2bms2MnBUeFVkb3JOZENpY2lRTXoxRFJjOHp5YyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.sUnEO4wbi7oIdaVR-f3pYtV_VxwzpPTgH-gKjYvIoWQb1LvV851cEApgWKFUqjizPGVkMTgEAQeUixAZYgJaMh43HvgaGf5PTi3ZhD5VGlyGmIG8xK-HfELMY6Yv2WVKPPjbCEuN3EC8iQGPWJGaOmTzGh3e9-1UWNqxXn0aeIvWaAxM8F0pTphrWj1Jo8mKDHdjJhdP-ax3rx87aWSSi_bEjxuVmJeYbNbe6IajzSRUXVjrvWaTz-vkLhV9vSgfFTa3Tm9ieXSgE850XF2atc7iuV-DAYZ9vCZTtBCNM7Jedut00BuQ4GDQvDK8i5YlqK0yymkhG0tmY2QXFm3LoA",
+    "type": "default",
+    "enabled": true
+  },
+  {
+    "key": "myequip_username",
+    "value": "shamsurahman+Support@equip.health",
+    "enabled": true
+  },
+  {
+    "key": "myequip_password",
+    "value": "Cali@$123",
+    "enabled": true
+  },
+  {
+    "key": "test-token",
+    "value": "  ",
+    "enabled": true
+  },
+  {
+    "key": "loginStateCode",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "resumeStateCode",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "supportFirstName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "supportLastName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "relationtopatient",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "supportId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "supportId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "scheduleUserId1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "scheduleUserId1_username",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "scheduleUserId1password",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "scheduleUserId1_UserFirstname1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "scheduleUserId1_UserLastname1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "scheduleUserId1_UserType1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "scheduleUserId2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "nonScheduleUserId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patient-ext-id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "host-ext-id",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "start-date",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "end-date",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPrimaryDiagnosisCode",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "filPatientPrimaryDiagnosisName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedStartDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedEndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "pausedReason",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "AuthApprovedSessions",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "AuthapprovedSessionUnits",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "adminepisodeExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "updatedDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "Auth_payor_name",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "mrn",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "appointment_start_date",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "appointment_end_date",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "sub1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "sub2",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "sub3",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "ElementTokenInternal_multiUsers",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "start_date",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "end_date",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "responseToken",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "providerUserId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "TagName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "provider_ExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "jsonResults",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "assessmentStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "surveyName",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "surveyExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "surveyDefinition",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "psychClearanceStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "psychClearanceRequestedDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "psychClearanceCompletedDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "observationExternalId",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "GoalStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "MeasureType",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "MeasureatPosition",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "MeasureValue",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "DataSource",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "MeasureAtPosition",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "MeasurementUnits",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "MeasureStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "BPSecondValue",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "UserID",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "observationDateTime",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "createdUser",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "MeasureUpdated",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "SecondValue",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactChosenName1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "patientContactDateOfBirth1",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "onSetDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "EndDate",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "DiagnosisStatus",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "CodingSystem",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "DiagnosisCode",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "DiagnosisID",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  },
+  {
+    "key": "DiagnosisExternalID",
+    "value": "",
+    "type": "any",
+    "enabled": true
+  }
+]
