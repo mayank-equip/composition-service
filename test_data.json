@@ -105,6 +105,147 @@
       "Inactive"
     ]
   },
+  "inquiry_referral_service": {
+    "equip_source": [
+      {
+        "equip_source_name": "Colleague (please specify)",
+        "equip_source_external_id": "1837b9e7-b4a1-5d7e-ba16-20ed3399eece"
+      },
+      {
+        "equip_source_name": "Conference (please specify)",
+        "equip_source_external_id": "94ec1d36-86a5-9154-ed66-4a2ec588b167"
+      },
+      {
+        "equip_source_name": "Dietitian",
+        "equip_source_external_id": "b0548d60-6706-66f4-39ce-64244ac9b488"
+      },
+      {
+        "equip_source_name": "Doctor/clinician",
+        "equip_source_external_id": "73d0851d-ef86-3fde-eb42-e76456cc06bc"
+      },
+      {
+        "equip_source_name": "Eating disorder organization",
+        "equip_source_external_id": "e78a85ff-d5bb-e9b6-aa52-4207f4514579"
+      },
+      {
+        "equip_source_name": "Equip employee",
+        "equip_source_external_id": "03b05531-9533-334c-18cf-788ef65a54f2"
+      },
+      {
+        "equip_source_name": "Equip event/webinar",
+        "equip_source_external_id": "537513f8-9f48-a8d5-28c5-df4292aaae9f"
+      },
+      {
+        "equip_source_name": "Equip patient/family",
+        "equip_source_external_id": "69e56306-2342-8564-0d97-dfa0ac133a2e"
+      },
+      {
+        "equip_source_name": "Friend or family member",
+        "equip_source_external_id": "20331916-2e8c-8e23-6fef-2d7051594e8d"
+      },
+      {
+        "equip_source_name": "Google/search",
+        "equip_source_external_id": "da1241be-41f5-bd47-1c58-53b22d71dacd"
+      },
+      {
+        "equip_source_name": "Hospital/medical center",
+        "equip_source_external_id": "d212a73b-8e40-0c7d-b040-86cf1d1457b1"
+      },
+      {
+        "equip_source_name": "Insurance/Health Plan",
+        "equip_source_external_id": "5e58b996-1a5a-19d6-b0ee-ca47d2898055"
+      },
+      {
+        "equip_source_name": "Networking event",
+        "equip_source_external_id": "c51e0ae2-d6c7-1668-ae56-23b2e851831a"
+      },
+      {
+        "equip_source_name": "Newsletter",
+        "equip_source_external_id": "f5968f05-8073-23e5-2e70-343d65100791"
+      },
+      {
+        "equip_source_name": "Other (please specify)",
+        "equip_source_external_id": "9fb76684-e848-69d9-e2d8-b576fc815f2f"
+      },
+      {
+        "equip_source_name": "Press",
+        "equip_source_external_id": "cf6a2fca-837e-bdb2-421a-9e7676bedb77"
+      },
+      {
+        "equip_source_name": "School",
+        "equip_source_external_id": "ccab06ed-4abd-682e-a49a-a6a0c01cd225"
+      },
+      {
+        "equip_source_name": "Social media",
+        "equip_source_external_id": "3df90a84-dcaf-2490-0135-f5a843991ed7"
+      },
+      {
+        "equip_source_name": "Speaking engagement/webinar",
+        "equip_source_external_id": "5f071189-39a2-4546-98a5-dff2df41e804"
+      },
+      {
+        "equip_source_name": "Therapist",
+        "equip_source_external_id": "edf08f1b-9c83-f220-a240-d1cada96eb60"
+      }
+    ],
+    "information_source": [
+      "Chat",
+      "Email",
+      "Fax",
+      "In-person",
+      "Live phone call",
+      "Voicemail",
+      "Webform"
+    ],
+    "relation_subcategory": [
+      "Another professional",
+      "Health plan employee",
+      "Provider"
+    ],
+    "relation_to_patient_inquiry": [
+      "Family member",
+      "Father",
+      "Friend",
+      "Grandparent",
+      "Guardian",
+      "Mother",
+      "Other",
+      "Parent (non-binary)",
+      "Sibling",
+      "Stepfather",
+      "Stepmother",
+      "Stepparent"
+    ],
+    "relation_to_patient_referral": [
+      "Case Manager/Discharge Planner",
+      "Community org/non-profit",
+      "Community professional",
+      "Dietitian",
+      "Eating disorder coach/advocate",
+      "Executive",
+      "Insurance Company",
+      "Nurse",
+      "Nurse Practitioner",
+      "Other",
+      "Outreach Professional",
+      "Payor Case Manager",
+      "Physician Assistant",
+      "Physician: Adolescent Medicine/Eating Disorder Specialist",
+      "Physician: Endocrinologist",
+      "Physician: Family Medicine",
+      "Physician: Gastroenterologist",
+      "Physician: Other specialist",
+      "Physician: PCP (non-peds)",
+      "Physician: Pediatrician",
+      "Practice Manager",
+      "Psychiatrist",
+      "Psychologist",
+      "Referral Coordinator",
+      "School nurse",
+      "School therapist/counselor",
+      "Therapist"
+    ]
+  },
   "user_service": {
     "genders": [
       "Cis-gender male",
