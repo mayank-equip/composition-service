@@ -50,7 +50,7 @@
 									"// pm.environment.set(\"patientGenderOffRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
 									"",
 									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(pm.environment.get(\"jsonData1\").gendersList));",
-									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(jsonData1.gendersList));",
+									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(pm.environment.get(\"jsonData1\").gendersList));",
 									"",
 									"",
 									"",
