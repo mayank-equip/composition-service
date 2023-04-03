@@ -1479,7 +1479,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "7274671f-65c6-423a-857b-f9ec12a7a2a3",
+				"id": "4461f795-a7dc-41fa-bc63-ee2a2f7f3ae5",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1640,18 +1640,18 @@
 					"    });",
 					"}",
 					"",
-					"pm.sendRequest({",
-					"    url: 'https://raw.githubusercontent.com/mayank-equip/equip-api-automation/main/test_data.json',",
-					"    method: 'GET',",
-					"    header: {",
-					"        'Accept': '*/*'",
-					"    }",
-					"}, (err, res) => {",
-					"    var jsonData1 = res.json();",
-					"    console.log(jsonData1.gendersList);",
-					"    // pm.environment.set(\"gendersList\", jsonData1.gendersList);",
-					"    // pm.environment.set(\"jsonData1\", jsonData1);",
-					"})",
+					"// pm.sendRequest({",
+					"//     url: 'https://raw.githubusercontent.com/mayank-equip/equip-api-automation/main/test_data.json',",
+					"//     method: 'GET',",
+					"//     header: {",
+					"//         'Accept': '*/*'",
+					"//     }",
+					"// }, (err, res) => {",
+					"//     var jsonData1 = res.json();",
+					"//     console.log(jsonData1.gendersList);",
+					"//     // pm.environment.set(\"gendersList\", jsonData1.gendersList);",
+					"//     // pm.environment.set(\"jsonData1\", jsonData1);",
+					"// })",
 					"",
 					"pm.environment.set(\"gendersList\", JSON.stringify(",
 					"    [",
@@ -1833,7 +1833,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "52fd9462-3735-48f2-8df7-09a5248a04e1",
+				"id": "7a596caa-70e2-4356-85fe-f5a41d120edd",
 				"type": "text/javascript",
 				"exec": [
 					""
