@@ -1473,7 +1473,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "beb94009-dd5d-416e-9192-480fffebe325",
+				"id": "f1e683d2-ef0a-4073-8a4e-0b77745230a1",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1643,19 +1643,21 @@
 					"}, (err, res) => {",
 					"    var jsonData = res.json();",
 					"    console.log(jsonData.gendersList);",
+					"    pm.environment.set(\"gendersList\", jsonData.gendersList);",
+					"",
 					"})",
 					"",
-					"pm.environment.set(\"gendersList\", JSON.stringify(jsonData.gendersList",
-					"    // [",
-					"    //     \"Cis-gender male\",",
-					"    //     \"Cis-gender female\",",
-					"    //     \"Non-binary\",",
-					"    //     \"Other\",",
-					"    //     \"Unknown\",",
-					"    //     \"Transgender male\",",
-					"    //     \"Transgender female\"",
-					"    // ]",
-					"));",
+					"// pm.environment.set(\"gendersList\", JSON.stringify(",
+					"//     [",
+					"//         \"Cis-gender male\",",
+					"//         \"Cis-gender female\",",
+					"//         \"Non-binary\",",
+					"//         \"Other\",",
+					"//         \"Unknown\",",
+					"//         \"Transgender male\",",
+					"//         \"Transgender female\"",
+					"//     ]",
+					"// ));",
 					"",
 					"pm.environment.set(\"pronounsList\", JSON.stringify(",
 					"    [",
@@ -1825,7 +1827,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "4663243b-2231-4da0-849b-ee05a81841df",
+				"id": "0b62ce9a-5540-4d8a-983d-e358a11f02e6",
 				"type": "text/javascript",
 				"exec": [
 					""
