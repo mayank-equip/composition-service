@@ -105,352 +105,6 @@
       "Inactive"
     ]
   },
-  "inquiry_referral_service": {
-    "equip_source": [
-      {
-        "equip_source_name": "Colleague (please specify)",
-        "equip_source_external_id": "1837b9e7-b4a1-5d7e-ba16-20ed3399eece"
-      },
-      {
-        "equip_source_name": "Conference (please specify)",
-        "equip_source_external_id": "94ec1d36-86a5-9154-ed66-4a2ec588b167"
-      },
-      {
-        "equip_source_name": "Dietitian",
-        "equip_source_external_id": "b0548d60-6706-66f4-39ce-64244ac9b488"
-      },
-      {
-        "equip_source_name": "Doctor/clinician",
-        "equip_source_external_id": "73d0851d-ef86-3fde-eb42-e76456cc06bc"
-      },
-      {
-        "equip_source_name": "Eating disorder organization",
-        "equip_source_external_id": "e78a85ff-d5bb-e9b6-aa52-4207f4514579"
-      },
-      {
-        "equip_source_name": "Equip employee",
-        "equip_source_external_id": "03b05531-9533-334c-18cf-788ef65a54f2"
-      },
-      {
-        "equip_source_name": "Equip event/webinar",
-        "equip_source_external_id": "537513f8-9f48-a8d5-28c5-df4292aaae9f"
-      },
-      {
-        "equip_source_name": "Equip patient/family",
-        "equip_source_external_id": "69e56306-2342-8564-0d97-dfa0ac133a2e"
-      },
-      {
-        "equip_source_name": "Friend or family member",
-        "equip_source_external_id": "20331916-2e8c-8e23-6fef-2d7051594e8d"
-      },
-      {
-        "equip_source_name": "Google/search",
-        "equip_source_external_id": "da1241be-41f5-bd47-1c58-53b22d71dacd"
-      },
-      {
-        "equip_source_name": "Hospital/medical center",
-        "equip_source_external_id": "d212a73b-8e40-0c7d-b040-86cf1d1457b1"
-      },
-      {
-        "equip_source_name": "Insurance/Health Plan",
-        "equip_source_external_id": "5e58b996-1a5a-19d6-b0ee-ca47d2898055"
-      },
-      {
-        "equip_source_name": "Networking event",
-        "equip_source_external_id": "c51e0ae2-d6c7-1668-ae56-23b2e851831a"
-      },
-      {
-        "equip_source_name": "Newsletter",
-        "equip_source_external_id": "f5968f05-8073-23e5-2e70-343d65100791"
-      },
-      {
-        "equip_source_name": "Other (please specify)",
-        "equip_source_external_id": "9fb76684-e848-69d9-e2d8-b576fc815f2f"
-      },
-      {
-        "equip_source_name": "Press",
-        "equip_source_external_id": "cf6a2fca-837e-bdb2-421a-9e7676bedb77"
-      },
-      {
-        "equip_source_name": "School",
-        "equip_source_external_id": "ccab06ed-4abd-682e-a49a-a6a0c01cd225"
-      },
-      {
-        "equip_source_name": "Social media",
-        "equip_source_external_id": "3df90a84-dcaf-2490-0135-f5a843991ed7"
-      },
-      {
-        "equip_source_name": "Speaking engagement/webinar",
-        "equip_source_external_id": "5f071189-39a2-4546-98a5-dff2df41e804"
-      },
-      {
-        "equip_source_name": "Therapist",
-        "equip_source_external_id": "edf08f1b-9c83-f220-a240-d1cada96eb60"
-      }
-    ],
-    "information_source": [
-      "Chat",
-      "Email",
-      "Fax",
-      "In-person",
-      "Live phone call",
-      "Voicemail",
-      "Webform"
-    ],
-    "relation_subcategory": [
-      "Another professional",
-      "Health plan employee",
-      "Provider"
-    ],
-    "relation_to_patient_inquiry": [
-      "Family member",
-      "Father",
-      "Friend",
-      "Grandparent",
-      "Guardian",
-      "Mother",
-      "Other",
-      "Parent (non-binary)",
-      "Sibling",
-      "Stepfather",
-      "Stepmother",
-      "Stepparent"
-    ],
-    "relation_to_patient_referral": [
-      "Case Manager/Discharge Planner",
-      "Community org/non-profit",
-      "Community professional",
-      "Dietitian",
-      "Eating disorder coach/advocate",
-      "Executive",
-      "Insurance Company",
-      "Nurse",
-      "Nurse Practitioner",
-      "Other",
-      "Outreach Professional",
-      "Payor Case Manager",
-      "Physician Assistant",
-      "Physician: Adolescent Medicine/Eating Disorder Specialist",
-      "Physician: Endocrinologist",
-      "Physician: Family Medicine",
-      "Physician: Gastroenterologist",
-      "Physician: Other specialist",
-      "Physician: PCP (non-peds)",
-      "Physician: Pediatrician",
-      "Practice Manager",
-      "Psychiatrist",
-      "Psychologist",
-      "Referral Coordinator",
-      "School nurse",
-      "School therapist/counselor",
-      "Therapist"
-    ]
-  },
-  "user_service": {
-    "genders": [
-      "Cis-gender male",
-      "Cis-gender female",
-      "Non-binary",
-      "Other",
-      "Unknown",
-      "Transgender male",
-      "Transgender female"
-    ],
-    "pronouns": [
-      "(F)ae/(F)aer/(F)aers",
-      "Ey/Em/Eirs",
-      "He/Him/His",
-      "None",
-      "Other",
-      "She/Her/Hers",
-      "They/Them/Theirs",
-      "Xe/Xem/Xir"
-    ],
-    "ethnicities": [
-      "Asian",
-      "Black/African American",
-      "White/Caucasian",
-      "Hispanic/Latinx",
-      "Native American, Indian American, or Alaska Native",
-      "Native Hawaiian or other Pacific Islander",
-      "Middle Eastern or North African",
-      "Prefer not to answer",
-      "Other"
-    ],
-    "languages": [
-      "Afrikaans",
-      "American Sign Language (ASL)",
-      "Armenian",
-      "Bamanankan",
-      "Bavarian",
-      "Bengali",
-      "Bhojpuri",
-      "Burmese",
-      "Cameroonian Pidgin",
-      "Cebuano",
-      "Chinese (Mandarin)",
-      "Chinese (Wu/Shanghainese)",
-      "Chinese (Yue/Cantonese)",
-      "Chittagonian",
-      "Czech",
-      "Deccan",
-      "Dutch",
-      "Eastern Punjabi",
-      "Egyptian Spoken Arabic",
-      "English",
-      "Filipino",
-      "French",
-      "Gan Chinese",
-      "Greek",
-      "Gujarati",
-      "Hakka Chinese",
-      "Hausa",
-      "Hindi",
-      "Hungarian",
-      "Igbo",
-      "Indonesian",
-      "Iranian Persian",
-      "Italian",
-      "Japanese",
-      "Javanese",
-      "Jinyu Chinese",
-      "Kannada",
-      "Kazakh",
-      "Khmer",
-      "Korean",
-      "Magahi",
-      "Maithili",
-      "Malay",
-      "Malayalam",
-      "Marathi",
-      "Nepali",
-      "Nigerian Fulfulde",
-      "Nigerian Pidgin",
-      "Northeastern Thai",
-      "Northern Kurdish",
-      "Northern Pashto",
-      "Northern Uzbek",
-      "Odia",
-      "Persian",
-      "Polish",
-      "Portuguese",
-      "Romanian",
-      "Russian",
-      "Sadri",
-      "Saraiki",
-      "Serbo-Croatian",
-      "Sindhi",
-      "Somali",
-      "South Azerbaijani",
-      "Southern Min Chinese",
-      "Spanish",
-      "Standard Arabic",
-      "Standard German",
-      "Sunda",
-      "Swahili",
-      "Swedish",
-      "Sylheti",
-      "Tagalog",
-      "Tamil",
-      "Telugu",
-      "Thai",
-      "Turkish",
-      "Ukrainian",
-      "Urdu",
-      "Vietnamese",
-      "Western Punjabi",
-      "Xhosa",
-      "Xiang Chinese",
-      "Yiddish",
-      "Yoruba",
-      "Zulu"
-    ],
-    "sex": [
-      "Male",
-      "Female",
-      "Unknown"
-    ],
-    "time_zone": [
-      "Alaska Time",
-      "Arizona",
-      "Central Time",
-      "Eastern Time",
-      "Hawaii Standard Time",
-      "Hawaii-Aleutian Time",
-      "London/UK Time",
-      "Mountain Time",
-      "Pacific Time"
-    ],
-    "contact_preferences": [
-      "Email",
-      "No preference",
-      "Phone",
-      "SMS",
-      "Unknown"
-    ],
-    "provider_type": [
-      "Admissions Operations",
-      "Admissions Specialist",
-      "Admissions Supervisor",
-      "Analyst",
-      "Billing Specialist",
-      "Care Coordinator",
-      "Client Success",
-      "Clinical Ops",
-      "Clinical Supervisor",
-      "Dietitian",
-      "Family Experience Navigator",
-      "Family Mentor",
-      "Insurance Specialist",
-      "Medical Assistant",
-      "Nurse Practitioner",
-      "Patient Service Representative",
-      "Peer Mentor",
-      "Physician",
-      "Physician Assistant",
-      "Practice Coordinator",
-      "Product Support",
-      "Provider Partnerships",
-      "Psychiatric Nurse Practitioner",
-      "Psychiatrist",
-      "Registered Nurse",
-      "Therapist"
-    ],
-    "region": [
-      "Northeast",
-      "Southwest",
-      "Southeast",
-      "West",
-      "Midwest"
-    ],
-    "user_type": [
-      "provider",
-      "patient",
-      "support"
-    ],
-    "equip_source": [
-      "Colleague (please specify)",
-      "Conference (please specify)",
-      "Dietitian",
-      "Doctor/clinician",
-      "Eating disorder organization",
-      "Equip employee",
-      "Equip event/webinar",
-      "Equip patient/family",
-      "Friend or family member",
-      "Google/search",
-      "Hospital/medical center",
-      "Insurance/Health Plan",
-      "Networking event",
-      "Newsletter",
-      "Other (please specify)",
-      "Press",
-      "School",
-      "Social media",
-      "Speaking engagement/webinar",
-      "Therapist"
-    ]
-  },
   "clinical_data_service": {
     "activityWith": [
       "Case Manager",
@@ -888,6 +542,669 @@
         "statecode": "Unknown",
         "statename": "Unknown"
       }
+    ]
+  },
+  "inquiry_referral_service": {
+    "equip_source": [
+      {
+        "equip_source_name": "Colleague (please specify)",
+        "equip_source_external_id": "1837b9e7-b4a1-5d7e-ba16-20ed3399eece"
+      },
+      {
+        "equip_source_name": "Conference (please specify)",
+        "equip_source_external_id": "94ec1d36-86a5-9154-ed66-4a2ec588b167"
+      },
+      {
+        "equip_source_name": "Dietitian",
+        "equip_source_external_id": "b0548d60-6706-66f4-39ce-64244ac9b488"
+      },
+      {
+        "equip_source_name": "Doctor/clinician",
+        "equip_source_external_id": "73d0851d-ef86-3fde-eb42-e76456cc06bc"
+      },
+      {
+        "equip_source_name": "Eating disorder organization",
+        "equip_source_external_id": "e78a85ff-d5bb-e9b6-aa52-4207f4514579"
+      },
+      {
+        "equip_source_name": "Equip employee",
+        "equip_source_external_id": "03b05531-9533-334c-18cf-788ef65a54f2"
+      },
+      {
+        "equip_source_name": "Equip event/webinar",
+        "equip_source_external_id": "537513f8-9f48-a8d5-28c5-df4292aaae9f"
+      },
+      {
+        "equip_source_name": "Equip patient/family",
+        "equip_source_external_id": "69e56306-2342-8564-0d97-dfa0ac133a2e"
+      },
+      {
+        "equip_source_name": "Friend or family member",
+        "equip_source_external_id": "20331916-2e8c-8e23-6fef-2d7051594e8d"
+      },
+      {
+        "equip_source_name": "Google/search",
+        "equip_source_external_id": "da1241be-41f5-bd47-1c58-53b22d71dacd"
+      },
+      {
+        "equip_source_name": "Hospital/medical center",
+        "equip_source_external_id": "d212a73b-8e40-0c7d-b040-86cf1d1457b1"
+      },
+      {
+        "equip_source_name": "Insurance/Health Plan",
+        "equip_source_external_id": "5e58b996-1a5a-19d6-b0ee-ca47d2898055"
+      },
+      {
+        "equip_source_name": "Networking event",
+        "equip_source_external_id": "c51e0ae2-d6c7-1668-ae56-23b2e851831a"
+      },
+      {
+        "equip_source_name": "Newsletter",
+        "equip_source_external_id": "f5968f05-8073-23e5-2e70-343d65100791"
+      },
+      {
+        "equip_source_name": "Other (please specify)",
+        "equip_source_external_id": "9fb76684-e848-69d9-e2d8-b576fc815f2f"
+      },
+      {
+        "equip_source_name": "Press",
+        "equip_source_external_id": "cf6a2fca-837e-bdb2-421a-9e7676bedb77"
+      },
+      {
+        "equip_source_name": "School",
+        "equip_source_external_id": "ccab06ed-4abd-682e-a49a-a6a0c01cd225"
+      },
+      {
+        "equip_source_name": "Social media",
+        "equip_source_external_id": "3df90a84-dcaf-2490-0135-f5a843991ed7"
+      },
+      {
+        "equip_source_name": "Speaking engagement/webinar",
+        "equip_source_external_id": "5f071189-39a2-4546-98a5-dff2df41e804"
+      },
+      {
+        "equip_source_name": "Therapist",
+        "equip_source_external_id": "edf08f1b-9c83-f220-a240-d1cada96eb60"
+      }
+    ],
+    "information_source": [
+      "Chat",
+      "Email",
+      "Fax",
+      "In-person",
+      "Live phone call",
+      "Voicemail",
+      "Webform"
+    ],
+    "relation_subcategory": [
+      "Another professional",
+      "Health plan employee",
+      "Provider"
+    ],
+    "relation_to_patient_inquiry": [
+      "Family member",
+      "Father",
+      "Friend",
+      "Grandparent",
+      "Guardian",
+      "Mother",
+      "Other",
+      "Parent (non-binary)",
+      "Sibling",
+      "Stepfather",
+      "Stepmother",
+      "Stepparent"
+    ],
+    "relation_to_patient_referral": [
+      "Case Manager/Discharge Planner",
+      "Community org/non-profit",
+      "Community professional",
+      "Dietitian",
+      "Eating disorder coach/advocate",
+      "Executive",
+      "Insurance Company",
+      "Nurse",
+      "Nurse Practitioner",
+      "Other",
+      "Outreach Professional",
+      "Payor Case Manager",
+      "Physician Assistant",
+      "Physician: Adolescent Medicine/Eating Disorder Specialist",
+      "Physician: Endocrinologist",
+      "Physician: Family Medicine",
+      "Physician: Gastroenterologist",
+      "Physician: Other specialist",
+      "Physician: PCP (non-peds)",
+      "Physician: Pediatrician",
+      "Practice Manager",
+      "Psychiatrist",
+      "Psychologist",
+      "Referral Coordinator",
+      "School nurse",
+      "School therapist/counselor",
+      "Therapist"
+    ]
+  },
+  "notification_service": {
+    "event_type": [
+      "ADDED_TO_CARE_TEAM",
+      "ASSIGNED_MY_EQUIP_TASK",
+      "CHAT_MENTION",
+      "CHAT_MESSAGE",
+      "CHAT_REPLY",
+      "COMPLETED_INTAKE_SURVEY",
+      "REMOVED_FROM_CARE_TEAM",
+      "UPDATED_CONTACTS",
+      "UPDATED_INSURANCE_STATUS",
+      "UPDATED_MEDICAL_CLEARANCE_STATUS",
+      "UPLOADED_INSURANCE_CARD"
+    ],
+    "notification_action": [
+      "OPEN_CHAT",
+      "OPEN_CARE_TEAM",
+      "OPEN_PATIENT_PROFILE",
+      "OPEN_CONTACTS",
+      "OPEN_PATIENT_NOTE",
+      "NONE"
+    ],
+    "priority": [
+      "LOW",
+      "MEDIUM",
+      "HIGH"
+    ],
+    "source": [
+      "ASSESSMENT",
+      "CHAT",
+      "CLINICAL_DATA",
+      "INQUIRY_REFERRAL",
+      "TASK",
+      "USER"
+    ],
+    "status": [
+      "NEW",
+      "DELIVERED",
+      "READ",
+      "UNREAD",
+      "ARCHIVED"
+    ]
+  },
+  "schedule_service": {
+    "apopintment_status": [
+      "scheduled",
+      "completed",
+      "cancelled",
+      "no show"
+    ],
+    "appointment_type": [
+      {
+        "appointment_type": "Therapy Intake",
+        "appointment_type_label": "Therapy Intake",
+        "provider_type_name": "Therapist",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Therapy Session",
+        "appointment_type_label": "Therapy 50-minute Session",
+        "provider_type_name": "Therapist",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Therapy Session",
+        "appointment_type_label": "Therapy 25-minute Session",
+        "provider_type_name": "Therapist",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 25,
+        "buffer_in_mins": 5
+      },
+      {
+        "appointment_type": "Therapy Session",
+        "appointment_type_label": "Therapy 15-minute Check-In",
+        "provider_type_name": "Therapist",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 15,
+        "buffer_in_mins": 0
+      },
+      {
+        "appointment_type": "Psychiatric Intake",
+        "appointment_type_label": "Psychiatric Intake",
+        "provider_type_name": "Psychiatrist",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 80,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Medication Management Session",
+        "appointment_type_label": "Medication Management Session",
+        "provider_type_name": "Psychiatrist",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 25,
+        "buffer_in_mins": 5
+      },
+      {
+        "appointment_type": "Medical Provider Intake",
+        "appointment_type_label": "Medical Provider Intake",
+        "provider_type_name": "Physician",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Medical Provider Session",
+        "appointment_type_label": "Medical Provider 25-min Session",
+        "provider_type_name": "Physician",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 25,
+        "buffer_in_mins": 5
+      },
+      {
+        "appointment_type": "Medical Provider Session",
+        "appointment_type_label": "Medical Provider 15-min Session",
+        "provider_type_name": "Physician",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 15,
+        "buffer_in_mins": 0
+      },
+      {
+        "appointment_type": "Registered Nurse Session",
+        "appointment_type_label": "Registered Nurse 25-min Session",
+        "provider_type_name": "Registered Nurse",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 25,
+        "buffer_in_mins": 5
+      },
+      {
+        "appointment_type": "Registered Nurse Session",
+        "appointment_type_label": "Registered Nurse 15-min Session",
+        "provider_type_name": "Registered Nurse",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 15,
+        "buffer_in_mins": 0
+      },
+      {
+        "appointment_type": "Medical Assistant Session",
+        "appointment_type_label": "Medical Assistant 15-min Check-In",
+        "provider_type_name": "Medical Assistant",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 15,
+        "buffer_in_mins": 0
+      },
+      {
+        "appointment_type": "Peer Mentor Intake",
+        "appointment_type_label": "Peer Mentor Intake",
+        "provider_type_name": "Peer Mentor",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Peer Mentor Session",
+        "appointment_type_label": "Peer Mentor 50-minute Session",
+        "provider_type_name": "Peer Mentor",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Peer Mentor Session",
+        "appointment_type_label": "Peer Mentor 25-minute Session",
+        "provider_type_name": "Peer Mentor",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 25,
+        "buffer_in_mins": 5
+      },
+      {
+        "appointment_type": "Peer Mentor Session",
+        "appointment_type_label": "Peer Mentor 15-minute Check-In",
+        "provider_type_name": "Peer Mentor",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 15,
+        "buffer_in_mins": 0
+      },
+      {
+        "appointment_type": "Family Mentor Intake",
+        "appointment_type_label": "Family Mentor Intake",
+        "provider_type_name": "Family Mentor",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Family Mentor Session",
+        "appointment_type_label": "Family Mentor 50-minute Session",
+        "provider_type_name": "Family Mentor",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Family Mentor Session",
+        "appointment_type_label": "Family Mentor 25-minute Session",
+        "provider_type_name": "Family Mentor",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 25,
+        "buffer_in_mins": 5
+      },
+      {
+        "appointment_type": "Family Mentor Session",
+        "appointment_type_label": "Family Mentor 15-minute Check-In",
+        "provider_type_name": "Family Mentor",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 15,
+        "buffer_in_mins": 0
+      },
+      {
+        "appointment_type": "Dietitian Intake",
+        "appointment_type_label": "Dietitian Intake",
+        "provider_type_name": "Dietitian",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Dietitian Session",
+        "appointment_type_label": "Dietitian 50-minute Session",
+        "provider_type_name": "Dietitian",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 50,
+        "buffer_in_mins": 10
+      },
+      {
+        "appointment_type": "Dietitian Session",
+        "appointment_type_label": "Dietitian 25-minute Session",
+        "provider_type_name": "Dietitian",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 25,
+        "buffer_in_mins": 5
+      },
+      {
+        "appointment_type": "Dietitian Session",
+        "appointment_type_label": "Dietitian 15-minute Check-In",
+        "provider_type_name": "Dietitian",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 15,
+        "buffer_in_mins": 0
+      },
+      {
+        "appointment_type": "Qualifying call",
+        "appointment_type_label": "Qualifying call",
+        "provider_type_name": "Patient Service Representative",
+        "start_time": "08:00",
+        "end_time": "17:00",
+        "duration_in_mins": 20,
+        "buffer_in_mins": 10
+      }
+    ]
+  },
+  "task_service": {
+    "task_priority": [
+      "Low",
+      "Medium",
+      "High"
+    ],
+    "task_status": [
+      "In progress",
+      "Void",
+      "To do",
+      "Done",
+      "Closed"
+    ],
+    "task_void_reason_void": [
+      "Admin episode closed",
+      "Assessment deleted or incomplete",
+      "Duplicate",
+      "Made in error"
+    ],
+    "task_void_reason_closed": [
+      "Contemplative",
+      "Declined - Admin/Equip delay",
+      "Declined - Chose HLOC (IOP/PHP/RTC)",
+      "Declined - Chose new output team",
+      "Declined - Continue with current team",
+      "Declined - Unknown tx choice",
+      "MIA - Lost contact",
+      "MIA - No contact",
+      "Not eligible - Wrong age",
+      "Not eligible - Wrong state",
+      "Not qualified - Equip referred to clinical HLOC",
+      "Not qualified - Equip referred to medical HLOC",
+      "Not qualified - Family unwilling to participate in tx",
+      "Not qualified - Financial - Can’t afford OOP $",
+      "Not qualified - Financial - Insurance not in-network",
+      "Not qualified - No eating disorder",
+      "Not qualified - Not living with family"
+    ]
+  },
+  "user_service": {
+    "genders": [
+      "Cis-gender male",
+      "Cis-gender female",
+      "Non-binary",
+      "Other",
+      "Unknown",
+      "Transgender male",
+      "Transgender female"
+    ],
+    "pronouns": [
+      "(F)ae/(F)aer/(F)aers",
+      "Ey/Em/Eirs",
+      "He/Him/His",
+      "None",
+      "Other",
+      "She/Her/Hers",
+      "They/Them/Theirs",
+      "Xe/Xem/Xir"
+    ],
+    "ethnicities": [
+      "Asian",
+      "Black/African American",
+      "White/Caucasian",
+      "Hispanic/Latinx",
+      "Native American, Indian American, or Alaska Native",
+      "Native Hawaiian or other Pacific Islander",
+      "Middle Eastern or North African",
+      "Prefer not to answer",
+      "Other"
+    ],
+    "languages": [
+      "Afrikaans",
+      "American Sign Language (ASL)",
+      "Armenian",
+      "Bamanankan",
+      "Bavarian",
+      "Bengali",
+      "Bhojpuri",
+      "Burmese",
+      "Cameroonian Pidgin",
+      "Cebuano",
+      "Chinese (Mandarin)",
+      "Chinese (Wu/Shanghainese)",
+      "Chinese (Yue/Cantonese)",
+      "Chittagonian",
+      "Czech",
+      "Deccan",
+      "Dutch",
+      "Eastern Punjabi",
+      "Egyptian Spoken Arabic",
+      "English",
+      "Filipino",
+      "French",
+      "Gan Chinese",
+      "Greek",
+      "Gujarati",
+      "Hakka Chinese",
+      "Hausa",
+      "Hindi",
+      "Hungarian",
+      "Igbo",
+      "Indonesian",
+      "Iranian Persian",
+      "Italian",
+      "Japanese",
+      "Javanese",
+      "Jinyu Chinese",
+      "Kannada",
+      "Kazakh",
+      "Khmer",
+      "Korean",
+      "Magahi",
+      "Maithili",
+      "Malay",
+      "Malayalam",
+      "Marathi",
+      "Nepali",
+      "Nigerian Fulfulde",
+      "Nigerian Pidgin",
+      "Northeastern Thai",
+      "Northern Kurdish",
+      "Northern Pashto",
+      "Northern Uzbek",
+      "Odia",
+      "Persian",
+      "Polish",
+      "Portuguese",
+      "Romanian",
+      "Russian",
+      "Sadri",
+      "Saraiki",
+      "Serbo-Croatian",
+      "Sindhi",
+      "Somali",
+      "South Azerbaijani",
+      "Southern Min Chinese",
+      "Spanish",
+      "Standard Arabic",
+      "Standard German",
+      "Sunda",
+      "Swahili",
+      "Swedish",
+      "Sylheti",
+      "Tagalog",
+      "Tamil",
+      "Telugu",
+      "Thai",
+      "Turkish",
+      "Ukrainian",
+      "Urdu",
+      "Vietnamese",
+      "Western Punjabi",
+      "Xhosa",
+      "Xiang Chinese",
+      "Yiddish",
+      "Yoruba",
+      "Zulu"
+    ],
+    "sex": [
+      "Male",
+      "Female",
+      "Unknown"
+    ],
+    "time_zone": [
+      "Alaska Time",
+      "Arizona",
+      "Central Time",
+      "Eastern Time",
+      "Hawaii Standard Time",
+      "Hawaii-Aleutian Time",
+      "London/UK Time",
+      "Mountain Time",
+      "Pacific Time"
+    ],
+    "contact_preferences": [
+      "Email",
+      "No preference",
+      "Phone",
+      "SMS",
+      "Unknown"
+    ],
+    "provider_type": [
+      "Admissions Operations",
+      "Admissions Specialist",
+      "Admissions Supervisor",
+      "Analyst",
+      "Billing Specialist",
+      "Care Coordinator",
+      "Client Success",
+      "Clinical Ops",
+      "Clinical Supervisor",
+      "Dietitian",
+      "Family Experience Navigator",
+      "Family Mentor",
+      "Insurance Specialist",
+      "Medical Assistant",
+      "Nurse Practitioner",
+      "Patient Service Representative",
+      "Peer Mentor",
+      "Physician",
+      "Physician Assistant",
+      "Practice Coordinator",
+      "Product Support",
+      "Provider Partnerships",
+      "Psychiatric Nurse Practitioner",
+      "Psychiatrist",
+      "Registered Nurse",
+      "Therapist"
+    ],
+    "region": [
+      "Northeast",
+      "Southwest",
+      "Southeast",
+      "West",
+      "Midwest"
+    ],
+    "user_type": [
+      "provider",
+      "patient",
+      "support"
+    ],
+    "equip_source": [
+      "Colleague (please specify)",
+      "Conference (please specify)",
+      "Dietitian",
+      "Doctor/clinician",
+      "Eating disorder organization",
+      "Equip employee",
+      "Equip event/webinar",
+      "Equip patient/family",
+      "Friend or family member",
+      "Google/search",
+      "Hospital/medical center",
+      "Insurance/Health Plan",
+      "Networking event",
+      "Newsletter",
+      "Other (please specify)",
+      "Press",
+      "School",
+      "Social media",
+      "Speaking engagement/webinar",
+      "Therapist"
     ]
   }
 }
