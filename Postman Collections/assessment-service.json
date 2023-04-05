@@ -1473,7 +1473,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f66b3994-4956-4433-8f78-ef8220c297a8",
+				"id": "79c313ed-f385-4dd4-bdb3-7e006cd0038b",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1636,7 +1636,7 @@
 					"",
 					"/*Load test data json*/",
 					"pm.sendRequest({",
-					"    url: 'https://raw.githubusercontent.com/mayank-equip/equip-api-automation/main/test_data.json',",
+					"    url: 'https://raw.githubusercontent.com/mayank-equip/equip-api-automation/main/testdata_qa.json',",
 					"    method: 'GET',",
 					"    header: {",
 					"        'Accept': '*/*'",
@@ -1827,7 +1827,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "098460b2-a2e9-4fa4-9d85-ab1fcd87beaf",
+				"id": "b37ff56b-2ea9-4cbf-b07b-72c4067f2725",
 				"type": "text/javascript",
 				"exec": [
 					""
