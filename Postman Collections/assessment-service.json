@@ -1473,7 +1473,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "5ac07ef5-1b65-47b7-919d-3c04ac9614dd",
+				"id": "1efa8ef9-15fc-4d8b-a61c-fffa76b346c7",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1809,11 +1809,11 @@
 					"    ]",
 					"));",
 					"",
-					"pm.environment.set(\"statesList\", JSON.stringify(",
-					"    [",
-					"        \"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"",
-					"    ]",
-					"));",
+					"// pm.environment.set(\"statesList\", JSON.stringify(",
+					"//     [",
+					"//         \"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"",
+					"//     ]",
+					"// ));",
 					"",
 					"pm.environment.set(\"addressLine2List\", JSON.stringify(",
 					"    [",
@@ -1827,7 +1827,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "e8eb0af5-f20b-4a1a-b9c3-e9fb51ac4c63",
+				"id": "7ce5a8bb-ed4e-4c44-889d-65c5d65cc8b8",
 				"type": "text/javascript",
 				"exec": [
 					""
