@@ -51,7 +51,7 @@
 									"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 3).sort()));",
 									"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 3).sort()));",
 									"pm.environment.set(\"patientSex\", ld.sample(pm.environment.get(\"test_data\").user_service.sex));",
-									"pm.environment.set(\"patientTimezone\", ld.sample(JSON.parse(pm.environment.get(\"timezonesList\"))));",
+									"pm.environment.set(\"patientTimezone\", ld.sample(pm.environment.get(\"test_data\").user_service.time_zone));",
 									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 2).sort()));"
 								],
 								"type": "text/javascript"
