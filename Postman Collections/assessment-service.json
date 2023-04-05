@@ -45,14 +45,14 @@
 									"pm.environment.set(\"patientAddressLine2\", ld.sample(JSON.parse(pm.environment.get(\"addressLine2List\"))));",
 									"pm.environment.set(\"patientState\", ld.sample(pm.environment.get(\"test_data\").clinical_data_service.states).statecode);",
 									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.ethnicities, 2).sort()));",
-									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"languagesList\")), 2).sort()));",
+									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.languages, 2).sort()));",
 									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
 									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(JSON.parse(pm.environment.get(\"gendersList\"))));",
-									"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort()));",
-									"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"pronounsList\")), 3).sort()));",
+									"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 3).sort()));",
+									"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 3).sort()));",
 									"pm.environment.set(\"patientSex\", ld.sample(JSON.parse(pm.environment.get(\"sexList\"))));",
 									"pm.environment.set(\"patientTimezone\", ld.sample(JSON.parse(pm.environment.get(\"timezonesList\"))));",
-									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(JSON.parse(pm.environment.get(\"contactPreferences\")), 2).sort()));"
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 2).sort()));"
 								],
 								"type": "text/javascript"
 							}
