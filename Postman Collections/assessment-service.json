@@ -128,6 +128,7 @@
 									"",
 									"pm.environment.set(\"submittedSource\", ld.sample(pm.environment.get(\"test_data\").assessment_service.submitted_source));",
 									"pm.environment.set(\"userPhone\", \"+12073444381\");",
+									"",
 									"if (pm.environment.name === \"dev\") {",
 									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
 									"    pm.environment.set(\"providerLastname\", \"User\");",
