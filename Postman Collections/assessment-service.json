@@ -681,9 +681,7 @@
 								"exec": [
 									"let ld = require('lodash');",
 									"",
-									"const submitted_source_list = ['Web', 'Phone', 'Email'];",
-									"",
-									"pm.environment.set(\"submittedSource\", ld.sample(submitted_source_list));",
+									"pm.environment.set(\"submittedSource\", ld.sample(pm.environment.get(\"test_data\").assessment_service.submitted_source));",
 									"pm.environment.set(\"userEmail\", \"qa@equip.health\");",
 									"pm.environment.set(\"userPhone\", \"+917842414959\");"
 								],
