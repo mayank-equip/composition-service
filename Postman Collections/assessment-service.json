@@ -1464,7 +1464,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "bf27e121-90fd-42a0-bcff-1f31ac808050",
+				"id": "e10b2596-48fb-41a9-8ae6-5e9a0dc18260",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1633,8 +1633,7 @@
 					"        'Accept': '*/*'",
 					"    }",
 					"}, (err, res) => {",
-					"    var test_data = res.json();",
-					"    pm.environment.set(\"test_data\", test_data);",
+					"    pm.environment.set(\"test_data\", res.json());",
 					"    console.log(pm.environment.get(\"test_data\"));",
 					"})"
 				]
@@ -1643,7 +1642,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "fea2c466-cca8-416a-951c-296c8e714633",
+				"id": "d7bcb891-7fd3-4667-a940-79f859483c5e",
 				"type": "text/javascript",
 				"exec": [
 					""
