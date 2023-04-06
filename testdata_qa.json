@@ -169,31 +169,110 @@
       "void"
     ],
     "note_type": [
-      "Admissions",
-      "Authorization",
-      "Billing",
-      "Care coordination",
-      "Consent forms",
-      "Custody agreement",
-      "FEN introduction",
-      "Informed consent",
-      "Inquiry",
-      "Insurance",
-      "Insurance card",
-      "Intake session",
-      "Medical clearance",
-      "Medical records",
-      "Patient follow-up",
-      "Phone screen",
-      "Presenting problem",
-      "Provider assignment",
-      "Provider follow-up",
-      "Qualifying call",
-      "Referral",
-      "Referral correspondance",
-      "Release of information",
-      "Treatment consent",
-      "Treatment session"
+      {
+        "type_code": "Admissions",
+        "is_active": true
+      },
+      {
+        "type_code": "Billing",
+        "is_active": true
+      },
+      {
+        "type_code": "Inquiry",
+        "is_active": true
+      },
+      {
+        "type_code": "Intake session",
+        "is_active": true
+      },
+      {
+        "type_code": "Provider follow-up",
+        "is_active": true
+      },
+      {
+        "type_code": "Referral",
+        "is_active": true
+      },
+      {
+        "type_code": "Treatment session",
+        "is_active": true
+      },
+      {
+        "type_code": "Patient follow-up",
+        "is_active": true
+      },
+      {
+        "type_code": "Authorization",
+        "is_active": true
+      },
+      {
+        "type_code": "Insurance",
+        "is_active": true
+      },
+      {
+        "type_code": "Patient chart",
+        "is_active": false
+      },
+      {
+        "type_code": "Care coordination",
+        "is_active": true
+      },
+      {
+        "type_code": "Qualifying call",
+        "is_active": true
+      },
+      {
+        "type_code": "Consent forms",
+        "is_active": true
+      },
+      {
+        "type_code": "FEN introduction",
+        "is_active": true
+      },
+      {
+        "type_code": "Presenting problem",
+        "is_active": true
+      },
+      {
+        "type_code": "Insurance card",
+        "is_active": true
+      },
+      {
+        "type_code": "Treatment consent",
+        "is_active": true
+      },
+      {
+        "type_code": "Informed consent",
+        "is_active": true
+      },
+      {
+        "type_code": "Custody agreement",
+        "is_active": true
+      },
+      {
+        "type_code": "Medical records",
+        "is_active": true
+      },
+      {
+        "type_code": "Release of information",
+        "is_active": true
+      },
+      {
+        "type_code": "Medical clearance",
+        "is_active": true
+      },
+      {
+        "type_code": "Provider assignment",
+        "is_active": true
+      },
+      {
+        "type_code": "Phone screen",
+        "is_active": true
+      },
+      {
+        "type_code": "Referral correspondance",
+        "is_active": true
+      }
     ],
     "note_void_reason": [
       "Duplicate",
