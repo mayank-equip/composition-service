@@ -124,11 +124,11 @@
       "Yellow"
     ],
     "communication_method": [
-      "chat",
-      "email",
-      "inbound phone",
-      "outbound phone",
-      "video"
+      "Chat",
+      "Email",
+      "Inbound phone",
+      "Outbound phone",
+      "Video"
     ],
     "diagnosis_status": [
       "active",
