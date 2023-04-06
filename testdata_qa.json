@@ -107,12 +107,12 @@
   },
   "clinical_data_service": {
     "activity_with": [
-      "Case Manager",
-      "School",
-      "carer",
-      "patient",
-      "payor",
-      "provider"
+      "Carer",
+      "Case manager",
+      "Patient",
+      "Payor",
+      "Provider",
+      "School"
     ],
     "admin_episode_level": [
       "Blue",
