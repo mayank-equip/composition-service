@@ -106,7 +106,7 @@
     ]
   },
   "clinical_data_service": {
-    "activityWith": [
+    "activity_with": [
       "Case Manager",
       "School",
       "carer",
