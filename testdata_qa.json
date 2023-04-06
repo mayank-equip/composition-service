@@ -174,51 +174,15 @@
         "is_active": true
       },
       {
-        "type_code": "Billing",
-        "is_active": true
-      },
-      {
-        "type_code": "Inquiry",
-        "is_active": true
-      },
-      {
-        "type_code": "Intake session",
-        "is_active": true
-      },
-      {
-        "type_code": "Provider follow-up",
-        "is_active": true
-      },
-      {
-        "type_code": "Referral",
-        "is_active": true
-      },
-      {
-        "type_code": "Treatment session",
-        "is_active": true
-      },
-      {
-        "type_code": "Patient follow-up",
-        "is_active": true
-      },
-      {
         "type_code": "Authorization",
         "is_active": true
       },
       {
-        "type_code": "Insurance",
+        "type_code": "Billing",
         "is_active": true
-      },
-      {
-        "type_code": "Patient chart",
-        "is_active": false
       },
       {
         "type_code": "Care coordination",
-        "is_active": true
-      },
-      {
-        "type_code": "Qualifying call",
         "is_active": true
       },
       {
@@ -226,19 +190,11 @@
         "is_active": true
       },
       {
+        "type_code": "Custody agreement",
+        "is_active": true
+      },
+      {
         "type_code": "FEN introduction",
-        "is_active": true
-      },
-      {
-        "type_code": "Presenting problem",
-        "is_active": true
-      },
-      {
-        "type_code": "Insurance card",
-        "is_active": true
-      },
-      {
-        "type_code": "Treatment consent",
         "is_active": true
       },
       {
@@ -246,15 +202,19 @@
         "is_active": true
       },
       {
-        "type_code": "Custody agreement",
+        "type_code": "Inquiry",
         "is_active": true
       },
       {
-        "type_code": "Medical records",
+        "type_code": "Insurance",
         "is_active": true
       },
       {
-        "type_code": "Release of information",
+        "type_code": "Insurance card",
+        "is_active": true
+      },
+      {
+        "type_code": "Intake session",
         "is_active": true
       },
       {
@@ -262,7 +222,15 @@
         "is_active": true
       },
       {
-        "type_code": "Provider assignment",
+        "type_code": "Medical records",
+        "is_active": true
+      },
+      {
+        "type_code": "Patient chart",
+        "is_active": false
+      },
+      {
+        "type_code": "Patient follow-up",
         "is_active": true
       },
       {
@@ -270,7 +238,39 @@
         "is_active": true
       },
       {
+        "type_code": "Presenting problem",
+        "is_active": true
+      },
+      {
+        "type_code": "Provider assignment",
+        "is_active": true
+      },
+      {
+        "type_code": "Provider follow-up",
+        "is_active": true
+      },
+      {
+        "type_code": "Qualifying call",
+        "is_active": true
+      },
+      {
+        "type_code": "Referral",
+        "is_active": true
+      },
+      {
         "type_code": "Referral correspondance",
+        "is_active": true
+      },
+      {
+        "type_code": "Release of information",
+        "is_active": true
+      },
+      {
+        "type_code": "Treatment consent",
+        "is_active": true
+      },
+      {
+        "type_code": "Treatment session",
         "is_active": true
       }
     ],
