@@ -1465,7 +1465,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "e10b2596-48fb-41a9-8ae6-5e9a0dc18260",
+				"id": "009741fb-b3bf-4ef6-8353-1f09b2833158",
 				"type": "text/javascript",
 				"exec": [
 					"// Refresh the OAuth token if necessary",
@@ -1539,8 +1539,8 @@
 					"                    body: {",
 					"                        mode: 'urlencoded',",
 					"                        urlencoded: [",
-					"                            { key: \"username\", value: pm.environment.get(\"vesta_username\") },",
-					"                            { key: \"password\", value: pm.environment.get(\"vesta_password\") },",
+					"                            { key: \"username\", value: pm.environment.get(\"maud_username\") },",
+					"                            { key: \"password\", value: pm.environment.get(\"maud_password\") },",
 					"                            { key: \"state\", value: tokenAuthorizationCode1 },",
 					"                            { key: \"tenant\", value: pm.environment.get(\"token_tenant\") },",
 					"                            { key: \"client_id\", value: pm.environment.get(\"vesta_client_id\") },",
@@ -1643,7 +1643,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "d7bcb891-7fd3-4667-a940-79f859483c5e",
+				"id": "d9308a44-6dd3-4cf5-90d8-5a90eae08d93",
 				"type": "text/javascript",
 				"exec": [
 					""
