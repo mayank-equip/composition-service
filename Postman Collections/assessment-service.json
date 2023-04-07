@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "a67e437b-d396-4536-a71d-fa3f6aeccfbd",
 		"name": "assessment-service",
+		"description": "This collection pre-request has token generation code which generates the token if the test-token variable is null or it is expired, also make sure that you set the `vesta_username` and `vesta_password` variables with your Maud username and password.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
