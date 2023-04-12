@@ -406,7 +406,7 @@
 			"name": "Verify Intake survey is populated with patient contact details",
 			"item": [
 				{
-					"name": "Create assessment Copy",
+					"name": "Create assessment",
 					"event": [
 						{
 							"listen": "prerequest",
