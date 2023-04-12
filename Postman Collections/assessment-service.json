@@ -45,7 +45,7 @@
 									"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
 									"pm.environment.set(\"patientAddressLine2\", ld.sample(JSON.parse(pm.environment.get(\"addressLine2List\"))));",
 									"pm.environment.set(\"patientState\", ld.sample(pm.environment.get(\"test_data\").clinical_data_service.states).statecode);",
-									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.ethnicities, 2).sort()));",
+									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.ethnicities.splice(0, 7), 2).sort()));",
 									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.languages, 2).sort()));",
 									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(pm.environment.get(\"test_data\").user_service.genders));",
 									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(pm.environment.get(\"test_data\").user_service.genders));",
