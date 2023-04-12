@@ -19,7 +19,7 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-        - uses: equip-api-automation/issue-label-notification-action@1.3
+        - uses: equip-api-automation/readme.md@1.3
           with:
              recipients: |
                   migration=@mayank-equip
