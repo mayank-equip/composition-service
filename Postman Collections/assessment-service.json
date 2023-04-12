@@ -195,83 +195,6 @@
 					"response": []
 				},
 				{
-					"name": "Create assessment Copy",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "85e3fb0e-f038-4fcb-a7d2-b6e55c8a661a",
-								"exec": [
-									"let ld = require('lodash');",
-									"",
-									"pm.environment.set(\"submittedSource\", ld.sample(pm.environment.get(\"test_data\").assessment_service.submitted_source));",
-									"pm.environment.set(\"userPhone\", \"+12073444381\");",
-									"",
-									"if (pm.environment.name === \"dev\") {",
-									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
-									"    pm.environment.set(\"providerLastname\", \"User\");",
-									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");",
-									"} else if (pm.environment.name === \"qa\") {",
-									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
-									"    pm.environment.set(\"providerLastname\", \"User\");",
-									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");",
-									"}"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "aaaeb827-364c-4224-9604-e1347a83d486",
-								"exec": [
-									"var jsonData = pm.response.json();",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Verify responseExternalId is generated\", function () {",
-									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);",
-									"});",
-									"",
-									"pm.test(\"Response time is less than 4000ms\", function () {",
-									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
-									"});",
-									"",
-									"pm.environment.set(\"assessment_responseExternalId\", jsonData.responseExternalId);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"id": "e7f1cf05-0dc1-44ba-b2e3-9fe872fa68b7",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{test-token}}"
-							}
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"status\": \"New\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\",\n    \"submittedUserId\": \"{{providerUserid}}\",\n    \"surveyName\": \"Intake\",\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"toUserFirstName\": \"{{patientFirstName}}\",\n    \"toUserLastName\": \"{{patientLastName}}\",\n    \"toUserPhone\": \"{{userPhone}}\",\n    \"userId\": \"{{patientId}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{host}}/assessments"
-					},
-					"response": []
-				},
-				{
 					"name": "Delete assessment",
 					"event": [
 						{
@@ -478,6 +401,236 @@
 				}
 			],
 			"id": "3c9b5961-000b-4f33-9e8f-605fb4cb0f18"
+		},
+		{
+			"name": "Verify Intake survey is populated with patient contact details",
+			"item": [
+				{
+					"name": "Create assessment Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "85e3fb0e-f038-4fcb-a7d2-b6e55c8a661a",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"pm.environment.set(\"submittedSource\", ld.sample(pm.environment.get(\"test_data\").assessment_service.submitted_source));",
+									"pm.environment.set(\"userPhone\", \"+12073444381\");",
+									"",
+									"if (pm.environment.name === \"dev\") {",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
+									"    pm.environment.set(\"providerLastname\", \"User\");",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");",
+									"} else if (pm.environment.name === \"qa\") {",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
+									"    pm.environment.set(\"providerLastname\", \"User\");",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "aaaeb827-364c-4224-9604-e1347a83d486",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify responseExternalId is generated\", function () {",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e7f1cf05-0dc1-44ba-b2e3-9fe872fa68b7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"New\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"surveyName\": \"Intake\",\n    \"userId\": \"{{patientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "Get assessment Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "85e3fb0e-f038-4fcb-a7d2-b6e55c8a661a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "aaaeb827-364c-4224-9604-e1347a83d486",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify assessment count\", function () {",
+									"    pm.expect(jsonData.count).to.eql(1);",
+									"});",
+									"",
+									"pm.test(\"Verify assessment responseExternalId\", function () {",
+									"    pm.expect(jsonData.assessments[0].responseExternalId).to.eql(pm.environment.get(\"assessment_responseExternalId\"));",
+									"});",
+									"",
+									"pm.test(\"Verify assessment status\", function () {",
+									"    pm.expect(jsonData.assessments[0].status).to.eql(pm.environment.get(\"assessmentStatus\"));",
+									"});",
+									"",
+									"pm.test(\"Verify assessment submitted source\", function () {",
+									"    pm.expect(jsonData.assessments[0].submittedSource).to.eql(pm.environment.get(\"submittedSource\"));",
+									"});",
+									"",
+									"pm.test(\"Verify survey definition\", function () {",
+									"    pm.expect(jsonData.assessments[0].surveyDefinition).to.eql(JSON.parse(pm.environment.get(\"surveyDefinition\")));",
+									"});",
+									"",
+									"pm.test(\"Verify survey external id\", function () {",
+									"    pm.expect(jsonData.assessments[0].surveyExternalId).to.eql(pm.environment.get(\"surveyExternalId\"));",
+									"});",
+									"",
+									"pm.test(\"Verify survey name\", function () {",
+									"    pm.expect(jsonData.assessments[0].surveyName).to.eql(pm.environment.get(\"surveyName\"));",
+									"});",
+									"",
+									"pm.test(\"Verify assessment updated date\", function () {",
+									"    var d = new Date();",
+									"    d.setDate(d.getDate());",
+									"    d = d.toISOString().slice(0, 10);",
+									"    d = d.split(\"T\")[0];",
+									"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+									"});",
+									"",
+									"pm.test(\"Verify assessment created date\", function () {",
+									"    var d = new Date();",
+									"    d.setDate(d.getDate());",
+									"    d = d.toISOString().slice(0, 10);",
+									"    d = d.split(\"T\")[0];",
+									"    pm.expect(jsonData.assessments[0].updatedDate).to.contains(d);",
+									"});",
+									"",
+									"pm.test(\"Verify assessment userEmail\", function () {",
+									"    pm.expect(jsonData.assessments[0].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));",
+									"});",
+									"",
+									"pm.test(\"Verify assessment userPhone\", function () {",
+									"    pm.expect(jsonData.assessments[0].toUserPhone).to.eql(pm.environment.get(\"userPhone\"));",
+									"});",
+									"",
+									"pm.test(\"Verify assessment userId\", function () {",
+									"    pm.expect(jsonData.assessments[0].userId).to.eql(pm.environment.get(\"patientId\"));",
+									"});",
+									"",
+									"pm.test(\"Verify assessment toUserFirstName\", function () {",
+									"    pm.expect(jsonData.assessments[0].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));",
+									"});",
+									"",
+									"pm.test(\"Verify assessment toUserFirstName\", function () {",
+									"    pm.expect(jsonData.assessments[0].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));",
+									"});",
+									"",
+									"pm.test(\"Verify assessment submittedUserId\", function () {",
+									"    pm.expect(jsonData.assessments[0].submittedUserId).to.eql(pm.environment.get(\"providerUserId\"));",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "31e8299c-0034-4f49-92aa-229edc687915",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "surveyName::{{survey_name}}%26userId::{{patientId}}",
+									"disabled": true
+								},
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "2314872c-c4f1-46ef-8fd0-4627e12e0d6f"
 		},
 		{
 			"name": "Create assessments with invalid data",
@@ -1294,11 +1447,6 @@
 				}
 			],
 			"id": "b580a643-8980-4bdc-a614-e48140fd7c79"
-		},
-		{
-			"name": "Verify Intake survey is populated with patient contact details",
-			"item": [],
-			"id": "2314872c-c4f1-46ef-8fd0-4627e12e0d6f"
 		},
 		{
 			"name": "Verify survey data",
