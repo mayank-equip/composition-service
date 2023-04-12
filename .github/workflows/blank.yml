@@ -2,14 +2,13 @@ name: Notify users based on issue labels
 
 on:
   pull_request:
-    branches:    
-      - main
-    types: [labeled]
+    types: [labeled, unlabeled]
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-        - uses: jenschelkopf/issue-label-notification-action@1.3
+        - uses: wow-actions/label-commands@v1
           with:
+             CONFIG_FILE: .github/workflows/blank.yml
              recipients: |
-                  migration=@jenschelkopf
+                  migration=@mayank-equip
