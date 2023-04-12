@@ -428,7 +428,8 @@
 									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");",
 									"}",
 									"",
-									"pm.environment.set(\"assessmentStatus\", \"New\");"
+									"pm.environment.set(\"assessmentStatus\", \"New\");",
+									"pm.environment.set(\"surveyName\", \"Intake\");"
 								],
 								"type": "text/javascript"
 							}
@@ -473,7 +474,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": \"New\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"surveyName\": \"Intake\",\n    \"userId\": \"{{patientId}}\"\n}",
+							"raw": "{\n    \"status\": \"{{assessmentStatus}}\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"surveyName\": \"{{surveyName}}\",\n    \"userId\": \"{{patientId}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
