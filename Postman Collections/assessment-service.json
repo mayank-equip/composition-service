@@ -426,7 +426,9 @@
 									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
 									"    pm.environment.set(\"providerLastname\", \"User\");",
 									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");",
-									"}"
+									"}",
+									"",
+									"pm.environment.set(\"assessmentStatus\", \"New\");"
 								],
 								"type": "text/javascript"
 							}
