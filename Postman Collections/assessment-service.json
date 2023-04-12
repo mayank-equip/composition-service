@@ -486,7 +486,7 @@
 					"response": []
 				},
 				{
-					"name": "Get assessment Copy",
+					"name": "Get assessment",
 					"event": [
 						{
 							"listen": "prerequest",
