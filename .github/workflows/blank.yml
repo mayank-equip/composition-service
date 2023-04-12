@@ -6,10 +6,12 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
-        - uses: wow-actions/label-commands@v1
+        - uses: tekktrik/issue-labeled-ping@v1
           with:
-             GITHUB_TOKEN: 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
-             CONFIG_FILE: .github/workflows/blank.yml
-             recipients: |
-                  migration=@mayank-equip
+            github-token: ${{secrets.GITHUB_TOKEN}}
+            user: mayank-equip
+            label: migration
+            message: Hey {user} - the "{label}" label was applied!
