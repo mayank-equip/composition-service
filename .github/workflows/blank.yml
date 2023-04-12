@@ -9,6 +9,7 @@ jobs:
     steps:
         - uses: wow-actions/label-commands@v1
           with:
+             GITHUB_TOKEN: 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
              CONFIG_FILE: .github/workflows/blank.yml
              recipients: |
                   migration=@mayank-equip
