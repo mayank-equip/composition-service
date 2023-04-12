@@ -49,11 +49,11 @@
 									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.languages, 2).sort()));",
 									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(pm.environment.get(\"test_data\").user_service.genders));",
 									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(pm.environment.get(\"test_data\").user_service.genders));",
-									"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 3).sort()));",
-									"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 3).sort()));",
+									"pm.environment.set(\"patientPronounsOnRecord\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 3)));",
+									"pm.environment.set(\"patientPronounsOffRecord\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.pronouns, 3)));",
 									"pm.environment.set(\"patientSex\", ld.sample(pm.environment.get(\"test_data\").user_service.sex));",
 									"pm.environment.set(\"patientTimezone\", ld.sample(pm.environment.get(\"test_data\").user_service.time_zone));",
-									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.contact_preferences.splice(0, 4), 2).sort()));"
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(pm.environment.get(\"test_data\").user_service.contact_preferences.splice(0, 4), 2)));"
 								],
 								"type": "text/javascript"
 							}
@@ -582,20 +582,24 @@
 									"    + \"\\\",\\\"patientDOB\\\":\\\"\" + pm.environment.get(\"patientDateOfBirth\")",
 									"    + \"\\\",\\\"assignedGenderAtBirth\\\":\\\"\" + pm.environment.get(\"patientSex\")",
 									"    + \"\\\",\\\"patientGender\\\":\\\"\" + pm.environment.get(\"patientGenderOnRecord\")",
+									"    + \"\\\",\\\"patientPronouns\\\":\\\"\" + pm.environment.get(\"patientPronounsOnRecord\")",
+									"    + \"\\\",\\\"patientEthnicity\\\":\\\"\" + pm.environment.get(\"patientEthnicities\")",
 									"    + \"\\\",\\\"patientEmail\\\":\\\"\" + pm.environment.get(\"patientEmail\")",
 									"    + \"\\\",\\\"patientPhone\\\":\\\"\" + pm.environment.get(\"patientPhoneNumber\").replace(/\\-/g, \"\")",
+									"    + \"\\\",\\\"patientPreferredContact\\\":\\\"\" + pm.environment.get(\"patientContactPreferences\")",
 									"    + \"\\\",\\\"patientMail\\\":\\\"\" + pm.environment.get(\"patientAddressLine1\") + \", \" + pm.environment.get(\"patientAddressLine2\")",
 									"    + \"\\\",\\\"patientCity\\\":\\\"\" + pm.environment.get(\"patientCity\")",
 									"    + \"\\\",\\\"patientState\\\":\\\"\" + pm.environment.get(\"patientState\")",
 									"    + \"\\\",\\\"patientZipcode\\\":\\\"\" + pm.environment.get(\"patientZip\")",
-									"    + \"\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"patientPronouns\\\":[\\\"none\\\"],\\\"patientEthnicity\\\":[\\\"none\\\"],\\\"patientPreferredContact\\\":[\\\"none\\\"]}\";",
+									"    + \"\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[]}\";",
 									"",
 									"console.log(expectedJSONResults);",
 									"",
 									"pm.test(\"Verify assessment jsonResults\", function () {",
 									"    pm.expect(jsonData.assessments[0].jsonResults).to.eql(expectedJSONResults);",
 									"});",
-									""
+									"",
+									"console.log(pm.environment.get(\"test_data\").user_service.contact_preferences.splice(0, 4));"
 								],
 								"type": "text/javascript"
 							}
