@@ -584,7 +584,7 @@
 									"    + \"\\\",\\\"patientGender\\\":\\\"\" + pm.environment.get(\"patientGenderOnRecord\")",
 									"    + \"\\\",\\\"patientEmail\\\":\\\"\" + pm.environment.get(\"patientEmail\")",
 									"    + \"\\\",\\\"patientPhone\\\":\\\"\" + pm.environment.get(\"patientPhoneNumber\").replace(/\\-/g, \"\")",
-									"    + \"\\\",\\\"patientMail\\\":\\\"\" + pm.environment.get(\"patientAddressLine1\") + pm.environment.get(\"patientAddressLine2\")",
+									"    + \"\\\",\\\"patientMail\\\":\\\"\" + pm.environment.get(\"patientAddressLine1\") + \", \" + pm.environment.get(\"patientAddressLine2\")",
 									"    + \"\\\",\\\"patientCity\\\":\\\"\" + pm.environment.get(\"patientCity\")",
 									"    + \"\\\",\\\"patientState\\\":\\\"\" + pm.environment.get(\"patientState\")",
 									"    + \"\\\",\\\"patientZipcode\\\":\\\"\" + pm.environment.get(\"patientZip\")",
