@@ -818,7 +818,7 @@
 									"});",
 									"",
 									"pm.test(\"Verify response message\", function () {",
-									"    pm.expect(jsonData).to.equal(\"Error saving assessment - Unrecognized survey name\");",
+									"    pm.expect(jsonData).to.equal(\"Unrecognized survey name\");",
 									"});"
 								],
 								"type": "text/javascript"
