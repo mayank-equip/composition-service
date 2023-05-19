@@ -1459,7 +1459,7 @@
 			"response": []
 		},
 		{
-			"name": "Verify email verification OTP Copy",
+			"name": "Update survey",
 			"event": [
 				{
 					"listen": "test",
@@ -3821,7 +3821,7 @@
 			"response": []
 		},
 		{
-			"name": "Create a survey",
+			"name": "Create survey",
 			"event": [
 				{
 					"listen": "test",
