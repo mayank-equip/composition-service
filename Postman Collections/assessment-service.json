@@ -6171,7 +6171,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Demo Survey\",\n    \"description\": \"string\",\n    \"definition\": {{definition}},\n    \"externalId\": \"97d26d55-2e59-4683-9084-3b2979f90mmm\",\n    \"fromEmail\": \"The Equip Team <noreply@np.equip.health>\",\n    \"schema\": {{schema}},\n    \"status\": \"Active\"\n}",
+					"raw": "{\n    \"name\": \"Demo Survey\",\n    \"description\": \"string\",\n    \"definition\": {{definition}},\n    \"externalId\": \"97d26d55-2e59-4683-9084-3b2979f90786\",\n    \"fromEmail\": \"The Equip Team <noreply@np.equip.health>\",\n    \"schema\": {{schema}},\n    \"status\": \"Active\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
