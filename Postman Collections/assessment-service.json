@@ -1551,14 +1551,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"definition\": \"string\",\n    \"description\": \"string\",\n    \"fromEmail\": \"string\",\n    \"externalId\": \"string\",\n    \"schema\": \"string\",\n    \"status\": \"string\"\n}",
+					"raw": "{\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"externalId\": \"string\",\n    \"status\": \"string\",\n    \"definition\": \"string\",\n    \"schema\": \"string\",\n    \"fromEmail\": \"string\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "{{host}}/assessments/surveys/"
+				"url": "{{host}}/assessments/surveys"
 			},
 			"response": []
 		}
