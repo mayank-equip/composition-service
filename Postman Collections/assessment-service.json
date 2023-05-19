@@ -1506,7 +1506,7 @@
 						}
 					}
 				},
-				"url": "{{host}}/assessments/surveys/"
+				"url": "{{host}}/surveys/"
 			},
 			"response": []
 		},
