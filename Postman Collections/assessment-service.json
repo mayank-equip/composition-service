@@ -1511,7 +1511,7 @@
 			"response": []
 		},
 		{
-			"name": "Create a survey",
+			"name": "Verify email verification OTP Copy 2",
 			"event": [
 				{
 					"listen": "test",
