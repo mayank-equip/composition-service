@@ -1511,7 +1511,7 @@
 			"response": []
 		},
 		{
-			"name": "Verify email verification OTP Copy 2",
+			"name": "Create a survey",
 			"event": [
 				{
 					"listen": "test",
@@ -3861,7 +3861,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"definition\": {{definition}},\n\t\"externalId\": \"97d26d55-2e59-4683-9084-3b2979f90c06\",\n\t\"createdByUserId\": \"033851ab-eff2-4414-b759-e9de57bf83f3\",\n\t\"fromEmail\": \"The Equip Team <noreply@np.equip.health>\",\n\t\"schema\": {{schema}}\n}",
+					"raw": "{\n    \"name\": \"Demo Survey\",\n    \"description\": \"string\",\n    \"definition\": {{definition}},\n    \"externalId\": \"97d26d55-2e59-4683-9084-3b2979f90mmm\",\n    \"fromEmail\": \"The Equip Team <noreply@np.equip.health>\",\n    \"schema\": {{schema}},\n    \"status\": \"Active\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
