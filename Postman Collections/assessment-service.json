@@ -1492,11 +1492,11 @@
 							" logoPosition: \"right\",",
 							" pages: [",
 							"  {",
-							"   name: \"Demographics\",",
+							"   name: \"Demographics-1\",",
 							"   elements: [",
 							"    {",
 							"     type: \"text\",",
-							"     name: \"firstName\",",
+							"     name: \"firstName1\",",
 							"     title: \"Patient's first name\",",
 							"     isRequired: true",
 							"    },",
@@ -3809,7 +3809,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Demo Survey\",\n    \"description\": \"string\",\n    \"definition\": {{definition}},\n    \"externalId\": \"97d26d55-2e59-4683-9084-3b2979f90789\",\n    \"fromEmail\": \"The Equip Team <noreply@np.equip.health>\",\n    \"schema\": {{schema}},\n    \"status\": \"Active\"\n}",
+					"raw": "{\n    \"description\": \"string\",\n    \"definition\": {{definition}},\n    \"externalId\": \"97d26d55-2e59-4683-9084-3b2979f90789\",\n    \"fromEmail\": \"The Equip Team <noreply@np.equip.health>\",\n    \"schema\": {{schema}},\n    \"status\": \"Active\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
