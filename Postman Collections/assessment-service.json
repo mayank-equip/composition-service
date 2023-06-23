@@ -34,7 +34,7 @@
 									"pm.environment.set(\"patientFirstName\", firstName);",
 									"pm.environment.set(\"patientLastName\", lastName);",
 									"pm.environment.set(\"patientEmail\", email);",
-									"pm.environment.set(\"patientPhoneNumber\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));",
+									"pm.environment.set(\"patientPhoneNumber\", \"+1\" + (pm.variables.replaceIn('{{$randomPhoneNumber}}')).replace(/-/g, \"\"));",
 									"pm.environment.set(\"patientChosenName\", chosenName);",
 									"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
 									"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
