@@ -925,7 +925,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"raw": "{{host}}/assessments?filter-by=userId::54818191-3e6b-4717-9b31-87186265399c",
 							"host": [
 								"{{host}}"
 							],
@@ -935,7 +935,7 @@
 							"query": [
 								{
 									"key": "filter-by",
-									"value": "userId::{{patientId}}"
+									"value": "userId::54818191-3e6b-4717-9b31-87186265399c"
 								}
 							]
 						}
