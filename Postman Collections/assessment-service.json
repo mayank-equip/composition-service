@@ -1360,7 +1360,6 @@
 									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
 									"}\r",
 									"\r",
-									"pm.environment.set(\"providerUserId1\", \"bacba30f-3811-4a39-99c8-e60e9bc2d3eb\");\r",
 									"pm.environment.set(\"NewInstance\", \"New\");\r",
 									"pm.environment.set(\"SurveyAdmissionNPS\", \"Admissions NPS\");"
 								],
