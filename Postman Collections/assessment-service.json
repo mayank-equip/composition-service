@@ -1219,6 +1219,11 @@
 			"id": "b580a643-8980-4bdc-a614-e48140fd7c79"
 		},
 		{
+			"name": "New Folder",
+			"item": [],
+			"id": "02916a10-1859-4751-9b3e-3b27c502b692"
+		},
+		{
 			"name": "Verify survey data",
 			"event": [
 				{
