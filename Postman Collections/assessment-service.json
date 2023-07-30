@@ -2245,7 +2245,7 @@
 					"response": []
 				},
 				{
-					"name": "NPS_Assessment Copy",
+					"name": "NPS_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
