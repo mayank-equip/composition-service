@@ -1417,7 +1417,7 @@
 					"response": []
 				},
 				{
-					"name": "AdmissionsNPS Copy",
+					"name": "AdmissionsNPS",
 					"event": [
 						{
 							"listen": "prerequest",
