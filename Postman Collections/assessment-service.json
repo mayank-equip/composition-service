@@ -1612,7 +1612,7 @@
 					"response": []
 				},
 				{
-					"name": "CET Copy",
+					"name": "CET",
 					"event": [
 						{
 							"listen": "prerequest",
