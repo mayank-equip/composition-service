@@ -1897,7 +1897,7 @@
 					"response": []
 				},
 				{
-					"name": "WeeklyTracker(NonARFID) Copy",
+					"name": "WeeklyTracker(NonARFID)",
 					"event": [
 						{
 							"listen": "prerequest",
