@@ -2339,7 +2339,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_NPS Copy",
+					"name": "GETAssessments_NPS",
 					"event": [
 						{
 							"listen": "test",
