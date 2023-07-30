@@ -1781,7 +1781,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_CET Copy",
+					"name": "GETAssessments_CET",
 					"event": [
 						{
 							"listen": "test",
