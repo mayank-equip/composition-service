@@ -1691,7 +1691,7 @@
 					"response": []
 				},
 				{
-					"name": "CET_Assessment Copy",
+					"name": "CET_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
