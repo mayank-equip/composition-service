@@ -1515,7 +1515,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_AdmissionNPS Copy",
+					"name": "GETAssessments_AdmissionNPS",
 					"event": [
 						{
 							"listen": "test",
