@@ -2065,7 +2065,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_WeeklyNonARFID Copy",
+					"name": "GETAssessments_WeeklyNonARFID",
 					"event": [
 						{
 							"listen": "test",
