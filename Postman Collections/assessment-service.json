@@ -1700,7 +1700,7 @@
 								"exec": [
 									"let ld = require('lodash');\r",
 									"let moment = require('moment');\r",
-									"const submitted_source_list = ['Web', 'Phone', 'Email'];\r",
+									"const submitted_source_list = ['Web'];\r",
 									"\r",
 									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
 									"pm.environment.set(\"assessmentStatus\", \"Done\");\r",
