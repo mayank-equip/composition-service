@@ -3080,7 +3080,7 @@
 									"\r",
 									"// let WeeklyARFIDQuestions = [\"Not difficult at all\", \"Somewhat difficult\",\"Very difficult\",\"Extremely difficult\"];\r",
 									"for(i=1; i<=7; i++){\r",
-									"    pm.environment.set(\"GAD7_Value_\"+i,ld.sample(WeeklyARFIDQuestions));\r",
+									"    pm.environment.set(\"WeeklyARFID_\"+i,ld.sample(WeeklyARFIDQuestions));\r",
 									"}\r",
 									"\r",
 									"let GAD7Q8 = [\"Not difficult at all\", \"Somewhat difficult\",\"Very difficult\",\"Extremely difficult\"];\r",
