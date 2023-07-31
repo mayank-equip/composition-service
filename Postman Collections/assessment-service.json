@@ -2521,7 +2521,7 @@
 					"response": []
 				},
 				{
-					"name": "FNS_Assessment Copy",
+					"name": "FNS_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
