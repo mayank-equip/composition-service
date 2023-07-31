@@ -3062,7 +3062,7 @@
 					"response": []
 				},
 				{
-					"name": "GAD7_Assessment Copy",
+					"name": "WeeklyARFID_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
