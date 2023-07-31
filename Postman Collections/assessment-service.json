@@ -3153,7 +3153,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_GAD7 Copy",
+					"name": "GETAssessments_WeeklyARFID",
 					"event": [
 						{
 							"listen": "test",
