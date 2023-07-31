@@ -3029,7 +3029,7 @@
 									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
 									"});\r",
 									"\r",
-									"pm.environment.set(\"GAD7_assessment_responseExternalId\", jsonData.responseExternalId);"
+									"pm.environment.set(\"WeeklyARFID_assessment_responseExternalId\", jsonData.responseExternalId);"
 								],
 								"type": "text/javascript"
 							}
