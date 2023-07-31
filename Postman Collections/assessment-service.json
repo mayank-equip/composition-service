@@ -3204,7 +3204,7 @@
 									"            pm.expect(assessment_data[\"reduction-instances\"]).to.eql(pm.environment.get(\"GAD7_Value_5\"));\r",
 									"            pm.expect(assessment_data[\"arguments-instances\"]).to.eql(pm.environment.get(\"GAD7_Value_6\"));\r",
 									"            pm.expect(assessment_data[\"social-eating-instances\"]).to.eql(pm.environment.get(\"GAD7_Value_7\"));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveyGAD7\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"WeeklyARFID\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
