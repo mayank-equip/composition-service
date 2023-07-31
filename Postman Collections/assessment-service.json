@@ -3004,7 +3004,7 @@
 									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
 									"}\r",
 									"\r",
-									"pm.environment.set(\"SurveyGAD7\", \"GAD-7\");\r",
+									"pm.environment.set(\"WeeklyARFID\", \"Weekly ED Symptom Tracker (ARFID)\");\r",
 									"pm.environment.set(\"NewInstance\", \"New\");"
 								],
 								"type": "text/javascript"
@@ -3050,7 +3050,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{SurveyGAD7}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{WeeklyARFID}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
