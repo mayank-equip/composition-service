@@ -3148,7 +3148,7 @@
 								}
 							}
 						},
-						"url": "{{host}}/assessments/{{GAD7_assessment_responseExternalId}}"
+						"url": "{{host}}/assessments/{{WeeklyARFID_assessment_responseExternalId}}"
 					},
 					"response": []
 				},
