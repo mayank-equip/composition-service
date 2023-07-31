@@ -2881,7 +2881,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_GAD7 Copy",
+					"name": "GETAssessments_GAD7",
 					"event": [
 						{
 							"listen": "test",
