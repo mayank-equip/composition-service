@@ -2610,7 +2610,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_FNS Copy",
+					"name": "GETAssessments_FNS",
 					"event": [
 						{
 							"listen": "test",
