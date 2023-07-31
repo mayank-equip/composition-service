@@ -2393,7 +2393,7 @@
 									"            pm.expect(assessment_data[\"nps8\"]).to.eql(pm.environment.get(\"TestingNPS\"));\r",
 									"            pm.expect(assessment_data[\"nps9\"]).to.eql(pm.environment.get(\"NPS_Value_7\"));\r",
 									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveyNPS\"));\r",
-									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"email\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserPhone).to.eql(pm.environment.get(\"patientPhoneNumber\"));\r",
