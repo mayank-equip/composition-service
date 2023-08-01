@@ -3602,7 +3602,7 @@
 					"response": []
 				},
 				{
-					"name": "PatientExperience_Assessment Copy",
+					"name": "PatientExperience_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
