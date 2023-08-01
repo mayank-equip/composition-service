@@ -2803,7 +2803,7 @@
 									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
 									"pm.environment.set(\"Complete\", \"Done\");\r",
 									"\r",
-									"//Pick random GAD-7 Questions\r",
+									"//Picks random GAD-7 Questions\r",
 									"let GAD7Questions = [\"0\",\"1\",\"2\",\"3\"];\r",
 									"for(i=1; i<=7; i++){\r",
 									"    pm.environment.set(\"GAD7_Value_\"+i,ld.sample(GAD7Questions));\r",
