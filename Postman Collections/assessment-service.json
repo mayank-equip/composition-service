@@ -3075,7 +3075,7 @@
 									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
 									"pm.environment.set(\"Complete\", \"Done\");\r",
 									"\r",
-									"//Pick random Weekly ARFID Questions\r",
+									"//Picks random Weekly ARFID Questions\r",
 									"let WeeklyARFIDQuestions = [\"0\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"];\r",
 									"for(i=1; i<=7; i++){\r",
 									"    pm.environment.set(\"WeeklyARFID_\"+i,ld.sample(WeeklyARFIDQuestions));\r",
