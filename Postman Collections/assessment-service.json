@@ -3964,7 +3964,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_PHQ8 Copy",
+					"name": "GETAssessments_PHQ8",
 					"event": [
 						{
 							"listen": "test",
