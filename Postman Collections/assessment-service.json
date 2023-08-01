@@ -3693,7 +3693,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_PatientExperience Copy",
+					"name": "GETAssessments_PatientExperience",
 					"event": [
 						{
 							"listen": "test",
