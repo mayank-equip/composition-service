@@ -2535,7 +2535,7 @@
 									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
 									"pm.environment.set(\"Complete\", \"Done\");\r",
 									"\r",
-									"//Pick random FNS Questions\r",
+									"//Picks random FNS Questions\r",
 									"let FNSQuestions = [\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"];\r",
 									"for(i=1; i<=6; i++){\r",
 									"    pm.environment.set(\"FNS_Value_\"+i,ld.sample(FNSQuestions));\r",
