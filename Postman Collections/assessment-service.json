@@ -3876,7 +3876,7 @@
 					"response": []
 				},
 				{
-					"name": "PHQ8_Assessment Copy",
+					"name": "PHQ8_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
