@@ -3330,7 +3330,7 @@
 					"response": []
 				},
 				{
-					"name": "GAD7_Assessment Copy",
+					"name": "GAD7_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
