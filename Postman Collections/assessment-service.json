@@ -4447,7 +4447,7 @@
 					"response": []
 				},
 				{
-					"name": "PSEA_Assessment Copy",
+					"name": "PSEA_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
