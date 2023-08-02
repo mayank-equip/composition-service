@@ -4535,7 +4535,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_PSEA Copy",
+					"name": "GETAssessments_PSEA",
 					"event": [
 						{
 							"listen": "test",
