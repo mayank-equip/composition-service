@@ -4809,7 +4809,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_BAS Copy",
+					"name": "GETAssessments_BAS",
 					"event": [
 						{
 							"listen": "test",
