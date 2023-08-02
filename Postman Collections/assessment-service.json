@@ -4639,6 +4639,286 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "BAS_Assessment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"5832a752-4b0a-4a00-ae1e-935245cc642b\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"BASSurvey\", \"Burden Assessment Scale (BAS)\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"BAS_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a1f10517-a194-4355-acc6-fdf69fd5de50",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{BASSurvey}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "BAS_Assessment Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"\r",
+									"//Picks random BAS Questions\r",
+									"let BASQues = [\"0\",\"1\",\"2\",\"3\",\"none\"];\r",
+									"for(i=1; i<=19; i++){\r",
+									"    pm.environment.set(\"BASQues_\"+i,ld.sample(BASQues));\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"CurrentPage2\", \"Burden Assessment Scale\");\r",
+									"pm.environment.set(\"CurrentPageNo\", \"0\");\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"5832a752-4b0a-4a00-ae1e-935245cc642b\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", JSON.parse(pm.environment.get(\"patientPronounsOnRecord\"))[0]);\r",
+									"pm.environment.set(\"SurveyPreferredContact\", JSON.parse(pm.environment.get(\"patientContactPreferences\"))[0]);\r",
+									"pm.environment.set(\"SurveyEthnicity\", JSON.parse(pm.environment.get(\"patientEthnicities\"))[0]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "022e08ab-9942-4f72-9a19-91efa43ca31f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"bas-1\\\":\\\"{{BASQues_1}}\\\",\\\"bas-2\\\":\\\"{{BASQues_2}}\\\",\\\"bas-3\\\":\\\"{{BASQues_3}}\\\",\\\"bas-4\\\":\\\"{{BASQues_4}}\\\",\\\"bas-5\\\":\\\"{{BASQues_5}}\\\",\\\"bas-6\\\":\\\"{{BASQues_6}}\\\",\\\"bas-7\\\":\\\"{{BASQues_7}}\\\",\\\"bas-8\\\":\\\"{{BASQues_8}}\\\",\\\"bas-9\\\":\\\"{{BASQues_9}}\\\",\\\"bas-10\\\":\\\"{{BASQues_10}}\\\",\\\"bas-11\\\":\\\"{{BASQues_11}}\\\",\\\"bas-12\\\":\\\"{{BASQues_12}}\\\",\\\"bas-13\\\":\\\"{{BASQues_13}}\\\",\\\"bas-14\\\":\\\"{{BASQues_14}}\\\",\\\"bas-15\\\":\\\"{{BASQues_15}}\\\",\\\"bas-16\\\":\\\"{{BASQues_16}}\\\",\\\"bas-17\\\":\\\"{{BASQues_17}}\\\",\\\"bas-18\\\":\\\"{{BASQues_18}}\\\",\\\"bas-19\\\":\\\"{{BASQues_19}}\\\",\\\"currentPage\\\":\\\"{{CurrentPage2}}\\\",\\\"currentPageNo\\\":{{CurrentPageNo}}}\",\r\n    \"responseExternalId\": \"{{BAS_assessment_responseExternalId}}\",\r\n    \"status\": \"{{Complete}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{BAS_assessment_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "GETAssessments_BAS Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"BAS_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"BAS_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify BAS Survey Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"BAS_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);\r",
+									"            pm.expect(assessment_data[\"bas-1\"]).to.eql((pm.environment.get(\"BASQues_1\")));\r",
+									"            pm.expect(assessment_data[\"bas-2\"]).to.eql((pm.environment.get(\"BASQues_2\")));\r",
+									"            pm.expect(assessment_data[\"bas-3\"]).to.eql((pm.environment.get(\"BASQues_3\")));\r",
+									"            pm.expect(assessment_data[\"bas-4\"]).to.eql((pm.environment.get(\"BASQues_4\")));\r",
+									"            pm.expect(assessment_data[\"bas-5\"]).to.eql((pm.environment.get(\"BASQues_5\")));\r",
+									"            pm.expect(assessment_data[\"bas-6\"]).to.eql((pm.environment.get(\"BASQues_6\")));\r",
+									"            pm.expect(assessment_data[\"bas-7\"]).to.eql((pm.environment.get(\"BASQues_7\")));\r",
+									"            pm.expect(assessment_data[\"bas-8\"]).to.eql((pm.environment.get(\"BASQues_8\")));\r",
+									"            pm.expect(assessment_data[\"bas-9\"]).to.eql((pm.environment.get(\"BASQues_9\")));\r",
+									"            pm.expect(assessment_data[\"bas-10\"]).to.eql((pm.environment.get(\"BASQues_10\")));\r",
+									"            pm.expect(assessment_data[\"bas-11\"]).to.eql((pm.environment.get(\"BASQues_11\")));\r",
+									"            pm.expect(assessment_data[\"bas-12\"]).to.eql((pm.environment.get(\"BASQues_12\")));\r",
+									"            pm.expect(assessment_data[\"bas-13\"]).to.eql((pm.environment.get(\"BASQues_13\")));\r",
+									"            pm.expect(assessment_data[\"bas-14\"]).to.eql((pm.environment.get(\"BASQues_14\")));\r",
+									"            pm.expect(assessment_data[\"bas-15\"]).to.eql((pm.environment.get(\"BASQues_15\")));\r",
+									"            pm.expect(assessment_data[\"bas-16\"]).to.eql((pm.environment.get(\"BASQues_16\")));\r",
+									"            pm.expect(assessment_data[\"bas-17\"]).to.eql((pm.environment.get(\"BASQues_17\")));\r",
+									"            pm.expect(assessment_data[\"bas-18\"]).to.eql((pm.environment.get(\"BASQues_18\")));\r",
+									"            pm.expect(assessment_data[\"bas-19\"]).to.eql((pm.environment.get(\"BASQues_19\")));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"BASSurvey\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserPhone).to.eql(pm.environment.get(\"patientPhoneNumber\"));\r",
+									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"BAS_assessment_responseExternalId\"));\r",
+									"          }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c4bb8095-6fe1-4de3-bb9e-c93c5f6beed8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "339947a5-f32e-425c-8b79-ab4ed376311f"
