@@ -4240,6 +4240,132 @@
 						"url": "{{host}}/assessments/{{EDS_assessment_responseExternalId}}"
 					},
 					"response": []
+				},
+				{
+					"name": "GETAssessments_EatingDisorderSeverity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"EDS_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"EDS_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify Eating Disorder Severity Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"EDS_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);\r",
+									"            pm.expect(assessment_data[\"ede-q1\"]).to.eql((pm.environment.get(\"EDSQues_1\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q2\"]).to.eql((pm.environment.get(\"EDSQues_2\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q3\"]).to.eql((pm.environment.get(\"EDSQues_3\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q4\"]).to.eql((pm.environment.get(\"EDSQues_4\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q5\"]).to.eql((pm.environment.get(\"EDSQues_5\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q6\"]).to.eql((pm.environment.get(\"EDSQues_6\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q7\"]).to.eql((pm.environment.get(\"EDSQues_7\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q8\"]).to.eql((pm.environment.get(\"EDSQues_8\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q9\"]).to.eql((pm.environment.get(\"EDSQues_9\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q10\"]).to.eql((pm.environment.get(\"EDSQues_10\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q11\"]).to.eql((pm.environment.get(\"EDSQues_11\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q12\"]).to.eql((pm.environment.get(\"EDSQues_12\")).toString());\r",
+									"            pm.expect(assessment_data[\"ede-q13\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
+									"            pm.expect(assessment_data[\"ede-q14\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
+									"            pm.expect(assessment_data[\"ede-q15\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
+									"            pm.expect(assessment_data[\"ede-q16\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
+									"            pm.expect(assessment_data[\"ede-q17\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
+									"            pm.expect(assessment_data[\"ede-q18\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
+									"            pm.expect(assessment_data[\"ede-q19\"]).to.eql(pm.environment.get(\"EDSQues_19\"));\r",
+									"            pm.expect(assessment_data[\"ede-q20\"]).to.eql(pm.environment.get(\"EDSQues_14\"));\r",
+									"            pm.expect(assessment_data[\"ede-q21\"]).to.eql(pm.environment.get(\"EDSQues_15\"));\r",
+									"            pm.expect(assessment_data[\"ede-q22\"]).to.eql(pm.environment.get(\"EDSQues_16\"));\r",
+									"            pm.expect(assessment_data[\"ede-q23\"]).to.eql(pm.environment.get(\"EDSQues_17\"));\r",
+									"            pm.expect(assessment_data[\"ede-q24\"]).to.eql(pm.environment.get(\"EDSQues_18\"));\r",
+									"            pm.expect(assessment_data[\"ede-q25\"]).to.eql(pm.environment.get(\"EDSQues_19\"));\r",
+									"            pm.expect(assessment_data[\"ede-q26\"]).to.eql(pm.environment.get(\"EDSQues_20\"));\r",
+									"            pm.expect(assessment_data[\"ede-q27\"]).to.eql(pm.environment.get(\"EDSQues_21\"));\r",
+									"            pm.expect(assessment_data[\"ede-q28\"]).to.eql(pm.environment.get(\"EDSQues_22\"));\r",
+									"            pm.expect(assessment_data[\"ede-q29\"]).to.eql(pm.environment.get(\"PatientWeight\"));\r",
+									"            pm.expect(assessment_data[\"ede-q30\"]).to.eql(pm.environment.get(\"EDSQues_23\"));\r",
+									"            pm.expect(assessment_data[\"ede-q31\"]).to.eql(true);\r",
+									"            pm.expect(assessment_data[\"ede-q32\"]).to.eql(pm.environment.get(\"EDSQues_24\"));\r",
+									"            pm.expect(assessment_data[\"ede-q33\"]).to.eql(true);\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"EatingDisorderSurvey\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
+									"            pm.expect(jsonData.assessments[i].toUserPhone).to.eql(pm.environment.get(\"patientPhoneNumber\"));\r",
+									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"EDS_assessment_responseExternalId\"));\r",
+									"          }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ca328617-ec81-43b5-89fc-5ea1c3c279c2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "339947a5-f32e-425c-8b79-ab4ed376311f"
