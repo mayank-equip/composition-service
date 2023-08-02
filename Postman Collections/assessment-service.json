@@ -4168,7 +4168,6 @@
 									"pm.environment.set(\"CurrentPageNo\", \"Questions 22-End\");\r",
 									"pm.environment.set(\"CurrentPageNo3\", \"3\");\r",
 									"pm.environment.set(\"CurrentPageNo\", \"0\");\r",
-									"pm.environment.set(\"CurrentPageNo\", \"0\");\r",
 									"\r",
 									"let PastDays = Math.floor(1 + Math.random() * 28);\r",
 									"pm.environment.set(\"PatientPastDays\", PastDays.toString());\r",
