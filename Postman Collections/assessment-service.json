@@ -4063,6 +4063,183 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "EatingDisorderSeverity_Assessment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"5832a752-4b0a-4a00-ae1e-935245cc642b\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"EatingDisorderSurvey\", \"Eating Disorder Severity\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"EDS_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "77524a86-ccb2-4a74-a9fd-fa051d589dce",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{EatingDisorderSurvey}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "EatingDisorderSeverity_Assessment Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"\r",
+									"//Picks random EDS Questions\r",
+									"let EDSQues = [\"0\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\"];\r",
+									"for(i=1; i<=24; i++){\r",
+									"    pm.environment.set(\"EDSQues_\"+i,ld.sample(EDSQues));\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"TestingPHQ8\", \"Patient Health Questionnaire\");\r",
+									"pm.environment.set(\"CurrentPageNo\", \"Questions 22-End\");\r",
+									"pm.environment.set(\"CurrentPageNo3\", \"3\");\r",
+									"pm.environment.set(\"CurrentPageNo\", \"0\");\r",
+									"pm.environment.set(\"CurrentPageNo\", \"0\");\r",
+									"\r",
+									"let Days = Math.floor(10 + Math.random() * 100);\r",
+									"pm.environment.set(\"PatientDays\", Days.toString());\r",
+									"\r",
+									"let PatientWeight = Math.floor(100 + Math.random() * 999);\r",
+									"pm.environment.set(\"PatientWeight\", PatientWeight.toString());\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"5832a752-4b0a-4a00-ae1e-935245cc642b\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", JSON.parse(pm.environment.get(\"patientPronounsOnRecord\"))[0]);\r",
+									"pm.environment.set(\"SurveyPreferredContact\", JSON.parse(pm.environment.get(\"patientContactPreferences\"))[0]);\r",
+									"pm.environment.set(\"SurveyEthnicity\", JSON.parse(pm.environment.get(\"patientEthnicities\"))[0]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "04ed400a-fc53-4591-80f4-0e7ff0e30f42",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"patientPronouns-Comment\\\":[],\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"ede-q1\\\":\\\"{{EDSQues_1}}\\\",\\\"ede-q2\\\":\\\"{{EDSQues_2}}\\\",\\\"ede-q3\\\":\\\"{{EDSQues_3}}\\\",\\\"ede-q4\\\":\\\"{{EDSQues_4}}\\\",\\\"ede-q5\\\":\\\"{{EDSQues_5}}\\\",\\\"ede-q6\\\":\\\"{{EDSQues_6}}\\\",\\\"ede-q7\\\":\\\"{{EDSQues_7}}\\\",\\\"ede-q8\\\":\\\"{{EDSQues_8}}\\\",\\\"ede-q9\\\":\\\"{{EDSQues_9}}\\\",\\\"ede-q10\\\":\\\"{{EDSQues_10}}\\\",\\\"ede-q11\\\":\\\"{{EDSQues_11}}\\\",\\\"ede-q12\\\":\\\"{{EDSQues_12}}\\\",\\\"currentPage\\\":\\\"{{CurrentPageNo}}\\\",\\\"currentPageNo\\\":{{CurrentPageNo3}},\\\"ede-q13\\\":{{PatientDays}},\\\"ede-q14\\\":{{PatientDays}},\\\"ede-q15\\\":{{PatientDays}},\\\"ede-q16\\\":{{PatientDays}},\\\"ede-q17\\\":{{PatientDays}},\\\"ede-q18\\\":{{PatientDays}},\\\"ede-q19\\\":\\\"{{EDSQues_13}}\\\",\\\"ede-q20\\\":\\\"{{EDSQues_14}}\\\",\\\"ede-q21\\\":\\\"{{EDSQues_15}}\\\",\\\"ede-q22\\\":\\\"{{EDSQues_16}}\\\",\\\"ede-q23\\\":\\\"{{EDSQues_17}}\\\",\\\"ede-q24\\\":\\\"{{EDSQues_18}}\\\",\\\"ede-q25\\\":\\\"{{EDSQues_19}}\\\",\\\"ede-q26\\\":\\\"{{EDSQues_20}}\\\",\\\"ede-q27\\\":\\\"{{EDSQues_21}}\\\",\\\"ede-q28\\\":\\\"{{EDSQues_22}}\\\",\\\"ede-q29\\\":\\\"{{PatientWeight}}\\\",\\\"ede-q30\\\":\\\"{{EDSQues_23}}\\\",\\\"ede-q31\\\":true,\\\"ede-q32\\\":\\\"{{EDSQues_24}}\\\",\\\"ede-q33\\\":true}\",\r\n    \"responseExternalId\": \"{{EDS_assessment_responseExternalId}}\",\r\n    \"status\": \"{{Complete}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{EDS_assessment_responseExternalId}}"
+					},
+					"response": []
 				}
 			],
 			"id": "339947a5-f32e-425c-8b79-ab4ed376311f"
