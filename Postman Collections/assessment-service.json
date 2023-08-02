@@ -4304,7 +4304,7 @@
 									"            pm.expect(assessment_data[\"ede-q16\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
 									"            pm.expect(assessment_data[\"ede-q17\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
 									"            pm.expect(assessment_data[\"ede-q18\"]).to.eql(parseInt(pm.environment.get(\"PatientPastDays\")));\r",
-									"            pm.expect(assessment_data[\"ede-q19\"]).to.eql(pm.environment.get(\"EDSQues_19\"));\r",
+									"            pm.expect(assessment_data[\"ede-q19\"]).to.eql(pm.environment.get(\"EDSQues_13\"));\r",
 									"            pm.expect(assessment_data[\"ede-q20\"]).to.eql(pm.environment.get(\"EDSQues_14\"));\r",
 									"            pm.expect(assessment_data[\"ede-q21\"]).to.eql(pm.environment.get(\"EDSQues_15\"));\r",
 									"            pm.expect(assessment_data[\"ede-q22\"]).to.eql(pm.environment.get(\"EDSQues_16\"));\r",
