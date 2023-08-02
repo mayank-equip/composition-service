@@ -4145,7 +4145,7 @@
 					"response": []
 				},
 				{
-					"name": "EatingDisorderSeverity_Assessment Copy",
+					"name": "EatingDisorderSeverity_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
