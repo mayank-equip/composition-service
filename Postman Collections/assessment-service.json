@@ -1330,6 +1330,245 @@
 					"response": []
 				},
 				{
+					"name": "Add  Proxy Support User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6c2a575c-6a8a-48c5-94e2-df82fefa774d",
+								"exec": [
+									"let text = pm.response.text();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Content-Type header is application/json\", () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+									"});",
+									"",
+									"pm.environment.set(\"supportId1\", text);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "901c56f9-ba7c-4b10-a53f-d1edb069bcb0",
+								"exec": [
+									"let ld = require('lodash');",
+									"",
+									"const relation_to_patient = [",
+									"  \"Adopted sibling\",",
+									"  \"Adoptive father\",",
+									"  \"Adoptive mother\",",
+									"  \"Adoptive parent\",",
+									"  \"Biological father\",",
+									"  \"Biological mother\",",
+									"  \"Biological parent\",",
+									"  \"Biological sibling\",",
+									"  \"Case Manager/Discharge Planner\",",
+									"  \"Community org/non-profit\",",
+									"  \"Community professional\",",
+									"  \"Dietitian\",",
+									"  \"Doctor\",",
+									"  \"Eating disorder coach/advocate\",",
+									"  \"Executive\",",
+									"  \"Family member\",",
+									"  \"Father\",",
+									"  \"Foster father\",",
+									"  \"Foster mother\",",
+									"  \"Foster parent\",",
+									"  \"Friend\",",
+									"  \"Grandparent\",",
+									"  \"Guardian\",",
+									"  \"Half sibling\",",
+									"  \"Hospital\",",
+									"  \"Insurance company\",",
+									"  \"Maternal grandfather\",",
+									"  \"Maternal grandmother\",",
+									"  \"Mother\",",
+									"  \"Nurse\",",
+									"  \"Nurse practitioner\",",
+									"  \"Other\",",
+									"  \"Outreach professional\",",
+									"  \"Paternal grandfather\",",
+									"  \"Paternal grandmother\",",
+									"  \"Payor case manager\",",
+									"  \"Physician Assistant\",",
+									"  \"Physician: Adolescent Medicine/Eating Disorder Specialist\",",
+									"  \"Physician: Endocrinologist\",",
+									"  \"Physician: Family Medicine\",",
+									"  \"Physician: Gastroenterologist\",",
+									"  \"Physician: Other specialist\",",
+									"  \"Physician: PCP (non-peds)\",",
+									"  \"Physician: Pediatrician\",",
+									"  \"Practice Manager\",",
+									"  \"Psychiatrist\",",
+									"  \"Psychologist\",",
+									"  \"Referral Coordinator\",",
+									"  \"School nurse\",",
+									"  \"School therapist/counselor\",",
+									"  \"Step sibling\",",
+									"  \"Stepfather\",",
+									"  \"Stepmother\",",
+									"  \"Stepparent\",",
+									"  \"Strategic Partner\",",
+									"  \"Therapist\",",
+									"  \"Treatment Center (eating disorder)\",",
+									"  \"Treatment Center (non-ED)\",",
+									"  \"University: Counseling Center\",",
+									"  \"University: Student Health\"",
+									"];",
+									"",
+									"let gendersList = [",
+									"    \"Cis-gender male\",",
+									"    \"Cis-gender female\",",
+									"    \"Non-binary\",",
+									"    \"Other\",",
+									"    \"Unknown\",",
+									"    \"Transgender male\",",
+									"    \"Transgender female\"",
+									"];",
+									"",
+									"let pronounsList = [",
+									"    \"He/Him/His\",",
+									"    \"She/Her/Hers\",",
+									"    \"They/Them/Theirs\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let ethnicitiesList = [",
+									"    \"Asian\",",
+									"    \"Black/African American\",",
+									"    \"White/Caucasian\",",
+									"    \"Hispanic/Latinx\",",
+									"    \"Native American, Indian American, or Alaska Native\",",
+									"    \"Native Hawaiian or other Pacific Islander\",",
+									"    \"Middle Eastern or North African\",",
+									"    \"Prefer not to answer\",",
+									"    \"Other\"",
+									"];",
+									"",
+									"let languagesList = [",
+									"    \"English\",",
+									"    \"Spanish\",",
+									"    \"Chinese\",",
+									"    \"French\",",
+									"    \"Tagalog\",",
+									"    \"Vietnamese\",",
+									"    \"Korean\",",
+									"    \"German\",",
+									"    \"Russian\",",
+									"    \"Italian\",",
+									"    \"Portuguese\",",
+									"    \"Polish\",",
+									"    \"Japanese\",",
+									"    \"Persian\",",
+									"    \"Greek\",",
+									"    \"Serbo-Croatian\",",
+									"    \"Armenian\",",
+									"    \"Yiddish\",",
+									"    \"American Sign Language (ASL)\"",
+									"];",
+									"",
+									"let sexList = [",
+									"    \"Male\",",
+									"    \"Female\"",
+									"];",
+									"",
+									"let timezonesList = [",
+									"    \"Hawaii Standard Time\",",
+									"    \"Hawaii-Aleutian Time\",",
+									"    \"Alaska Time\",",
+									"    \"Pacific Time\",",
+									"    \"Arizona\",",
+									"    \"Mountain Time\",",
+									"    \"Central Time\",",
+									"    \"Eastern Time\"",
+									"];",
+									"",
+									"let contactPreferences = [\"Email\", \"No preference\", \"Phone\", \"Unknown\"];",
+									"",
+									"let statesList = [\"AK\", \"AL\", \"AZ\", \"AR\", \"CA\", \"CO\", \"CT\", \"DE\", \"DC\", \"FL\", \"GA\", \"HI\", \"ID\", \"IL\", \"IN\", \"IA\", \"KS\", \"KY\", \"LA\", \"ME\", \"MD\", \"MA\", \"MI\", \"MN\", \"MS\", \"MO\", \"MT\", \"NE\", \"NV\", \"NH\", \"NJ\", \"NM\", \"NY\", \"NC\", \"ND\", \"OH\", \"OK\", \"OR\", \"PA\", \"PR\", \"RI\", \"SC\", \"SD\", \"TN\", \"TX\", \"UT\", \"VT\", \"VA\", \"WA\", \"WV\", \"WI\", \"WY\", \"Outside US\", \"Unknown\"];",
+									"",
+									"let addressLine2List = [\"Apt 1\", \"Apt 2\", \"Apt 3\", \"Unit #1\", \"Unit #2\", \"Unit #3\", \"Apt 2L\", \"Apt 2R\"];",
+									"",
+									"let firstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let lastName = pm.variables.replaceIn('{{$randomLastName}}');",
+									"let chosenName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"let email = \"vaduvala\" + \"+\" + firstName + \"+\" + Date.now() + \"@equip.health\";",
+									"let zip = Math.floor(10000 + Math.random() * 90000);",
+									"",
+									"//Generate random Date of Birth in YYYY-MM-DD Format",
+									"function randomDate(start, end) {",
+									"    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));",
+									"}",
+									"let date = randomDate(new Date(1990, 00, 01), new Date());",
+									"let dateOfBirth = date.getFullYear() + '-' + (\"0\" + (date.getMonth() + 1)).slice(-2) + '-' + (\"0\" + date.getDate()).slice(-2);",
+									"",
+									"//Save the variables to be used in next request for validation",
+									"pm.environment.set(\"supportFirstName\", firstName);",
+									"pm.environment.set(\"supportLastName\", lastName);",
+									"pm.environment.set(\"relationtopatient\", ld.sample(relation_to_patient));",
+									"pm.environment.set(\"patientEmail\", email);",
+									"pm.environment.set(\"patientPhoneNumber\", \"+1\" + (pm.variables.replaceIn('{{$randomPhoneNumber}}')).replace(/-/g, \"\"));",
+									"pm.environment.set(\"patientChosenName\", chosenName);",
+									"pm.environment.set(\"patientDateOfBirth\", dateOfBirth);",
+									"pm.environment.set(\"patientAddressLine1\", pm.variables.replaceIn('{{$randomStreetAddress}}'));",
+									"pm.environment.set(\"patientAddressLine2\", ld.sample(addressLine2List));",
+									"pm.environment.set(\"patientCity\", pm.variables.replaceIn('{{$randomCity}}'));",
+									"pm.environment.set(\"patientState\", ld.sample(statesList));",
+									"pm.environment.set(\"patientCountry\", \"US\");",
+									"pm.environment.set(\"patientZip\", zip.toString());",
+									"pm.environment.set(\"patientLatitude\", pm.variables.replaceIn('{{$randomLatitude}}'));",
+									"pm.environment.set(\"patientLongitude\", pm.variables.replaceIn('{{$randomLongitude}}'));",
+									"pm.environment.set(\"patientEthnicities\", JSON.stringify(ld.sampleSize(ethnicitiesList, 2).sort()));",
+									"pm.environment.set(\"patientLanguages\", JSON.stringify(ld.sampleSize(languagesList, 2).sort()));",
+									"pm.environment.set(\"patientGenderOnRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientGenderOffRecord\", ld.sample(gendersList));",
+									"pm.environment.set(\"patientPronounsOnRecord\", ld.sample(pronounsList));",
+									"pm.environment.set(\"patientPronounsOffRecord\", ld.sample(pronounsList));",
+									"pm.environment.set(\"patientSex\", ld.sample(sexList));",
+									"pm.environment.set(\"patientTimezone\", ld.sample(timezonesList));",
+									"pm.environment.set(\"patientContactPreferences\", JSON.stringify(ld.sampleSize(contactPreferences, 2).sort()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5bf338fe-5e93-40cd-b92e-9d6cbf074369",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{supportFirstName}}\",\n    \"lastName\": \"{{supportLastName}}\",\n    \"email\": \"{{patientEmail}}\",\n    \"cellPhone\": \"{{patientPhoneNumber}}\",\n    \"gender\": \"{{patientGenderOnRecord}}\",\n    \"pronouns\": \"{{patientPronounsOnRecord}}\",\n    \"sex\": \"{{patientSex}}\",\n    \"timezone\": \"{{patientTimezone}}\",\n    \"latitude\": \"{{patientLatitude}}\",\n    \"longitude\": \"{{patientLongitude}}\",\n    \"affiliationName\": \"\",\n    \"addressLine1\": \"{{patientAddressLine1}}\",\n    \"addressLine2\": \"{{patientAddressLine2}}\",\n    \"city\": \"{{patientCity}}\",\n    \"state\": \"{{patientState}}\",\n    \"country\": \"{{patientCountry}}\",\n    \"zip\": \"{{patientZip}}\",\n    \"contactPreferences\": {{patientContactPreferences}},\n    \"languages\": {{patientLanguages}},\n    \"patientExternalId\": \"{{patientId}}\",\n   \"relationToPatient\": \"{{relationtopatient}}\",\n    \"isProxy\": true,\n    \"isPrimaryContact\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/users/supports"
+					},
+					"response": []
+				},
+				{
 					"name": "AdmissionsNPS",
 					"event": [
 						{
@@ -1503,7 +1742,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"admissions-nps1\\\":\\\"{{admissionsNPSQues1}}\\\",\\\"admissions-nps2\\\":\\\"{{admissionsNPSQues2}}\\\",\\\"admissions-nps3\\\":\\\"{{admissionsNPSQues3}}\\\",\\\"admissions-nps4\\\":{{admissionsNPSQues4}},\\\"currentPage\\\":\\\"{{currentPage}}\\\",\\\"currentPageNo\\\":{{Pagenumber}}}\",\r\n    \"responseExternalId\": \"{{assessment_responseExternalId_AdminNPS}}\",\r\n    \"status\": \"{{Complete}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\"\r\n}",
+							"raw": "{\r\n    \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"admissions-nps1\\\":\\\"{{admissionsNPSQues1}}\\\",\\\"admissions-nps2\\\":\\\"{{admissionsNPSQues2}}\\\",\\\"admissions-nps3\\\":\\\"{{admissionsNPSQues3}}\\\",\\\"admissions-nps4\\\":{{admissionsNPSQues4}},\\\"currentPage\\\":\\\"{{currentPage}}\\\",\\\"currentPageNo\\\":{{Pagenumber}}}\",\r\n    \"responseExternalId\": \"{{AdmisNPSassessment_responseExternalId}}\",\r\n    \"status\": \"{{Complete}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4917,6 +5156,86 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Intake_Assessment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"5832a752-4b0a-4a00-ae1e-935245cc642b\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"Mayank\");\r",
+									"    pm.environment.set(\"providerLastname\", \"Verma\");\r",
+									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"IntakeSurvey\", \"Intake\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"Intake_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8cbe0132-8a78-4f6d-8934-65f9b3d47fda",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{IntakeSurvey}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
 					},
 					"response": []
 				}
