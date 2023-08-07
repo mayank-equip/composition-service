@@ -5238,7 +5238,7 @@
 					"response": []
 				},
 				{
-					"name": "NIAS_Assessment Copy",
+					"name": "NIAS_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -5326,7 +5326,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_NIAS Copy",
+					"name": "GETAssessments_NIAS",
 					"event": [
 						{
 							"listen": "test",
