@@ -1699,9 +1699,9 @@
 									"\r",
 									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());\r",
 									"// pm.environment.set(\"SurveyPreferredContact\", JSON.parse(pm.environment.get(\"patientContactPreferences\"))[0]);\r",
-									"pm.environment.set(\"SurveyPreferredContact\", JSON.parse(pm.environment.get(\"patientContactPreferences\"))[0]);\r",
+									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());\r",
 									"// pm.environment.set(\"SurveyEthnicity\", JSON.parse(pm.environment.get(\"patientEthnicities\"))[0]);\r",
-									"pm.environment.set(\"SurveyEthnicity\", JSON.parse(pm.environment.get(\"patientEthnicities\"))[0]);\r",
+									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());\r",
 									"\r",
 									""
 								],
