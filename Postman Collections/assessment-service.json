@@ -4689,9 +4689,9 @@
 									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
 									"}\r",
 									"\r",
-									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());\r",
-									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());\r",
-									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());"
+									"pm.environment.set(\"SurveyPronouns\", JSON.parse(pm.environment.get(\"patientPronounsOnRecord\"))[0]);\r",
+									"pm.environment.set(\"SurveyPreferredContact\", JSON.parse(pm.environment.get(\"patientContactPreferences\"))[0]);\r",
+									"pm.environment.set(\"SurveyEthnicity\", JSON.parse(pm.environment.get(\"patientEthnicities\"))[0]);"
 								],
 								"type": "text/javascript"
 							}
