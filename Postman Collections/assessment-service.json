@@ -1410,7 +1410,7 @@
 					"response": []
 				},
 				{
-					"name": "ARFIDSelf_Assessment Copy 2",
+					"name": "ARFIDSelf_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
