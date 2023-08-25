@@ -1505,7 +1505,7 @@
 					"response": []
 				},
 				{
-					"name": "GETAssessments_ARFIDSelf Copy 2",
+					"name": "GETAssessments_ARFIDSelf",
 					"event": [
 						{
 							"listen": "test",
