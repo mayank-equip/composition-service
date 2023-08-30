@@ -1352,7 +1352,7 @@
 									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
 									"}\r",
 									"\r",
-									"pm.environment.set(\"ARFIDSelfSurvey\", \"ARFID Severity: Self\");\r",
+									"pm.environment.set(\"Survey_name_Arfid\", \"ARFID Severity: Self\");\r",
 									"pm.environment.set(\"Status\", \"New\");"
 								],
 								"type": "text/javascript"
@@ -1398,7 +1398,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\": \"{{Status}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{ARFIDSelfSurvey}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"raw": "{\r\n    \"status\": \"{{Status}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{Survey_name_Arfid}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1558,7 +1558,7 @@
 									"            pm.expect(assessment_data[\"pardiarqself27\"]).to.eql(((pm.environment.get(\"ARFIDQues_7\"))).toString());\r",
 									"            pm.expect(assessment_data[\"pardiarqself28\"]).to.eql(((pm.environment.get(\"ARFIDQues_8\"))).toString());\r",
 									"            pm.expect(assessment_data[\"pardiarqself29\"]).to.eql(((pm.environment.get(\"ARFIDQues_9\"))).toString());            \r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"ARFIDSelfSurvey\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"Survey_name_Arfid\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
