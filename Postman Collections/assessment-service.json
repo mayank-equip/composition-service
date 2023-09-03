@@ -1839,7 +1839,7 @@
 									"            pm.expect(assessment_data[\"admissions-nps2\"]).to.eql(pm.environment.get(\"admissionsNPSQues2\"));\r",
 									"            pm.expect(assessment_data[\"admissions-nps3\"]).to.eql(pm.environment.get(\"admissionsNPSQues3\"));\r",
 									"            pm.expect(assessment_data[\"admissions-nps4\"]).to.eql(parseInt(pm.environment.get(\"admissionsNPSQues4\")));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveyAdmissionNPS\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"Survey_Name_AdmissionNPS\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
@@ -5705,6 +5705,18 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "9f18212a-a15d-4b9f-a2a9-e770e55de25a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
