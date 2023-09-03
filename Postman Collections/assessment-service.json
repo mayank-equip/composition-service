@@ -2405,7 +2405,7 @@
 									"            pm.expect(assessment_data[\"cet22\"]).to.eql(pm.environment.get(\"CET_Value_22\"));\r",
 									"            pm.expect(assessment_data[\"cet23\"]).to.eql(pm.environment.get(\"CET_Value_23\"));\r",
 									"            pm.expect(assessment_data[\"cet24\"]).to.eql(pm.environment.get(\"CET_Value_24\"));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveynameCET\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_CET\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
