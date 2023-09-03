@@ -1219,7 +1219,7 @@
 			"id": "b580a643-8980-4bdc-a614-e48140fd7c79"
 		},
 		{
-			"name": "Verify_Patient_Assessments_withoutPatientTag",
+			"name": "Verify_Assessments_withPatients_withoutPatientTag",
 			"item": [
 				{
 					"name": "Add Patient",
