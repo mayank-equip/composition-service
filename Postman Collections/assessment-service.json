@@ -1558,7 +1558,7 @@
 									"            pm.expect(assessment_data[\"pardiarqself27\"]).to.eql(((pm.environment.get(\"ARFIDQues_7\"))).toString());\r",
 									"            pm.expect(assessment_data[\"pardiarqself28\"]).to.eql(((pm.environment.get(\"ARFIDQues_8\"))).toString());\r",
 									"            pm.expect(assessment_data[\"pardiarqself29\"]).to.eql(((pm.environment.get(\"ARFIDQues_9\"))).toString());            \r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"Survey_name_Arfid\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_ARFIDSelf\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
