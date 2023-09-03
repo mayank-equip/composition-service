@@ -2119,7 +2119,7 @@
 									"            pm.expect(assessment_data[\"bas-17\"]).to.eql((pm.environment.get(\"BASQues_17\")));\r",
 									"            pm.expect(assessment_data[\"bas-18\"]).to.eql((pm.environment.get(\"BASQues_18\")));\r",
 									"            pm.expect(assessment_data[\"bas-19\"]).to.eql((pm.environment.get(\"BASQues_19\")));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"BASSurvey\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_BAS\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
