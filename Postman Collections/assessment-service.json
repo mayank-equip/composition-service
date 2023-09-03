@@ -1349,7 +1349,7 @@
 									"} else if (pm.environment.name === \"qa\") {\r",
 									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
 									"    pm.environment.set(\"providerLastname\", \"User\");\r",
-									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
 									"}\r",
 									"\r",
 									"pm.environment.set(\"Survey_name_Arfid\", \"ARFID Severity: Self\");\r",
