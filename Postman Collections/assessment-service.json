@@ -4577,7 +4577,7 @@
 									"            pm.expect(assessment_data[\"phq9-6\"]).to.eql(pm.environment.get(\"PHQ8_Value_6\"));\r",
 									"            pm.expect(assessment_data[\"phq9-7\"]).to.eql(pm.environment.get(\"PHQ8_Value_7\"));\r",
 									"            pm.expect(assessment_data[\"phq9-8\"]).to.eql(pm.environment.get(\"PHQ8_Value_8\"));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"PHQ8Survey\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_PHQ8\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
