@@ -3833,8 +3833,8 @@
 									"    pm.environment.set(\"providerUserId\", \"73f92e85-9596-46e0-aa18-2708cc8d7fc2\");\r",
 									"}\r",
 									"\r",
-									"pm.environment.set(\"NIAS\", \"NIAS\");\r",
-									"pm.environment.set(\"NewInstance\", \"New\");"
+									"pm.environment.set(\"surveyName_NIAS\", \"NIAS\");\r",
+									"pm.environment.set(\"Status\", \"New\");"
 								],
 								"type": "text/javascript"
 							}
