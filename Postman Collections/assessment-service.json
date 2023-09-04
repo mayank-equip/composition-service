@@ -5463,8 +5463,8 @@
 									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
 									"}\r",
 									"\r",
-									"pm.environment.set(\"WeeklyARFID\", \"Weekly ED Symptom Tracker (ARFID)\");\r",
-									"pm.environment.set(\"NewInstance\", \"New\");"
+									"pm.environment.set(\"surveyName_WeeklyARFID\", \"Weekly ED Symptom Tracker (ARFID)\");\r",
+									"pm.environment.set(\"Status\", \"New\");"
 								],
 								"type": "text/javascript"
 							}
