@@ -3762,7 +3762,7 @@
 									"\t\t\tpm.expect(assessment_data[\"guardians-relationship-status\"]).to.eql((pm.environment.get(\"Parentsguardians\")));\r",
 									"\t\t\tpm.expect(assessment_data[\"livingSituation\"]).to.eql([pm.environment.get(\"ParentsLivingSituation\")]);\r",
 									"\t\t\tpm.expect(assessment_data[\"currentPage\"]).to.eql((pm.environment.get(\"CurrentPage5\")));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"IntakeSurvey\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_Intake\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
