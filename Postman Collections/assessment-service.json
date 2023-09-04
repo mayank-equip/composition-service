@@ -4851,7 +4851,7 @@
 									"            pm.expect(assessment_data[\"psea1\"]).to.eql((pm.environment.get(\"PSEAQues_1\")));\r",
 									"            pm.expect(assessment_data[\"psea1\"]).to.eql((pm.environment.get(\"PSEAQues_1\")));\r",
 									"            pm.expect(assessment_data[\"psea1\"]).to.eql((pm.environment.get(\"PSEAQues_1\")));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"PSEASurvey\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_PSEA\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
