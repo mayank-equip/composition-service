@@ -2698,7 +2698,7 @@
 									"            pm.expect(assessment_data[\"ede-q26\"]).to.eql(pm.environment.get(\"EDSQues_20\"));\r",
 									"            pm.expect(assessment_data[\"ede-q27\"]).to.eql(pm.environment.get(\"EDSQues_21\"));\r",
 									"            pm.expect(assessment_data[\"ede-q28\"]).to.eql(pm.environment.get(\"EDSQues_22\"));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"EatingDisorderSurvey\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_EatingDisorder\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
