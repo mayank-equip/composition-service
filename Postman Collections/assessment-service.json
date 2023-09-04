@@ -5196,7 +5196,7 @@
 									"}\r",
 									"\r",
 									"pm.environment.set(\"WeeklyNonARFID\", \"Weekly ED Symptom Tracker\");\r",
-									"pm.environment.set(\"NewInstance\", \"New\");"
+									"pm.environment.set(\"Status\", \"New\");"
 								],
 								"type": "text/javascript"
 							}
