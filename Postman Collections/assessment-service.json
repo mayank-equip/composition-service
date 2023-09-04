@@ -5174,7 +5174,7 @@
 					"response": []
 				},
 				{
-					"name": "WeeklyTracker(NonARFID)",
+					"name": "WeeklyTracker(NonARFID)_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
