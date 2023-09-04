@@ -2168,7 +2168,7 @@
 					"response": []
 				},
 				{
-					"name": "CET",
+					"name": "CET_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
