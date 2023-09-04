@@ -1607,7 +1607,7 @@
 					"response": []
 				},
 				{
-					"name": "AdmissionsNPS",
+					"name": "AdmissionsNPS_Assessment",
 					"event": [
 						{
 							"listen": "prerequest",
