@@ -2966,7 +2966,7 @@
 									"            pm.expect(assessment_data[\"fns4\"]).to.eql(pm.environment.get(\"FNS_Value_4\"));\r",
 									"            pm.expect(assessment_data[\"fns5\"]).to.eql(pm.environment.get(\"FNS_Value_5\"));\r",
 									"            pm.expect(assessment_data[\"fns6\"]).to.eql(pm.environment.get(\"FNS_Value_6\"));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveyFNS\"));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_FNS\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserFirstName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].toUserLastName).to.eql(pm.environment.get(\"patientLastName\"));\r",
