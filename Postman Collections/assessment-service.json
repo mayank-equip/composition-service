@@ -4380,7 +4380,7 @@
 									"}\r",
 									"\r",
 									"pm.environment.set(\"PHQ8Survey\", \"PHQ-8\");\r",
-									"pm.environment.set(\"NewInstance\", \"New\");"
+									"pm.environment.set(\"Status\", \"New\");"
 								],
 								"type": "text/javascript"
 							}
