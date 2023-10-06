@@ -9934,6 +9934,777 @@
 						"url": "{{host}}/users/patients"
 					},
 					"response": []
+				},
+				{
+					"name": "C-SSRs Lifetime/Recent Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"pm.environment.set(\"userPhone\", \"+12073444381\");\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveynameCSSRlifeTime\", \"C-SSRS - Lifetime/Recent\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"SurveynameCSSRlifeTime_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "073c6d94-5a32-4bf9-a023-dfc195a7bc32",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"surveyName\": \"{{SurveynameCSSRlifeTime}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "C-SSRS Lifetime/Recent Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"let moment = require('moment');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"assessmentStatus\", \"Done\");\r",
+									"\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "3fc55084-1faf-4bd9-b178-f8f0efa697b7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{userPhone}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"c-ssrs-lr-1\\\":[{\\\"Lifetime\\\":false,\\\"Past 1 Month\\\":false}],\\\"c-ssrs-lr-2\\\":[{\\\"Lifetime\\\":false,\\\"Past 1 Month\\\":false}],\\\"c-ssrs-lr-actual-attempt\\\":[{\\\"Lifetime\\\":false,\\\"Past 3 months\\\":false}],\\\"c-ssrs-lr-non-suicidal-self-injury\\\":[{\\\"Lifetime\\\":false,\\\"Past 3 months\\\":false}],\\\"c-ssrs-lr-interrupted-attempt\\\":[{\\\"Lifetime\\\":false,\\\"Past 3 months\\\":false}],\\\"c-ssrs-lr-aborted-attempt\\\":[{\\\"Lifetime\\\":false,\\\"Past 3 months\\\":false}],\\\"c-ssrs-lr-preparatory-acts\\\":[{\\\"Lifetime\\\":false,\\\"Past 3 months\\\":false}],\\\"currentPage\\\":\\\"C-SSRS - Lifetime/Recent\\\",\\\"currentPageNo\\\":0}\",\r\n    \"responseExternalId\": \"{{SurveynameCSSRlifeTime_responseExternalId}}\",\r\n    \"status\": \"{{Complete}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{SurveynameCSSRlifeTime_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "C-SSRS Lifetime/Recent Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"SurveynameCSSRlifeTime_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"SurveynameCSSRlifeTime_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"pm.test(\"Verify CSS-R RecentlifeTime Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"SurveynameCSSRlifeTime_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);\r",
+									"    \r",
+									"       pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveynameCSSRlifeTime\"));\r",
+									"            pm.expect(assessment_data.patientEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
+									"            pm.expect(assessment_data[\"c-ssrs-lr-1\"][0][\"Lifetime\",\"Past 1 Month\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-lr-2\"][0][\"Lifetime\",\"Past 1 Month\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-lr-actual-attempt\"][0][\"Lifetime\",\"Past 3 months\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-lr-non-suicidal-self-injury\"][0][\"Lifetime\",\"Past 3 months\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-lr-interrupted-attempt\"][0][\"Lifetime\",\"Past 3 months\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-lr-aborted-attempt\"][0][\"Lifetime\",\"Past 3 months\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-lr-preparatory-acts\"][0][\"Lifetime\",\"Past 3 months\"]).to.eql(false);\r",
+									"\r",
+									"\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"SurveynameCSSRlifeTime_responseExternalId\"));\r",
+									"        }\r",
+									"     }\r",
+									"});  \r",
+									"     \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6e10a68a-9ae9-48c9-bde0-af40e692aebd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "C-SSRS Recent Screen Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"pm.environment.set(\"userPhone\", \"+12073444381\");\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"CSSRecentScreen\", \"C-SSRS - Recent Screen\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"CSSRecentScreen_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "069f6811-6f81-43a5-813e-12e989520f25",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"submittedUserId\": \"{{providerUserId1}}\",\r\n    \"surveyName\": \"{{CSSRecentScreen}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "C-SSRS Recent Screen Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"let moment = require('moment');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"pm.environment.set(\"assessmentStatus\", \"Done\");\r",
+									"\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "87a91bad-3846-415b-9c01-81fd37debce3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"patientTags\\\":[],\\\"patientEthnicity\\\":[\\\"other\\\"],\\\"patientEthnicity-Comment\\\":[],\\\"patientPreferredContact\\\":[\\\"none\\\"],\\\"c-ssrs-recent-short-1\\\":[{\\\"Past Month\\\":false}],\\\"c-ssrs-recent-short-2\\\":[{\\\"Past Month\\\":false}],\\\"c-ssrs-recent-short-6\\\":[{\\\"Lifetime\\\":false}],\\\"currentPage\\\":\\\"C-SSRS Screen Version - Recent\\\",\\\"currentPageNo\\\":0}\",\r\n    \"responseExternalId\": \"{{CSSRecentScreen_assessment_responseExternalId}}\",\r\n    \"status\": \"{{Complete}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{CSSRecentScreen_assessment_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "C-SSRS Recent Screen Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"CSSRecentScreen_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"CSSRecentScreen_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify CSS-R Recent Screen Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"CSSRecentScreen_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);\r",
+									"           \r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"CSSRecentScreen\"));\r",
+									"            pm.expect(assessment_data.patientEmail).to.eql(pm.environment.get(\"patientEmail\"));\r",
+									"            pm.expect(assessment_data[\"c-ssrs-recent-short-1\"][0][\"Past Month\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-recent-short-2\"][0][\"Past Month\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-recent-short-6\"][0][\"Lifetime\"]).to.eql(false);\r",
+									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
+									"            \r",
+									"          }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "3dd1e5dd-967f-4eca-9043-a4e81b18b49b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "C-SSRS SLC Screen Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveySLCScreen\", \"C-SSRS (SLC) Screen\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"SLCScreen_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "91388e16-9dc9-4094-831d-a9ed077c174f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{SurveySLCScreen}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "C-SSRS SLC Screen Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "2ab97c2a-8517-4f0f-980a-b264dcc78005",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n       \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"c-ssrs-slc-short-1\\\":[{\\\"Since last contact\\\":false}],\\\"c-ssrs-slc-short-2\\\":[{\\\"Since last contact\\\":false}],\\\"c-ssrs-slc-short-6\\\":[{\\\"Since last contact\\\":false}],\\\"currentPage\\\":\\\"C-SSRS Screen Version - Since Last Contact\\\",\\\"currentPageNo\\\":0}\",\r\n       \"responseExternalId\": \"{{SLCScreen_assessment_responseExternalId}}\",\r\n       \"status\": \"{{Complete}}\",\r\n       \"submittedSource\": \"{{submittedSource}}\",\r\n       \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n       \"submittedUserId\": \"{{providerUserId}}\",\r\n       \"submittedUserLastName\": \"{{providerLastname}}\",\r\n       \"toUserEmail\": \"{{patientEmail}}\"\r\n   }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{SLCScreen_assessment_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "C-SSRS SLC Screen Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"SLCScreen_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"SLCScreen_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify C-SSRS-SinceLastContact Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"SLCScreen_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);\r",
+									"             pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveySLCScreen\"));\r",
+									"             pm.expect(assessment_data[\"c-ssrs-slc-short-1\"][0][\"Since last contact\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-slc-short-2\"][0][\"Since last contact\"]).to.eql(false);\r",
+									"            pm.expect(assessment_data[\"c-ssrs-slc-short-6\"][0][\"Since last contact\"]).to.eql(false);\r",
+									"           \r",
+									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"SLCScreen_assessment_responseExternalId\"));\r",
+									"          }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "9641dabd-a1e4-428a-961d-9da1f509e970",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "96d30238-1325-4471-a316-491287586baa"
