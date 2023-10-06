@@ -9749,6 +9749,11 @@
 			"id": "08e32a96-ae6f-426a-81d8-0f2bdffd25d6"
 		},
 		{
+			"name": "VerifyAssessments_Clinical",
+			"item": [],
+			"id": "96d30238-1325-4471-a316-491287586baa"
+		},
+		{
 			"name": "Verify survey data",
 			"event": [
 				{
