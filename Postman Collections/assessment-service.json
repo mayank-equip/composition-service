@@ -9749,7 +9749,7 @@
 			"id": "08e32a96-ae6f-426a-81d8-0f2bdffd25d6"
 		},
 		{
-			"name": "VerifyAssessments_Clinical",
+			"name": "VerifyAssessments_Clinician",
 			"item": [
 				{
 					"name": "Add Patient Copy",
