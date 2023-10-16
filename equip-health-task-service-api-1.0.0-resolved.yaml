@@ -60,6 +60,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TaskCategoryDTO'
+    post:
+      operationId: getTaskCategories
+      parameters: []
+      responses:
+        "200":
+          description: getTaskCategories 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskCategoryDTO'
   /tasks/comment:
     post:
       operationId: addComment
