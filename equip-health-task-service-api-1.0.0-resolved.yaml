@@ -1,0 +1,284 @@
+---
+openapi: 3.0.1
+info:
+  title: Task Service
+  description: Task Service API
+  contact:
+    name: Equip Health
+    url: https://equip.health/
+    email: tapan@equip.health
+  license:
+    name: Apache 2.0
+    url: https://equip.health/
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /tasks:
+    put:
+      operationId: updateTaskDetails
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+        required: true
+      responses:
+        "200":
+          description: updateTaskDetails 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDetailsResponse'
+    post:
+      operationId: addTask
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTaskRequest'
+        required: true
+      responses:
+        "200":
+          description: addTask 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddTaskResponse'
+  /tasks/categories:
+    get:
+      operationId: getTaskCategories
+      parameters: []
+      responses:
+        "200":
+          description: getTaskCategories 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskCategoryDTO'
+  /tasks/comment:
+    post:
+      operationId: addComment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCommentRequest'
+        required: true
+      responses:
+        "200":
+          description: addComment 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddCommentResponse'
+  /tasks/comment/{taskExternalId}:
+    get:
+      operationId: getComment
+      parameters:
+      - name: taskExternalId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: getComment 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+  /tasks/{taskExternalId}:
+    get:
+      operationId: getTaskDetails
+      parameters:
+      - name: taskExternalId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: getTaskDetails 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDetailsResponse'
+components:
+  schemas:
+    AddCommentRequest:
+      required:
+      - commentContent
+      - commentCreatedByUserId
+      - commentCreatedByUserName
+      - taskExternalId
+      type: object
+      properties:
+        taskExternalId:
+          minLength: 1
+          type: string
+        commentContent:
+          minLength: 1
+          type: string
+        commentCreatedByUserId:
+          minLength: 1
+          type: string
+        commentCreatedByUserName:
+          minLength: 1
+          type: string
+    AddCommentResponse:
+      type: object
+      properties:
+        commentExternalId:
+          type: string
+    AddTaskRequest:
+      required:
+      - taskCategoryExternalId
+      - taskName
+      - taskPriorityId
+      - taskStatusId
+      type: object
+      properties:
+        taskName:
+          maxLength: 100
+          minLength: 1
+          type: string
+        taskDescription:
+          type: string
+        taskCategoryExternalId:
+          minLength: 1
+          type: string
+        taskSubCategoryExternalId:
+          type: string
+        taskAssignedUserId:
+          type: string
+        taskDueDate:
+          type: string
+          format: date-time
+        taskPriorityId:
+          minLength: 1
+          type: string
+        taskStatusId:
+          minLength: 1
+          type: string
+        patientId:
+          type: string
+        taskCreatedByUserId:
+          type: string
+    AddTaskResponse:
+      type: object
+      properties:
+        taskExternalId:
+          type: string
+    Comment:
+      type: object
+      properties:
+        commentExternalId:
+          type: string
+        taskExternalId:
+          type: string
+        commentCreatedDate:
+          type: string
+        commentContent:
+          type: string
+        commentCreatedByUserId:
+          type: string
+        commentCreatedByUserName:
+          type: string
+        errorMessage:
+          type: string
+    TaskCategoryDTO:
+      type: object
+      properties:
+        categoryExternalId:
+          type: string
+        categoryName:
+          type: string
+        subCategoryList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskCategoryDTO'
+    TaskDetailsResponse:
+      type: object
+      properties:
+        taskExternalId:
+          type: string
+        taskName:
+          type: string
+        taskDescription:
+          type: string
+        taskCategoryExternalId:
+          type: string
+        taskCategoryName:
+          type: string
+        taskSubCategoryExternalId:
+          type: string
+        taskSubCategoryName:
+          type: string
+        taskAssignedUserId:
+          type: string
+        taskCreatedByUserId:
+          type: string
+        taskDueDate:
+          type: string
+        taskPriorityId:
+          type: integer
+          format: int32
+        taskStatusId:
+          type: integer
+          format: int32
+        taskCreatedDate:
+          type: string
+        patientId:
+          type: string
+        errorMessage:
+          type: string
+    UpdateTaskRequest:
+      required:
+      - taskCategoryExternalId
+      - taskExternalId
+      - taskName
+      - taskPriorityId
+      - taskStatusId
+      type: object
+      properties:
+        taskExternalId:
+          minLength: 1
+          type: string
+        taskName:
+          maxLength: 100
+          minLength: 1
+          type: string
+        taskDescription:
+          type: string
+        taskCategoryExternalId:
+          minLength: 1
+          type: string
+        taskSubCategoryExternalId:
+          type: string
+        taskAssignedUserId:
+          type: string
+        taskDueDate:
+          type: string
+          format: date-time
+        taskPriorityId:
+          minLength: 1
+          type: string
+        taskStatusId:
+          minLength: 1
+          type: string
+        patientId:
+          type: string
+        taskCreatedByUserId:
+          type: string
