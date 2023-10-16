@@ -188,8 +188,6 @@ components:
           type: string
         taskCreatedByUserId:
           type: string
-        taskNotCreated:
-          type: Integer          
     AddTaskResponse:
       type: object
       properties:
