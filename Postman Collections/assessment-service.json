@@ -9752,7 +9752,7 @@
 			"name": "VerifyAssessments_Clinician",
 			"item": [
 				{
-					"name": "Add Patient Copy",
+					"name": "Add Patient",
 					"event": [
 						{
 							"listen": "test",
@@ -9936,7 +9936,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRs Lifetime/Recent Copy",
+					"name": "C-SSRs Lifetime/Recent",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10016,7 +10016,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRS Lifetime/Recent Copy",
+					"name": "C-SSRS Lifetime/Recent",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10099,7 +10099,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRS Lifetime/Recent Copy",
+					"name": "C-SSRS Lifetime/Recent",
 					"event": [
 						{
 							"listen": "test",
@@ -10197,7 +10197,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRS Recent Screen Copy",
+					"name": "C-SSRS Recent Screen",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10277,7 +10277,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRS Recent Screen Copy",
+					"name": "C-SSRS Recent Screen",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10360,7 +10360,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRS Recent Screen Copy",
+					"name": "C-SSRS Recent Screen",
 					"event": [
 						{
 							"listen": "test",
@@ -10454,7 +10454,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRS SLC Screen Copy",
+					"name": "C-SSRS SLC Screen",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10534,7 +10534,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRS SLC Screen Copy",
+					"name": "C-SSRS SLC Screen",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10614,7 +10614,7 @@
 					"response": []
 				},
 				{
-					"name": "C-SSRS SLC Screen Copy",
+					"name": "C-SSRS SLC Screen",
 					"event": [
 						{
 							"listen": "test",
@@ -10703,6 +10703,85 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "SafetyPlan",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"surveyName_SafetyPlan\", \"Safety Plan\");\r",
+									"pm.environment.set(\"Status\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"SafetyPlan_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "503506c1-b56b-45c8-a78d-3f9fe1f3448a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{Status}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{surveyName_SafetyPlan}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
 					},
 					"response": []
 				}
