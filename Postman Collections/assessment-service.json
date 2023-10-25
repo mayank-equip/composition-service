@@ -7939,7 +7939,7 @@
 									"pm.environment.set(\"Complete\", \"Done\");\r",
 									"\r",
 									"//Picks random NIAS Questions\r",
-									"let NIASQues = [\"1\",\"2\",\"3\",\"4\",\"5\",\"6\"];\r",
+									"let NIASQues = [\"0\",\"1\",\"2\",\"3\",\"4\",\"5\"];\r",
 									"for(i=1; i<=9; i++){\r",
 									"    pm.environment.set(\"NIASQues_Value_\"+i,ld.sample(NIASQues));\r",
 									"}\r",
