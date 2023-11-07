@@ -11017,7 +11017,7 @@
 									"\r",
 									"let TreatmentLevel = [\"Purple: The patient is exhibiting high ED symptom severity and is at high medical and/or psychiatric risk.\", \"Red: The patient is medically stable and is exhibiting high ED symptom severity.\", \"Orange: The patient is medically stable and ED symptoms are decreasing.\", \"Yellow: The patient is medically stable and ED symptoms are lower and continuing to decrease.\",\"Blue: The patient is medically stable and ED symptoms are no longer impairing daily functioning; co-occuring condition present and included as treatment target.\",\"Teal: The patient is medically stable and ED symptoms are no longer impairing daily functioning.\", \"Green: The patient is medically stable, ED symptoms are in remission, and treatment focus is relapse prevention.\"];\r",
 									"\r",
-									"let TreatmentType = [\"1000-1500 kcal/day\", \"1500-2000 kcal/day\", \"2000-2500 kcal/day\", \"2500-3000 kcal/day\",\"3000-3500 kcal/day\",\"3500-4000 kcal/day\", \"4000-4500 kcal/day\", \"4500-5000 kcal/day\", \"5000-5500 kcal/day\", \"5500-6000 kcal/day\"];\r",
+									"let TreatmentType = [\"Adolescent Focused Therapy\", \"CBT-E\", \"DBT\", \"Family Based Treatment\",\"Family Based Treatment for Transitional Youth\"];\r",
 									"\r",
 									"pm.environment.set(\"weekofCare\", ld.sample(weekCare));\r",
 									"pm.environment.set(\"weekinTreatment\", weekTreatment.toString());\r",
