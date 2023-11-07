@@ -10980,6 +10980,133 @@
 						"url": "{{host}}/assessments"
 					},
 					"response": []
+				},
+				{
+					"name": "TreatmentUpdate",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"let moment = require('moment');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"\r",
+									"let age = ld.random(1, 100);\r",
+									"let dateCurrentWeight = moment().subtract(age, 'years').format('YYYY-MM-DD');\r",
+									"let dateCurrentHeight = moment().subtract(10, 'days').format('YYYY-MM-DD');\r",
+									"\r",
+									"let dateLastVitals = moment().subtract(15, 'days').format('YYYY-MM-DD');\r",
+									"let LMPPatients = moment().subtract(20, 'days').format('YYYY-MM-DD');\r",
+									"\r",
+									"let weekCare = [\"Week 4\", \"Week 16\"];\r",
+									"let weekTreatment = Math.floor(1 + Math.random() * 7);\r",
+									"let WeightInPounds = Math.floor(100 + Math.random() * 500);\r",
+									"let HeightInInches = Math.floor(20 + Math.random() * 100);\r",
+									"let HeartRate = Math.floor(40 + Math.random() * 200);\r",
+									"let Bloodpressure = Math.floor(90 + Math.random() * 200);\r",
+									"let DiagnosisList = [\"Anorexia nervosa - binge/purge type\", \"Anorexia nervosa - restricting type\", \"Anorexia nervosa - unspecified\", \"Avoidant restrictive food intake disorder (ARFID)\",\"Bulimia nervosa\",\"Binge eating disorder (BED)\", \"Other specified feeding or eating disorder (OSFED)\", \"Pica\", \"Rumination (regurgitation) disorder\"];\r",
+									"\r",
+									"let Nutritionprescription = [\"1000-1500 kcal/day\", \"1500-2000 kcal/day\", \"2000-2500 kcal/day\", \"2500-3000 kcal/day\",\"3000-3500 kcal/day\",\"3500-4000 kcal/day\", \"4000-4500 kcal/day\", \"4500-5000 kcal/day\", \"5000-5500 kcal/day\", \"5500-6000 kcal/day\"];\r",
+									"\r",
+									"let ActivityLevel = [\"Activity Stage A:  Activities of daily living only.  Static stretching is OK.  Caregiver supervision to prevent compulsive exercise.  The patient is engaging in ED behaviors.  Less than 75% average compliance with nutrition under full caregiver supervision.\", \"Activity Stage B: Activities of daily living.  May have movement of up to 30 minutes/day, under supervision of a trusted adult.  There has been a positive weight gain trajectory. Eating disorder behaviors are improving and caregivers are able to supervise and manage the ED. There is absence of dysfunctional exercise behavior.  There is 75 to 90% compliance with nutrition under carer supervision. \", \"Activity Stage C: Activities of daily living.  May have movement of up to 60 minutes per day (30 minutes cardiovascular activity and 30 minutes resistance activity).  Supervision is flexible (may be primarily social).  The patient is at least 90% of total weight restoration goal (TWR).  Eating disorder behaviors are reducing.  There is absence of dysfunctional exercise behaviors.  The patient is using coping skills.  The patient is eating 90-100% of recommended nutrition. \", \"Activity Stage D: Activities of daily living.  Cleared for sports practice. May have a flexible amount and type of movement with flexibility in supervision.  There is monitoring with vital signs and labs. Sex hormones have normalized and/or periods have returned in patients with a uterus, not on contraceptive/menses suppressing medications.  The patient is at least 95% of the TWR and gaining.  There is no ED symptom regression.  The patient is returning to independence, using coping skills, and connecting with values outside of exercise.  There is full compliance with the nutrition recommendations.\"];\r",
+									"\r",
+									"let TreatmentLevel = [\"Purple: The patient is exhibiting high ED symptom severity and is at high medical and/or psychiatric risk.\", \"Red: The patient is medically stable and is exhibiting high ED symptom severity.\", \"Orange: The patient is medically stable and ED symptoms are decreasing.\", \"Yellow: The patient is medically stable and ED symptoms are lower and continuing to decrease.\",\"Blue: The patient is medically stable and ED symptoms are no longer impairing daily functioning; co-occuring condition present and included as treatment target.\",\"Teal: The patient is medically stable and ED symptoms are no longer impairing daily functioning.\", \"Green: The patient is medically stable, ED symptoms are in remission, and treatment focus is relapse prevention.\"];\r",
+									"\r",
+									"let TreatmentType = [\"1000-1500 kcal/day\", \"1500-2000 kcal/day\", \"2000-2500 kcal/day\", \"2500-3000 kcal/day\",\"3000-3500 kcal/day\",\"3500-4000 kcal/day\", \"4000-4500 kcal/day\", \"4500-5000 kcal/day\", \"5000-5500 kcal/day\", \"5500-6000 kcal/day\"];\r",
+									"\r",
+									"pm.environment.set(\"weekofCare\", ld.sample(weekCare));\r",
+									"pm.environment.set(\"weekinTreatment\", weekTreatment.toString());\r",
+									"pm.environment.set(\"Diagnosis\", ld.sample(DiagnosisList));\r",
+									"pm.environment.set(\"Weight\", WeightInPounds.toString());\r",
+									"pm.environment.set(\"Height\", HeightInInches.toString());\r",
+									"pm.environment.set(\"HeartRateRange\", HeartRate.toString());\r",
+									"pm.environment.set(\"BloodpressureRange\", Bloodpressure.toString());\r",
+									"pm.environment.set(\"CurrentMedications\", \"CurrentMedications\");\r",
+									"pm.environment.set(\"Nutritionprescription\", ld.sample(Nutritionprescription));\r",
+									"pm.environment.set(\"ActivityLevel\", ld.sample(ActivityLevel));\r",
+									"pm.environment.set(\"TreatmentLevel\", ld.sample(TreatmentLevel));\r",
+									"pm.environment.set(\"TreatmentType\", ld.sample(TreatmentType));\r",
+									"pm.environment.set(\"Additionalcomments\", \"Additionalcomments\");\r",
+									"pm.environment.set(\"SkillDescription\", \"DescriptionTest\");\r",
+									"pm.environment.set(\"ReasontobeAlive\", \"ReasontobeAlive\");\r",
+									"pm.environment.set(\"dateCurrentWeight\", dateCurrentWeight);\r",
+									"pm.environment.set(\"dateCurrentHeight\", dateCurrentHeight);\r",
+									"pm.environment.set(\"dateLastVitals\", dateLastVitals);\r",
+									"pm.environment.set(\"LMPPatients\", LMPPatients);\r",
+									"pm.environment.set(\"Supportname\", \"Supportname\");\r",
+									"pm.environment.set(\"imminentrisk\", \"imminentrisk\");\r",
+									"pm.environment.set(\"currentPage\", \"Treatment Summary\");\r",
+									"pm.environment.set(\"Pagenumber\", \"0\");\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", JSON.parse(pm.environment.get(\"patientPronounsOnRecord\"))[0]);\r",
+									"pm.environment.set(\"SurveyPreferredContact\", JSON.parse(pm.environment.get(\"patientContactPreferences\"))[0]);\r",
+									"pm.environment.set(\"SurveyEthnicity\", JSON.parse(pm.environment.get(\"patientEthnicities\"))[0]);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e97e3429-5d55-460d-a823-d32aa0130562",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"tx_update_week_of_update\\\":\\\"{{weekofCare}}\\\",\\\"pt_legal_name\\\":\\\"{{patientFirstName}}\\\",\\\"pt_dob\\\":\\\"{{patientDateOfBirth}}\\\",\\\"wk_in_tx\\\":{{weekinTreatment}},\\\"pt_diagnosis\\\":\\\"{{Diagnosis}}\\\",\\\"admit_wt\\\":\\\"{{Weight}}\\\",\\\"current_wt\\\":\\\"{{Weight}}\\\",\\\"tx_update_date_current_wt\\\":\\\"{{dateCurrentWeight}}\\\",\\\"target_wt\\\":\\\"{{Weight}}\\\",\\\"pt_ht\\\":\\\"{{Height}}\\\",\\\"tx_update_date_pt_ht\\\":\\\"{{dateCurrentHeight}}\\\",\\\"last_vitals\\\":\\\"{{dateLastVitals}}\\\",\\\"lying_hr\\\":\\\"{{HeartRateRange}}\\\",\\\"lying_bp\\\":\\\"{{BloodpressureRange}}\\\",\\\"standing_hr\\\":\\\"{{HeartRateRange}}\\\",\\\"standing_bp\\\":\\\"{{BloodpressureRange}}\\\",\\\"lmp\\\":\\\"{{LMPPatients}}\\\",\\\"current_rx\\\":\\\"{{CurrentMedications}}\\\",\\\"nutrition_rx\\\":\\\"{{Nutritionprescription}}\\\",\\\"activity_lvl\\\":\\\"{{ActivityLevel}} \\\",\\\"tx_lvl\\\":\\\"{{TreatmentLevel}}\\\",\\\"tx_type\\\":[\\\"{{TreatmentType}}\\\"],\\\"tx_update_sum_comments\\\":\\\"{{Additionalcomments}}\\\",\\\"currentPage\\\":\\\"{{currentPage}}\\\",\\\"currentPageNo\\\":{{Pagenumber}}}\",\r\n    \"responseExternalId\": \"{{TreatmentUpdate_assessment_responseExternalId}}\",\r\n    \"status\": \"{{Complete}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\"\r\n}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{TreatmentUpdate_assessment_responseExternalId}}"
+					},
+					"response": []
 				}
 			],
 			"id": "96d30238-1325-4471-a316-491287586baa"
