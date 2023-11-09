@@ -11296,6 +11296,238 @@
 						"url": "{{host}}/assessments"
 					},
 					"response": []
+				},
+				{
+					"name": "Early Response Check-in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"    \r",
+									"}\r",
+									"\r",
+									"let ErcstuckPoints = [\r",
+									"    \"Low engagement/missing appointments\",\r",
+									"    \"Conflict in family - carers and patient\",\r",
+									"    \"Conflict in family - between carers\",\r",
+									"    \"Carers feeling disempowered\",\r",
+									"    \"Not submitting necessary medical data\",\r",
+									"    \"None\"\r",
+									"];\r",
+									"\r",
+									"let engagement = [\"true\",\"false\"];\r",
+									"pm.environment.set(\"erc_therapist\", ld.sample(engagement));\r",
+									"pm.environment.set(\"erc_fm\", ld.sample(engagement));\r",
+									"pm.environment.set(\"erc_rd\", ld.sample(engagement));\r",
+									"pm.environment.set(\"erc_pm\", ld.sample(engagement));\r",
+									"pm.environment.set(\"erc_mp\", ld.sample(engagement));\r",
+									"pm.environment.set(\"erc_psychiatry\", ld.sample(engagement));\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"erc_therapistgroup\", pm.variables.replaceIn('{{$randomCity}}'));\r",
+									"pm.environment.set(\"erc_fmgroup\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"pm.environment.set(\"erc_rdgroup\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"pm.environment.set(\"erc_pmgroup\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+									"pm.environment.set(\"erc_mpgroup\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+									"pm.environment.set(\"erc_psychiatrygroup\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+									"\r",
+									"pm.environment.set(\"erc_meals\", pm.variables.replaceIn('{{$randomCity}}'));\r",
+									"pm.environment.set(\"erc_fmeals\", pm.variables.replaceIn('{{$randomLastName}'));\r",
+									"pm.environment.set(\"erc_rdmeals\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+									"pm.environment.set(\"erc_pmmeals\", pm.variables.replaceIn('{{$randomCity}}'));\r",
+									"pm.environment.set(\"erc_mpmeals\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+									"pm.environment.set(\"erc_psychiatrymeals\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+									"pm.environment.set(\"Stuck_points\", ld.sample(ErcstuckPoints));\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"currentPage\", \"Signatures\");\r",
+									"pm.environment.set(\"Pagenumber\", \"4\");\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "cc2df3b4-477b-4af6-b015-1360f686a8e4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkxNMlFoclFYd3BGUmtZa01UQkVCMyJ9.eyJodHRwczovL2FwcC5lcXVpcC5oZWFsdGgvcm9sZXMiOlsiYWRtaW46cm9sZTptYW5hZ2UtY29udGVudCIsImFkbWluOnJvbGU6bWFuYWdlLXVzZXJzIiwibWF1ZDpyb2xlOmdlbmVyYWwtYWNjZXNzIl0sImh0dHBzOi8vYXBwLmVxdWlwLmhlYWx0aC9wZXJtaXNzaW9ucyI6WyJhZG1pbjphY2Nlc3M6YXBwIiwibWF1ZDphY2Nlc3M6YXBwIiwibWF1ZDpwZXJtaXNzaW9uOmFkZC1wYXRpZW50IiwibWF1ZDpwZXJtaXNzaW9uOmF2YWlsYWJpbGl0eSIsIm1hdWQ6cGVybWlzc2lvbjpjYXJlLXBsYW4iLCJtYXVkOnBlcm1pc3Npb246cGF0aWVudC1kYXNoYm9hcmQiLCJtYXVkOnBlcm1pc3Npb246cGF0aWVudC1zZWFyY2giLCJtYXVkOnBlcm1pc3Npb246c2NoZWR1bGUtcHJveHkiXSwiaHR0cHM6Ly9hcHAuZXF1aXAuaGVhbHRoL2V4dGVybmFsX3VzZXJfaWQiOiJjNjQ0YmEwMC05MjcxLTRmM2UtYmYyYy1mM2VjNGEwZmFmY2EiLCJpc3MiOiJodHRwczovL2VxdWlwLXFhLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2MWY0MmU2NzI1MzM3MjAwNzAzYzFlMTkiLCJhdWQiOlsiaHR0cHM6Ly9lcXVpcC1xYS51cy5hdXRoMC5jb20vYXBpL3YyLyIsImh0dHBzOi8vZXF1aXAtcWEudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY5OTM1MTg3NCwiZXhwIjoxNzAxOTQzODc0LCJhenAiOiJvY3RrNzRzUlBmVm03ekp6MzE0Y01NekZIbkdPM0IycyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MifQ.BIt1P7_xA-AL_jC8cAVtShrqRTiVu3TL3opkrO4MUUV7zBB1cF-_uwUB-93JAdg1OuVZ-VxRccUrVT9_84Jo3_qh131lOtwVA1gHHWdLsYN1SolA0buAeYGsNoJFEnfzt1sAJWmydbsiCe8dGPui1oZi_FuMfS4IWH2ZgmDJLX8ObOkxeEMlockWsQAhDy-A55MsC-E8SbTPAMwQczMODxkn2dtww_k0p8c048no2e_w6_uISebKK3Vcxri7GJSa9lfbA0UdoDMiVbjoZzcrduVVhTKZuiJgTq6-N47wGTJjnbz-AZlaK2vO7jute2YlSLVcinh3N9zVsgSmQ1Fhjg"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n       \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"erc_therapist_engagement\\\":\\\"{{erc_therapist}}\\\",\\\"erc_fm_overall_engagement\\\":\\\"{{erc_fm}}\\\",\\\"erc_rd_overall_enagement\\\":\\\"{{erc_rd}}\\\",\\\"erc_pm_overall_engagement\\\":\\\"{{erc_pm}}\\\",\\\"erc_mp_overall_engagement\\\":\\\"{{erc_mp}}\\\",\\\"erc_psychiatry_overall_engagement\\\":\\\"{{erc_psychiatry}}\\\",\\\"erc_therapist_group_participation\\\":\\\"{{erc_therapistgroup}}\\\",\\\"erc_fm_group_participation\\\":\\\"{{erc_fmgroup}}\\\",\\\"erc_rd_group_participation\\\":\\\"{{erc_rdgroup}}\\\",\\\"erc_pm_group_participation\\\":\\\"{{erc_pmgroup}}\\\",\\\"erc_mp_group_participation\\\":\\\"{{erc_mpgroup}}\\\",\\\"erc_psychiatry_group_participation\\\":\\\"{{erc_psychiatrygroup}}\\\",\\\"erc_therapist_meals\\\":\\\"{{erc_meals}}\\\",\\\"erc_fm_meals\\\":\\\"{{erc_fmeals}}\\\",\\\"erc_rd_meals\\\":\\\"{{erc_rdmeals}}\\\",\\\"erc_pm_meals\\\":\\\"{{erc_pmmeals}}\\\",\\\"erc_mp_meals\\\":\\\"{{erc_mpmeals}}\\\",\\\"erc_psychiatry_meals\\\":\\\"{{erc_psychiatrymeals}}\\\",\\\"erc_stuck_points\\\":\\\"{{Stuck_points}}\\\",\\\"erc_next_steps\\\":[{\\\"Description\\\":\\\"test\\\"}],\\\"erc_sign_off\\\":{\\\"Therapist (CM):\\\":{\\\"Sign-off\\\":\\\"test\\\"}},\\\"currentPage\\\":\\\"Signatures\\\",\\\"currentPageNo\\\":4}\",\r\n       \"responseExternalId\": \"{{EarlyResponse_assessment_responseExternalId}}\",\r\n       \"status\": \"{{Complete}}\",\r\n       \"submittedSource\": \"{{submittedSource}}\",\r\n       \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n       \"submittedUserId\": \"{{providerUserId}}\",\r\n       \"submittedUserLastName\": \"{{providerLastname}}\",\r\n       \"toUserEmail\": \"{{patientEmail}}\"\r\n   }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{EarlyResponse_assessment_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Early Response Check-in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"EarlyResponse_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"EarlyResponse_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify Early Response Check-in Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"EarlyResponse_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);\r",
+									"            \r",
+									"             pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveyEarlyResponse\"));\r",
+									"\r",
+									"             pm.expect(assessment_data[\"erc_therapist_engagement\"]).to.eql(pm.environment.get(\"erc_therapist\"));\r",
+									"             pm.expect(assessment_data[\"erc_fm_overall_engagement\"]).to.eql(pm.environment.get(\"erc_fm\"));\r",
+									"             pm.expect(assessment_data[\"erc_rd_overall_enagement\"]).to.eql(pm.environment.get(\"erc_rd\"));\r",
+									"             pm.expect(assessment_data[\"erc_pm_overall_engagement\"]).to.eql(pm.environment.get(\"erc_pm\"));\r",
+									"             pm.expect(assessment_data[\"erc_mp_overall_engagement\"]).to.eql(pm.environment.get(\"erc_mp\"));\r",
+									"             pm.expect(assessment_data[\"erc_psychiatry_overall_engagement\"]).to.eql(pm.environment.get(\"erc_psychiatry\"));\r",
+									"             pm.expect(assessment_data[\"erc_therapist_group_participation\"]).to.eql(pm.environment.get(\"erc_therapistgroup\"));\r",
+									"\r",
+									"             pm.expect(assessment_data[\"erc_fm_group_participation\"]).to.eql(pm.environment.get(\"erc_fmgroup\"));\r",
+									"             pm.expect(assessment_data[\"erc_rd_group_participation\"]).to.eql(pm.environment.get(\"erc_rdgroup\"));\r",
+									"             pm.expect(assessment_data[\"erc_pm_group_participation\"]).to.eql(pm.environment.get(\"erc_pmgroup\"));\r",
+									"             pm.expect(assessment_data[\"erc_mp_group_participation\"]).to.eql(pm.environment.get(\"erc_mpgroup\"));\r",
+									"            pm.expect(assessment_data[\"erc_psychiatry_group_participation\"]).to.eql(pm.environment.get(\"erc_psychiatrygroup\"));\r",
+									"\r",
+									"             pm.expect(assessment_data[\"erc_therapist_meals\"]).to.eql(pm.environment.get(\"erc_meals\"));\r",
+									"             pm.expect(assessment_data[\"erc_fm_meals\"]).to.eql(pm.environment.get(\"erc_fmeals\"));\r",
+									"             pm.expect(assessment_data[\"erc_rd_meals\"]).to.eql(pm.environment.get(\"erc_rdmeals\"));\r",
+									"             pm.expect(assessment_data[\"erc_pm_meals\"]).to.eql(pm.environment.get(\"erc_pmmeals\"));\r",
+									"             pm.expect(assessment_data[\"erc_mp_meals\"]).to.eql(pm.environment.get(\"erc_mpmeals\"));\r",
+									"             pm.expect(assessment_data[\"erc_psychiatry_meals\"]).to.eql(pm.environment.get(\"erc_psychiatrymeals\"));\r",
+									"            pm.expect(assessment_data[\"erc_stuck_points\"]).to.eql(pm.environment.get(\"Stuck_points\"));\r",
+									"\r",
+									"  \r",
+									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"EarlyResponse_assessment_responseExternalId\"));\r",
+									"          }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "acb57946-9a8c-462b-b047-a56510ddc526",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "96d30238-1325-4471-a316-491287586baa"
