@@ -11216,6 +11216,86 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Early Response Check-in",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveyEarlyResponse\", \"Early Response (Week 4) Check-in\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"EarlyResponse_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "35074376-176c-4fae-a19a-0308d2e77b55",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkxNMlFoclFYd3BGUmtZa01UQkVCMyJ9.eyJodHRwczovL2FwcC5lcXVpcC5oZWFsdGgvcm9sZXMiOlsiYWRtaW46cm9sZTptYW5hZ2UtY29udGVudCIsImFkbWluOnJvbGU6bWFuYWdlLXVzZXJzIiwibWF1ZDpyb2xlOmdlbmVyYWwtYWNjZXNzIl0sImh0dHBzOi8vYXBwLmVxdWlwLmhlYWx0aC9wZXJtaXNzaW9ucyI6WyJhZG1pbjphY2Nlc3M6YXBwIiwibWF1ZDphY2Nlc3M6YXBwIiwibWF1ZDpwZXJtaXNzaW9uOmFkZC1wYXRpZW50IiwibWF1ZDpwZXJtaXNzaW9uOmF2YWlsYWJpbGl0eSIsIm1hdWQ6cGVybWlzc2lvbjpjYXJlLXBsYW4iLCJtYXVkOnBlcm1pc3Npb246cGF0aWVudC1kYXNoYm9hcmQiLCJtYXVkOnBlcm1pc3Npb246cGF0aWVudC1zZWFyY2giLCJtYXVkOnBlcm1pc3Npb246c2NoZWR1bGUtcHJveHkiXSwiaHR0cHM6Ly9hcHAuZXF1aXAuaGVhbHRoL2V4dGVybmFsX3VzZXJfaWQiOiJjNjQ0YmEwMC05MjcxLTRmM2UtYmYyYy1mM2VjNGEwZmFmY2EiLCJpc3MiOiJodHRwczovL2VxdWlwLXFhLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2MWY0MmU2NzI1MzM3MjAwNzAzYzFlMTkiLCJhdWQiOlsiaHR0cHM6Ly9lcXVpcC1xYS51cy5hdXRoMC5jb20vYXBpL3YyLyIsImh0dHBzOi8vZXF1aXAtcWEudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY5OTI3MjIyNSwiZXhwIjoxNzAxODY0MjI1LCJhenAiOiJvY3RrNzRzUlBmVm03ekp6MzE0Y01NekZIbkdPM0IycyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MifQ.syCGwZT5ooxaexjZHh6oZtAXfkav3RzDZJrWsBi7SycDyWovLSONQ4c9F5TAqpbyaxD1NxoGo_OyGtxsA03lSYxmCjSgyvW-nOigwut1fo1vhfzgKFgjPaUTLaFT1ZvVAVnMtHooXz9FXx8FkMq6ctRy6hsqBjHxwoC7_6oyR_PvhIafwh3Bh9lgaB28lQH_7K47Y1g0bJGxs05STzhg0CSxut84Tc2pkzRoRlSZEIFkfI1zuTN2FU-HQNBoQOTkGOq1p4zd2SKC-5AHxxohVlv3-vJ8j4r6eSZVKCVYHe7Mx7HcZGs8UDAVxEr8vFuKBe-aV_bk6A-whNxd4IBt3w"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{SurveyEarlyResponse}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
 				}
 			],
 			"id": "96d30238-1325-4471-a316-491287586baa"
