@@ -11761,7 +11761,7 @@
 					"response": []
 				},
 				{
-					"name": "Therapist_Intake Copy",
+					"name": "Therapist_Intake",
 					"event": [
 						{
 							"listen": "test",
