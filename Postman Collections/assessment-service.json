@@ -10854,7 +10854,7 @@
 									"            // pm.expect(assessment_data[\"sp_warning_signs\"][0][\"Sign 1\"]).to.eql((pm.environment.get(\"WarningSign1\")));\r",
 									"            pm.expect(assessment_data[\"sp_other_warning_signs\"]).to.eql((pm.environment.get(\"OtherWarningSign\")));\r",
 									"            pm.expect(assessment_data[\"sp_internal_coping_skills\"][0][\"Skill\"]).to.eql((pm.environment.get(\"internalSkill\")));\r",
-									"            pm.expect(assessment_data[\"sp_internal_coping_skills\"][0][\"Skill\"]).to.eql((pm.environment.get(\"internalSkill\")));\r",
+									"            pm.expect(assessment_data[\"sp_internal_coping_skills\"][0][\"Description\"]).to.eql((pm.environment.get(\"internalSkill\")));\r",
 									"            // pm.expect(assessment_data[\"sp_reason_to_live\"]).to.eql(parseInt(pm.environment.get(\"ReasontobeAlive\")));\r",
 									"            // pm.expect(assessment_data[\"sp_names_phones_supports\"][0][\"Name\"]).to.eql(parseInt(pm.environment.get(\"Supportname\")));\r",
 									"            // pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_SafetyPlan\"));\r",
