@@ -11609,117 +11609,7 @@
 					"response": []
 				},
 				{
-					"name": "Therapist_Intake Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
-								"exec": [
-									"var jsonData = pm.response.json();\r",
-									"\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time is less than 4000ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Verify assessment updated date\", function () {\r",
-									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
-									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
-									"    var d = new Date();\r",
-									"    d.setDate(d.getDate());\r",
-									"    d = d.toISOString().slice(0, 10);\r",
-									"    d = d.split(\"T\")[0];\r",
-									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
-									"        }}\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Verify assessment created date\", function () {\r",
-									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
-									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
-									"    var d = new Date();\r",
-									"    d.setDate(d.getDate());\r",
-									"    d = d.toISOString().slice(0, 10);\r",
-									"    d = d.split(\"T\")[0];\r",
-									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
-									"        }\r",
-									"     }\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Verify TherapistIntake Assessment Response\", function(){\r",
-									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
-									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
-									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);    \r",
-									"            pm.expect(assessment_data[\"therapistEDbehav\"][0][\"Column 1\"]).to.eql((pm.environment.get(\"EDBehavior\")));\r",
-									"            pm.expect(assessment_data[\"therapistEDbehav\"][0][\"Column 2\"]).to.eql((pm.environment.get(\"EDBehaviorFrequency\")));\r",
-									"            pm.expect(assessment_data[\"therapistdailycalories\"]).to.eql(parseInt(pm.environment.get(\"DailyCalories\")));\r",
-									"            pm.expect(assessment_data[\"therapistlimitedfoods\"]).to.eql((pm.environment.get(\"ConsumedFoods\")));\r",
-									"            pm.expect(assessment_data[\"therapistconcerns\"]).to.eql((pm.environment.get(\"OtherConcerns\")));\r",
-									"            pm.expect(assessment_data[\"therapistmood\"][0][\"Changes in or behaviors related to:\"]).to.eql((pm.environment.get(\"MoodChangeBehaviors\")));\r",
-									"            pm.expect(assessment_data[\"therapistmood\"][0][\"Historical or Current?\"]).to.eql((pm.environment.get(\"HistoricalSymptom\")));\r",
-									"            pm.expect(assessment_data[\"therapistanx\"][0][\"Changes in or behaviors related to:\"]).to.eql((pm.environment.get(\"TypeAnxiety\")));\r",
-									"            pm.expect(assessment_data[\"therapistfamilyhist\"]).to.eql([(pm.environment.get(\"TypeAnxiety\"))]);\r",
-									"            pm.expect(assessment_data[\"therapistfamhistmembers\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
-									"            pm.expect(assessment_data[\"therapistculturereligion\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
-									"            pm.expect(assessment_data[\"therapistsibnameage\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
-									"            pm.expect(assessment_data[\"therapistgrade\"]).to.eql(parseInt(pm.environment.get(\"currentGrade\")));\r",
-									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Appearance\"]).to.eql((pm.environment.get(\"MentalStatusAppearance\")));\r",
-									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Mood\"]).to.eql((pm.environment.get(\"MentalStatusMood\")));\r",
-									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Affect\"]).to.eql((pm.environment.get(\"MentalStatusEffect\")));\r",
-									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Other\"]).to.eql((pm.environment.get(\"MentalStatusOther\")));\r",
-									"            pm.expect(assessment_data[\"therapistProvisionalEDDiagnosis\"]).to.eql([(pm.environment.get(\"EatingDDiagnosis\"))]);\r",
-									"            pm.expect(assessment_data[\"therapistCo-occurringconditions\"]).to.eql([(pm.environment.get(\"CoOccuringConditions\"))]);\r",
-									"            pm.expect(assessment_data[\"therapistRisk\"]).to.eql((pm.environment.get(\"safetyRisk\")));\r",
-									"            pm.expect(assessment_data[\"currentPage\"]).to.eql((pm.environment.get(\"currentPage\")));\r",
-									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_TherapistIntake\"));\r",
-									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"TherapistIntake_assessment_responseExternalId\"));\r",
-									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
-									"        }\r",
-									"     }\r",
-									"});  \r",
-									"     \r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"id": "18ad3290-6869-47dc-82cb-3bf018471aa1",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{test-token}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"assessments"
-							],
-							"query": [
-								{
-									"key": "filter-by",
-									"value": "userId::{{patientId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Therapist_Intake Copy",
+					"name": "Therapist_Intake",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -11867,6 +11757,116 @@
 							}
 						},
 						"url": "{{host}}/assessments/{{TherapistIntake_assessment_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Therapist_Intake Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify TherapistIntake Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);    \r",
+									"            pm.expect(assessment_data[\"therapistEDbehav\"][0][\"Column 1\"]).to.eql((pm.environment.get(\"EDBehavior\")));\r",
+									"            pm.expect(assessment_data[\"therapistEDbehav\"][0][\"Column 2\"]).to.eql((pm.environment.get(\"EDBehaviorFrequency\")));\r",
+									"            pm.expect(assessment_data[\"therapistdailycalories\"]).to.eql(parseInt(pm.environment.get(\"DailyCalories\")));\r",
+									"            pm.expect(assessment_data[\"therapistlimitedfoods\"]).to.eql((pm.environment.get(\"ConsumedFoods\")));\r",
+									"            pm.expect(assessment_data[\"therapistconcerns\"]).to.eql((pm.environment.get(\"OtherConcerns\")));\r",
+									"            pm.expect(assessment_data[\"therapistmood\"][0][\"Changes in or behaviors related to:\"]).to.eql((pm.environment.get(\"MoodChangeBehaviors\")));\r",
+									"            pm.expect(assessment_data[\"therapistmood\"][0][\"Historical or Current?\"]).to.eql((pm.environment.get(\"HistoricalSymptom\")));\r",
+									"            pm.expect(assessment_data[\"therapistanx\"][0][\"Changes in or behaviors related to:\"]).to.eql((pm.environment.get(\"TypeAnxiety\")));\r",
+									"            pm.expect(assessment_data[\"therapistfamilyhist\"]).to.eql([(pm.environment.get(\"TypeAnxiety\"))]);\r",
+									"            pm.expect(assessment_data[\"therapistfamhistmembers\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
+									"            pm.expect(assessment_data[\"therapistculturereligion\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
+									"            pm.expect(assessment_data[\"therapistsibnameage\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
+									"            pm.expect(assessment_data[\"therapistgrade\"]).to.eql(parseInt(pm.environment.get(\"currentGrade\")));\r",
+									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Appearance\"]).to.eql((pm.environment.get(\"MentalStatusAppearance\")));\r",
+									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Mood\"]).to.eql((pm.environment.get(\"MentalStatusMood\")));\r",
+									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Affect\"]).to.eql((pm.environment.get(\"MentalStatusEffect\")));\r",
+									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Other\"]).to.eql((pm.environment.get(\"MentalStatusOther\")));\r",
+									"            pm.expect(assessment_data[\"therapistProvisionalEDDiagnosis\"]).to.eql([(pm.environment.get(\"EatingDDiagnosis\"))]);\r",
+									"            pm.expect(assessment_data[\"therapistCo-occurringconditions\"]).to.eql([(pm.environment.get(\"CoOccuringConditions\"))]);\r",
+									"            pm.expect(assessment_data[\"therapistRisk\"]).to.eql((pm.environment.get(\"safetyRisk\")));\r",
+									"            pm.expect(assessment_data[\"currentPage\"]).to.eql((pm.environment.get(\"currentPage\")));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_TherapistIntake\"));\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"TherapistIntake_assessment_responseExternalId\"));\r",
+									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
+									"        }\r",
+									"     }\r",
+									"});  \r",
+									"     \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "18ad3290-6869-47dc-82cb-3bf018471aa1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
