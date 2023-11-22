@@ -10850,7 +10850,7 @@
 									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"SafetyPlan_assessment_responseExternalId\")){\r",
 									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);    \r",
 									"            pm.expect(assessment_data[\"sp_local_ems\"]).to.eql((pm.environment.get(\"splocalemsNumber\")));\r",
-									"            // pm.expect(assessment_data[\"sp_risk_level\"]).to.eql(parseInt(pm.environment.get(\"levelOfRisk\")));\r",
+									"            pm.expect(assessment_data[\"sp_risk_level\"]).to.eql((pm.environment.get(\"levelOfRisk\")));\r",
 									"            // pm.expect(assessment_data[\"sp_warning_signs\"][0][\"Sign 1\"]).to.eql(parseInt(pm.environment.get(\"WarningSign1\")));\r",
 									"            // pm.expect(assessment_data[\"sp_other_warning_signs\"]).to.eql(parseInt(pm.environment.get(\"OtherWarningSign\")));\r",
 									"            // pm.expect(assessment_data[\"sp_internal_coping_skills\"]).to.eql(parseInt(pm.environment.get(\"internalSkill\")));\r",
