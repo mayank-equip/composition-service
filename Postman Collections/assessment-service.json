@@ -10859,7 +10859,7 @@
 									"            // pm.expect(jsonData.assessments[i].lastName).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            // pm.expect(jsonData.assessments[i].firstName).to.eql(pm.environment.get(\"patientLastName\"));\r",
 									"            // pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
-									"            // pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"SafetyPlan_assessment_responseExternalId\"));\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"SafetyPlan_assessment_responseExternalId\"));\r",
 									"        }\r",
 									"     }\r",
 									"});  \r",
