@@ -10710,7 +10710,7 @@
 					"response": []
 				},
 				{
-					"name": "SafetyPlan Copy",
+					"name": "SafetyPlan",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -10748,7 +10748,7 @@
 									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
 									"}\r",
 									"\r",
-									"\r",
+									"pm.environment.set(\"patientLanguage\", JSON.parse(pm.environment.get(\"patientLanguages\"))[0]);\r",
 									"pm.environment.set(\"SurveyPronouns\", JSON.parse(pm.environment.get(\"patientPronounsOnRecord\"))[0]);\r",
 									"pm.environment.set(\"SurveyPreferredContact\", JSON.parse(pm.environment.get(\"patientContactPreferences\"))[0]);\r",
 									"pm.environment.set(\"SurveyEthnicity\", JSON.parse(pm.environment.get(\"patientEthnicities\"))[0]);"
