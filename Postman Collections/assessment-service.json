@@ -10859,7 +10859,7 @@
 									"            pm.expect(assessment_data[\"sp_names_phones_supports\"][0][\"Name\"]).to.eql((pm.environment.get(\"Supportname\")));\r",
 									"            pm.expect(assessment_data[\"sp_names_phones_supports\"][0][\"Phone\"]).to.eql(parseInt(pm.environment.get(\"safetyPlanPatientPhone\")));\r",
 									"            pm.expect(assessment_data[\"sp_imminent_risk_plan\"]).to.eql(pm.environment.get(\"imminentrisk\"));\r",
-									"            // pm.expect(assessment_data[\"lastName\"]).to.eql(pm.environment.get(\"patientLastName\"));\r",
+									"            pm.expect(assessment_data[\"lastName\"]).to.eql(pm.environment.get(\"patientLastName\"));\r",
 									"            // pm.expect(assessment_data[\"firstName\"]).to.eql(pm.environment.get(\"patientFirstName\"));\r",
 									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
 									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"SafetyPlan_assessment_responseExternalId\"));\r",
