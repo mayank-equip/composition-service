@@ -11528,6 +11528,347 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Therapist_Intake",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"surveyName_TherapistIntake\", \"Therapist Intake\");\r",
+									"pm.environment.set(\"Status\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"TherapistIntake_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6d7f9734-1dc5-4920-b9da-3aebec8e8cba",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{Status}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{surveyName_TherapistIntake}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "Therapist_Intake Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify TherapistIntake Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"TherapistIntake_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);    \r",
+									"            pm.expect(assessment_data[\"therapistEDbehav\"][0][\"Column 1\"]).to.eql((pm.environment.get(\"EDBehavior\")));\r",
+									"            pm.expect(assessment_data[\"therapistEDbehav\"][0][\"Column 2\"]).to.eql((pm.environment.get(\"EDBehaviorFrequency\")));\r",
+									"            pm.expect(assessment_data[\"therapistdailycalories\"]).to.eql(parseInt(pm.environment.get(\"DailyCalories\")));\r",
+									"            pm.expect(assessment_data[\"therapistlimitedfoods\"]).to.eql((pm.environment.get(\"ConsumedFoods\")));\r",
+									"            pm.expect(assessment_data[\"therapistconcerns\"]).to.eql((pm.environment.get(\"OtherConcerns\")));\r",
+									"            pm.expect(assessment_data[\"therapistmood\"][0][\"Changes in or behaviors related to:\"]).to.eql((pm.environment.get(\"MoodChangeBehaviors\")));\r",
+									"            pm.expect(assessment_data[\"therapistmood\"][0][\"Historical or Current?\"]).to.eql((pm.environment.get(\"HistoricalSymptom\")));\r",
+									"            pm.expect(assessment_data[\"therapistanx\"][0][\"Changes in or behaviors related to:\"]).to.eql((pm.environment.get(\"TypeAnxiety\")));\r",
+									"            pm.expect(assessment_data[\"therapistfamilyhist\"]).to.eql([(pm.environment.get(\"TypeAnxiety\"))]);\r",
+									"            pm.expect(assessment_data[\"therapistfamhistmembers\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
+									"            pm.expect(assessment_data[\"therapistculturereligion\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
+									"            pm.expect(assessment_data[\"therapistsibnameage\"]).to.eql((pm.environment.get(\"TherapyIntake\")));\r",
+									"            pm.expect(assessment_data[\"therapistgrade\"]).to.eql(parseInt(pm.environment.get(\"currentGrade\")));\r",
+									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Appearance\"]).to.eql((pm.environment.get(\"MentalStatusAppearance\")));\r",
+									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Mood\"]).to.eql((pm.environment.get(\"MentalStatusMood\")));\r",
+									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Affect\"]).to.eql((pm.environment.get(\"MentalStatusEffect\")));\r",
+									"            pm.expect(assessment_data[\"therapistMSE\"][0][\"Other\"]).to.eql((pm.environment.get(\"MentalStatusOther\")));\r",
+									"            pm.expect(assessment_data[\"therapistProvisionalEDDiagnosis\"]).to.eql([(pm.environment.get(\"EatingDDiagnosis\"))]);\r",
+									"            pm.expect(assessment_data[\"therapistCo-occurringconditions\"]).to.eql([(pm.environment.get(\"CoOccuringConditions\"))]);\r",
+									"            pm.expect(assessment_data[\"therapistRisk\"]).to.eql((pm.environment.get(\"safetyRisk\")));\r",
+									"            pm.expect(assessment_data[\"currentPage\"]).to.eql((pm.environment.get(\"currentPage\")));\r",
+									"            pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"surveyName_TherapistIntake\"));\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"TherapistIntake_assessment_responseExternalId\"));\r",
+									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
+									"        }\r",
+									"     }\r",
+									"});  \r",
+									"     \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "18ad3290-6869-47dc-82cb-3bf018471aa1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Therapist_Intake Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"let moment = require('moment');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"\r",
+									"let age = ld.random(1, 100);\r",
+									"let dateCurrentWeight = moment().subtract(age, 'years').format('YYYY-MM-DD');\r",
+									"let dateCurrentHeight = moment().subtract(10, 'days').format('YYYY-MM-DD');\r",
+									"\r",
+									"let dateLastVitals = moment().subtract(15, 'days').format('YYYY-MM-DD');\r",
+									"let LMPPatients = moment().subtract(20, 'days').format('YYYY-MM-DD');\r",
+									"\r",
+									"let weekCare = [\"Week 4\", \"Week 16\"];\r",
+									"let dailyCalories = Math.floor(100 + Math.random() * 2500);\r",
+									"let currentGrade = Math.floor(1 + Math.random() * 10);\r",
+									"\r",
+									"\r",
+									"let DateIntake = moment().subtract(10, 'days').format('YYYY-MM-DD');\r",
+									"\r",
+									"let behaviorList = [\"Restricting\", \"Binge Eating\", \"Purging\", \"Exercise\", \"Diet pills, laxatives, diuretics, emetics\", \"Caffeine, water loading\", \"Weighing, body checking\", \"Pseudodysphagia (fear of choking\", \"Emetophobia (fear of vomiting)\", \"Selective eating\", \"Lack of interest in food\"];\r",
+									"\r",
+									"let behaviorFrequency = [\"1-2X per month\", \"1-2X per week\", \"3-4X per week\", \"1X per day\",\"Multiple times per day\",\"None\"];\r",
+									"\r",
+									"let MoodBehaviors = [\"Sleep\", \"Interest\", \"Guilt\", \"Energy\", \"Concentration\", \"Appetite\", \"Psychomotor Function\", \"Suicidal Ideation\", \"Mania\", \"Psychosis\"];\r",
+									"\r",
+									"let HistoricalSymptom = [\"Historical\",\"Current\"];\r",
+									" \r",
+									"let TypeAnxiety = [\"Social Phobia\", \"Separation Anxiety\", \"Generalized Anxiety\", \"OCD\",\"Panic Disorder with Agoraphobia\",\"Panic Disorder without Agoraphobia\", \"None\"];\r",
+									"\r",
+									"let TypeMood = [\"Social Phobia\", \"Separation Anxiety\", \"Generalized Anxiety\", \"OCD\",\"Panic Disorder with Agoraphobia\",\"Panic Disorder without Agoraphobia\", \"None\"];\r",
+									"\r",
+									"let CoOccuringConditions = [\"MDD\", \"GAD\", \"OCD\", \"PTSD\",\"Bipolar Disorder\", \"Panic Disorder\", \"Agoraphobia\", \"ASD\", \"ADHD\", \"None\"];\r",
+									"\r",
+									"let MentalStatusAppearance = [\"Neatly Groomed\", \"Disheveled\"];\r",
+									"\r",
+									"let MentalStatusMood = [\"Good\", \"Sad\", \"Angry\"];\r",
+									"\r",
+									"let MentalStatusEffect = [\"Euthymic\", \"Tearful\", \"Irritable\", \"Dysregulated\"];\r",
+									"\r",
+									"let MentalStatusOther = [\"+SI\", \"+HI\", \"+Paranoia\", \"+Mania\", \"+Hallucinations\"];\r",
+									"\r",
+									"let EatingDDiagnosis = [\"AN-R\", \"AN-BP\", \"ARFID\", \"BN\", \"BED\", \"OSFED/UFED\", \"None\"];\r",
+									"\r",
+									"let safetyRisk = [\"Low\", \"Medium\", \"High\", \"Imminent\"];\r",
+									"\r",
+									"pm.environment.set(\"weekofCare\", ld.sample(weekCare));\r",
+									"pm.environment.set(\"DailyCalories\", dailyCalories.toString());\r",
+									"pm.environment.set(\"MoodChangeBehaviors\", ld.sample(MoodBehaviors));\r",
+									"pm.environment.set(\"TypeAnxiety\", ld.sample(TypeAnxiety));\r",
+									"pm.environment.set(\"TypeMood\", ld.sample(TypeMood));\r",
+									"pm.environment.set(\"HistoricalSymptom\",ld.sample(HistoricalSymptom));\r",
+									"pm.environment.set(\"currentGrade\", currentGrade.toString());\r",
+									"pm.environment.set(\"CurrentMedications\", \"CurrentMedications\");\r",
+									"pm.environment.set(\"MentalStatusAppearance\", ld.sample(MentalStatusAppearance));\r",
+									"pm.environment.set(\"MentalStatusMood\", ld.sample(MentalStatusMood));\r",
+									"pm.environment.set(\"MentalStatusEffect\", ld.sample(MentalStatusEffect));\r",
+									"pm.environment.set(\"MentalStatusOther\", ld.sample(MentalStatusOther));\r",
+									"pm.environment.set(\"EDBehavior\", ld.sample(behaviorList));\r",
+									"pm.environment.set(\"EDBehaviorFrequency\", ld.sample(behaviorFrequency));\r",
+									"pm.environment.set(\"EatingDDiagnosis\", ld.sample(EatingDDiagnosis));\r",
+									"pm.environment.set(\"CoOccuringConditions\", ld.sample(CoOccuringConditions));\r",
+									"pm.environment.set(\"safetyRisk\", ld.sample(safetyRisk));\r",
+									"pm.environment.set(\"DateIntake\", DateIntake);\r",
+									"pm.environment.set(\"patientPhone\", \"19646765278\");\r",
+									"pm.environment.set(\"ConsumedFoods\", \"NoConsumedFoods\");\r",
+									"pm.environment.set(\"OtherConcerns\", \"OtherConcerns\");\r",
+									"pm.environment.set(\"ReasontobeAlive\", \"ReasontobeAlive\");\r",
+									"pm.environment.set(\"dateCurrentWeight\", dateCurrentWeight);\r",
+									"pm.environment.set(\"dateCurrentHeight\", dateCurrentHeight);\r",
+									"pm.environment.set(\"dateLastVitals\", dateLastVitals);\r",
+									"pm.environment.set(\"LMPPatients\", LMPPatients);\r",
+									"pm.environment.set(\"TherapyIntake\", \"TherapyIntake\");\r",
+									"pm.environment.set(\"imminentrisk\", \"imminentrisk\");\r",
+									"pm.environment.set(\"currentPage\", \"Therapist Intake\");\r",
+									"pm.environment.set(\"Pagenumber\", \"0\");\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", JSON.parse(pm.environment.get(\"patientPronounsOnRecord\"))[0]);\r",
+									"pm.environment.set(\"patientLanguage\", JSON.parse(pm.environment.get(\"patientLanguages\"))[0]);\r",
+									"pm.environment.set(\"SurveyPreferredContact\", JSON.parse(pm.environment.get(\"patientContactPreferences\"))[0]);\r",
+									"pm.environment.set(\"SurveyEthnicity\", JSON.parse(pm.environment.get(\"patientEthnicities\"))[0]);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "28779b6c-09f5-4dbb-bfb3-27b4e2a17e66",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jsonResults\": \"{\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientTags\\\":[],\\\"patientMail\\\":\\\"{{patientAddressLine1}}\\\",\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"patientPhone\\\":\\\"{{patientPhone}}\\\",\\\"intake_pt_mail_line_2\\\":\\\"{{patientAddressLine2}}\\\",\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"patientLanguages\\\":[\\\"{{patientLanguage}}\\\"],\\\"intake_is_pt_trans\\\":false,\\\"patientMailLine2\\\":\\\"{{patientAddressLine2}}\\\",\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"contacts\\\":[],\\\"intake_pt_preferred_healthcare_lang\\\":[\\\"{{patientLanguage}}\\\"],\\\"therapistEDbehav\\\":[{\\\"Column 1\\\":\\\"{{EDBehavior}}\\\",\\\"Column 2\\\":\\\"{{EDBehaviorFrequency}}\\\"},{}],\\\"therapistdailycalories\\\":{{DailyCalories}},\\\"therapistlimitedfoods\\\":\\\"{{ConsumedFoods}}\\\",\\\"therapistconcerns\\\":\\\"{{OtherConcerns}}\\\",\\\"therapistmood\\\":[{\\\"Changes in or behaviors related to:\\\":\\\"{{MoodChangeBehaviors}}\\\",\\\"Historical or Current?\\\":\\\"{{HistoricalSymptom}}\\\"},{}],\\\"therapistanx\\\":[{\\\"Changes in or behaviors related to:\\\":\\\"{{TypeAnxiety}}\\\",\\\"Historical or Current?\\\":\\\"{{HistoricalSymptom}}\\\"},{}],\\\"therapistfamilyhist\\\":[\\\"{{TypeAnxiety}}\\\"],\\\"therapistfamhistmembers\\\":\\\"{{TherapyIntake}}\\\",\\\"therapistculturereligion\\\":\\\"{{TherapyIntake}}\\\",\\\"therapistsiblings\\\":true,\\\"therapistsibnameage\\\":\\\"{{TherapyIntake}}\\\",\\\"therapistgrade\\\":{{currentGrade}},\\\"therapist504IEP\\\":\\\"{{TherapyIntake}}\\\",\\\"therapistMSE\\\":[{\\\"Appearance\\\":\\\"{{MentalStatusAppearance}}\\\",\\\"Mood\\\":\\\"{{MentalStatusMood}}\\\",\\\"Affect\\\":\\\"{{MentalStatusEffect}}\\\",\\\"Other\\\":\\\"{{MentalStatusOther}}\\\"},{}],\\\"therapistProvisionalEDDiagnosis\\\":[\\\"{{EatingDDiagnosis}}\\\"],\\\"therapistCo-occurringconditions\\\":[\\\"{{CoOccuringConditions}}\\\"],\\\"therapistRisk\\\":\\\"{{safetyRisk}}\\\",\\\"therapistSafetyPlan\\\":true,\\\"therapistpsycheval\\\":true,\\\"therapistFBTsessions\\\":true,\\\"therapistconfidentiality\\\":true,\\\"therapistIntakeCertification\\\":{\\\"Name\\\":\\\"{{TherapyIntake}}\\\",\\\"Credentials\\\":\\\"{{TherapyIntake}}\\\",\\\"Date of Intake\\\":\\\"{{DateIntake}}\\\"},\\\"currentPage\\\":\\\"{{currentPage}}\\\",\\\"currentPageNo\\\":{{Pagenumber}}}\",\r\n    \"responseExternalId\": \"{{TherapistIntake_assessment_responseExternalId}}\",\r\n    \"status\": \"{{Complete}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{TherapistIntake_assessment_responseExternalId}}"
+					},
+					"response": []
 				}
 			],
 			"id": "96d30238-1325-4471-a316-491287586baa"
