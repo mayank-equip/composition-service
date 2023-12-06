@@ -11873,6 +11873,282 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "DUDIT",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveyDudit\", \"DUDIT\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"Dudit_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5ccf21ba-58b3-4238-b788-6fc7088c8f03",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkxNMlFoclFYd3BGUmtZa01UQkVCMyJ9.eyJodHRwczovL2FwcC5lcXVpcC5oZWFsdGgvcm9sZXMiOlsiYWRtaW46cm9sZTptYW5hZ2UtY29udGVudCIsImFkbWluOnJvbGU6bWFuYWdlLXVzZXJzIiwibWF1ZDpyb2xlOmdlbmVyYWwtYWNjZXNzIl0sImh0dHBzOi8vYXBwLmVxdWlwLmhlYWx0aC9wZXJtaXNzaW9ucyI6WyJhZG1pbjphY2Nlc3M6YXBwIiwibWF1ZDphY2Nlc3M6YXBwIiwibWF1ZDpwZXJtaXNzaW9uOmFkZC1wYXRpZW50IiwibWF1ZDpwZXJtaXNzaW9uOmF2YWlsYWJpbGl0eSIsIm1hdWQ6cGVybWlzc2lvbjpjYXJlLXBsYW4iLCJtYXVkOnBlcm1pc3Npb246cGF0aWVudC1kYXNoYm9hcmQiLCJtYXVkOnBlcm1pc3Npb246cGF0aWVudC1zZWFyY2giLCJtYXVkOnBlcm1pc3Npb246c2NoZWR1bGUtcHJveHkiXSwiaHR0cHM6Ly9hcHAuZXF1aXAuaGVhbHRoL2V4dGVybmFsX3VzZXJfaWQiOiJjNjQ0YmEwMC05MjcxLTRmM2UtYmYyYy1mM2VjNGEwZmFmY2EiLCJpc3MiOiJodHRwczovL2VxdWlwLXFhLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2MWY0MmU2NzI1MzM3MjAwNzAzYzFlMTkiLCJhdWQiOlsiaHR0cHM6Ly9lcXVpcC1xYS51cy5hdXRoMC5jb20vYXBpL3YyLyIsImh0dHBzOi8vZXF1aXAtcWEudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY5OTI3MjIyNSwiZXhwIjoxNzAxODY0MjI1LCJhenAiOiJvY3RrNzRzUlBmVm03ekp6MzE0Y01NekZIbkdPM0IycyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MifQ.syCGwZT5ooxaexjZHh6oZtAXfkav3RzDZJrWsBi7SycDyWovLSONQ4c9F5TAqpbyaxD1NxoGo_OyGtxsA03lSYxmCjSgyvW-nOigwut1fo1vhfzgKFgjPaUTLaFT1ZvVAVnMtHooXz9FXx8FkMq6ctRy6hsqBjHxwoC7_6oyR_PvhIafwh3Bh9lgaB28lQH_7K47Y1g0bJGxs05STzhg0CSxut84Tc2pkzRoRlSZEIFkfI1zuTN2FU-HQNBoQOTkGOq1p4zd2SKC-5AHxxohVlv3-vJ8j4r6eSZVKCVYHe7Mx7HcZGs8UDAVxEr8vFuKBe-aV_bk6A-whNxd4IBt3w"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{SurveyDudit}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "DUDIT",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"    \r",
+									"}\r",
+									"let duditdrugs = [ \"0\",\"1\",\"2\",\"3\",\"4\"];\r",
+									"\r",
+									"pm.environment.set(\"drugmultipletypes\", ld.sample(duditdrugs));\r",
+									"pm.environment.set(\"drugusefrq\", ld.sample(duditdrugs));\r",
+									"pm.environment.set(\"Influence\", ld.sample(duditdrugs));\r",
+									"pm.environment.set(\"longing\", ld.sample(duditdrugs));\r",
+									"pm.environment.set(\"unabletostop\", ld.sample(duditdrugs));\r",
+									"pm.environment.set(\"Neglectres\", ld.sample(duditdrugs));\r",
+									"pm.environment.set(\"Usetofunction\", ld.sample(duditdrugs));\r",
+									"pm.environment.set(\"Druguseguilt\", ld.sample(duditdrugs));\r",
+									"\r",
+									"let duditothers = [ \"0\",\"1\",\"2\"];\r",
+									"pm.environment.set(\"hurtselfothers\", ld.sample(duditothers));\r",
+									"pm.environment.set(\"concernfromothers\", ld.sample(duditothers));\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "82891295-1f32-4e58-8954-a22c49d12d19",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkxNMlFoclFYd3BGUmtZa01UQkVCMyJ9.eyJodHRwczovL2FwcC5lcXVpcC5oZWFsdGgvcm9sZXMiOlsiYWRtaW46cm9sZTptYW5hZ2UtY29udGVudCIsImFkbWluOnJvbGU6bWFuYWdlLXVzZXJzIiwibWF1ZDpyb2xlOmdlbmVyYWwtYWNjZXNzIl0sImh0dHBzOi8vYXBwLmVxdWlwLmhlYWx0aC9wZXJtaXNzaW9ucyI6WyJhZG1pbjphY2Nlc3M6YXBwIiwibWF1ZDphY2Nlc3M6YXBwIiwibWF1ZDpwZXJtaXNzaW9uOmFkZC1wYXRpZW50IiwibWF1ZDpwZXJtaXNzaW9uOmF2YWlsYWJpbGl0eSIsIm1hdWQ6cGVybWlzc2lvbjpjYXJlLXBsYW4iLCJtYXVkOnBlcm1pc3Npb246cGF0aWVudC1kYXNoYm9hcmQiLCJtYXVkOnBlcm1pc3Npb246cGF0aWVudC1zZWFyY2giLCJtYXVkOnBlcm1pc3Npb246c2NoZWR1bGUtcHJveHkiXSwiaHR0cHM6Ly9hcHAuZXF1aXAuaGVhbHRoL2V4dGVybmFsX3VzZXJfaWQiOiJjNjQ0YmEwMC05MjcxLTRmM2UtYmYyYy1mM2VjNGEwZmFmY2EiLCJpc3MiOiJodHRwczovL2VxdWlwLXFhLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2MWY0MmU2NzI1MzM3MjAwNzAzYzFlMTkiLCJhdWQiOlsiaHR0cHM6Ly9lcXVpcC1xYS51cy5hdXRoMC5jb20vYXBpL3YyLyIsImh0dHBzOi8vZXF1aXAtcWEudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY5OTM1MTg3NCwiZXhwIjoxNzAxOTQzODc0LCJhenAiOiJvY3RrNzRzUlBmVm03ekp6MzE0Y01NekZIbkdPM0IycyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MifQ.BIt1P7_xA-AL_jC8cAVtShrqRTiVu3TL3opkrO4MUUV7zBB1cF-_uwUB-93JAdg1OuVZ-VxRccUrVT9_84Jo3_qh131lOtwVA1gHHWdLsYN1SolA0buAeYGsNoJFEnfzt1sAJWmydbsiCe8dGPui1oZi_FuMfS4IWH2ZgmDJLX8ObOkxeEMlockWsQAhDy-A55MsC-E8SbTPAMwQczMODxkn2dtww_k0p8c048no2e_w6_uISebKK3Vcxri7GJSa9lfbA0UdoDMiVbjoZzcrduVVhTKZuiJgTq6-N47wGTJjnbz-AZlaK2vO7jute2YlSLVcinh3N9zVsgSmQ1Fhjg"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n       \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"dudit_drug_use_occurance\\\":\\\"2\\\",\\\"dudit_drug_use_multiple_types\\\":\\\"{{drugmultipletypes}}\\\",\\\"dudit_drug_use_frequency\\\":\\\"{{drugusefrq}}\\\",\\\"dudit_influence\\\":\\\"{{Influence}}\\\",\\\"dudit_longing\\\":\\\"{{longing}}\\\",\\\"dudit_unable_to_stop\\\":\\\"{{unabletostop}}\\\",\\\"dudit_neglect_responsibilities\\\":\\\"{{Neglectres}}\\\",\\\"dudit_need_to_use_to_function\\\":\\\"{{Usetofunction}}\\\",\\\"dudit_drug_use_guilt\\\":\\\"{{Druguseguilt}}\\\",\\\"dudit_hurt_self_others\\\":\\\"{{hurtselfothers}}\\\",\\\"dudit_concern_from_others\\\":\\\"{{concernfromothers}}\\\",\\\"currentPage\\\":\\\"Drug Use Disorders Identification Test (DUDIT)\\\",\\\"currentPageNo\\\":0}\",\r\n       \"responseExternalId\": \"{{Dudit_assessment_responseExternalId}}\",\r\n       \"status\": \"{{Complete}}\",\r\n       \"submittedSource\": \"{{submittedSource}}\",\r\n       \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n       \"submittedUserId\": \"{{providerUserId}}\",\r\n       \"submittedUserLastName\": \"{{providerLastname}}\",\r\n       \"toUserEmail\": \"{{patientEmail}}\"\r\n   }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{Dudit_assessment_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "DUDIT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"Dudit_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"Dudit_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify dudit Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"Dudit_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);\r",
+									"            \r",
+									"             pm.expect(jsonData.assessments[i].surveyName).to.eql(pm.environment.get(\"SurveyDudit\"));\r",
+									"\r",
+									"              pm.expect(assessment_data[\"dudit_drug_use_multiple_types\"]).to.eql(pm.environment.get(\"drugmultipletypes\"));\r",
+									"              pm.expect(assessment_data[\"dudit_drug_use_frequency\"]).to.eql(pm.environment.get(\"drugusefrq\"));\r",
+									"              pm.expect(assessment_data[\"dudit_influence\"]).to.eql(pm.environment.get(\"Influence\"));\r",
+									"              pm.expect(assessment_data[\"dudit_longing\"]).to.eql(pm.environment.get(\"longing\"));\r",
+									"              pm.expect(assessment_data[\"dudit_unable_to_stop\"]).to.eql(pm.environment.get(\"unabletostop\"));\r",
+									"              pm.expect(assessment_data[\"dudit_neglect_responsibilities\"]).to.eql(pm.environment.get(\"Neglectres\"));\r",
+									"              pm.expect(assessment_data[\"dudit_need_to_use_to_function\"]).to.eql(pm.environment.get(\"Usetofunction\"));\r",
+									"              pm.expect(assessment_data[\"dudit_drug_use_guilt\"]).to.eql(pm.environment.get(\"Druguseguilt\"));\r",
+									"              pm.expect(assessment_data[\"dudit_hurt_self_others\"]).to.eql(pm.environment.get(\"hurtselfothers\"));\r",
+									"              pm.expect(assessment_data[\"dudit_concern_from_others\"]).to.eql(pm.environment.get(\"concernfromothers\"));\r",
+									"  \r",
+									"            pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));\r",
+									"            pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"Dudit_assessment_responseExternalId\"));\r",
+									"          }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "22cf5030-a5ee-4710-8c25-a285fac1e4e2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "96d30238-1325-4471-a316-491287586baa"
