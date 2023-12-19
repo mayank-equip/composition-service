@@ -9781,7 +9781,7 @@
 			"name": "VerifyAssessments_Clinician",
 			"item": [
 				{
-					"name": "Add Patient Copy 2",
+					"name": "Add Patient",
 					"event": [
 						{
 							"listen": "test",
