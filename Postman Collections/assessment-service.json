@@ -5944,7 +5944,7 @@
 							"script": {
 								"id": "901c56f9-ba7c-4b10-a53f-d1edb069bcb0",
 								"exec": [
-									"pm.environment.set(\"TagName\", \"EQ_APP_TREAT\");"
+									"pm.environment.set(\"TagName\", \"Equip Web App for Treatment\");"
 								],
 								"type": "text/javascript"
 							}
@@ -5965,7 +5965,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tags\":[\"EQ_APP_TREAT\"]\n}",
+							"raw": "{\n    \"tags\":[\"Equip Web App for Treatment\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
