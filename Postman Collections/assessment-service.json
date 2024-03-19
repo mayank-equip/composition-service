@@ -5965,7 +5965,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tags\":[\"EQ_APP_TREAT\"]\n}",
+							"raw": "{\n    \"tags\":[\"Equip Web App for Treatment\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
