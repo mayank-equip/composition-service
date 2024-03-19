@@ -12551,6 +12551,318 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "AIMS",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "85e3fb0e-f038-4fcb-a7d2-b6e55c8a661a",
+								"exec": [
+									"const submitted_source_list = ['Web'];",
+									"",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);",
+									"",
+									"pm.environment.set(\"userPhone\", \"+12073444381\");",
+									"if (pm.environment.name === \"dev\") {",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
+									"    pm.environment.set(\"providerLastname\", \"User\");",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");",
+									"} else if (pm.environment.name === \"qa\") {",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
+									"    pm.environment.set(\"providerLastname\", \"User\");",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");",
+									"}",
+									"pm.environment.set(\"SurveynameAIMS\", \"AIMS\");",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "aaaeb827-364c-4224-9604-e1347a83d486",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verify responseExternalId is generated\", function () {",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.environment.set(\"AIMSassessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "942b1e83-78fe-4bdf-9720-1b5f3a108356",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"{{NewInstance}}\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\",\n    \"submittedUserId\": \"{{providerUserId}}\",\n    \"surveyName\": \"{{SurveynameAIMS}}\",\n    \"toUserEmail\": \"{{patientEmail}}\",\n    \"toUserFirstName\": \"{{patientFirstName}}\",\n    \"toUserLastName\": \"{{patientLastName}}\",\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\n    \"userId\": \"{{patientId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "Update AIMS",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e5cc84a1-d326-4bb0-ad47-9da54e316ece",
+								"exec": [
+									"let ld = require('lodash');",
+									"let moment = require('moment');",
+									"const submitted_source_list = ['Web'];",
+									"",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);",
+									"pm.environment.set(\"assessmentStatus\", \"Done\");",
+									"",
+									"let AIMSQuestions = [\"0\",\"1\",\"2\",\"3\",\"4\"];",
+									"for(i=3; i<=10; i++){",
+									"    pm.environment.set(\"AIMS_Value_\"+i,ld.sample(AIMSQuestions));",
+									"}",
+									"let AIMSFlagQuestions =[\"true\",\"false\"];",
+									"for(i=11; i<=14; i++){",
+									"    pm.environment.set(\"AIMS_Value_\"+i,ld.sample(AIMSFlagQuestions));",
+									"}",
+									"let Aims_code = [\"0\",\"1\",\"2\",\"3\",\"4\"];",
+									"let Aims_value= [\"1\",\"2\",\"3\",\"4\"];",
+									"",
+									"pm.environment.set(\"userPhone\", \"+12073444381\");",
+									"if (pm.environment.name === \"dev\") {",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
+									"    pm.environment.set(\"providerLastname\", \"User\");",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");",
+									"} else if (pm.environment.name === \"qa\") {",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");",
+									"    pm.environment.set(\"providerLastname\", \"User\");",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");",
+									"}",
+									"",
+									"pm.environment.set(\"AIMS_Value_1\", ld.sample(Aims_code));",
+									"pm.environment.set(\"AIMS_Value_2\", ld.sample(Aims_value));",
+									"pm.environment.set(\"currentPage\", \"Abnormal Involuntary Movements Scale\");",
+									"pm.environment.set(\"Pagenumber\", \"0\");",
+									"pm.environment.set(\"Complete\", \"Done\");",
+									"",
+									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());",
+									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());",
+									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1cef5085-bad9-400a-8b58-946d0f74443f",
+								"exec": [
+									"var jsonData = pm.response.text();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify response message\", function () {",
+									"    pm.expect(jsonData).to.equal(\"Survey response saved!\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "204d8cb6-f0dd-44f0-a3f9-4c76b68fa62f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientPronouns\\\":[\\\"{{SurveyPronouns}}\\\"],\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{userPhone}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"aims_1\\\":[{\\\"Code\\\":\\\"{{AIMS_Value_1}}\\\"}],\\\"aims_2\\\":[{\\\"Code\\\":\\\"{{AIMS_Value_2}}\\\"}],\\\"aims_3\\\":[{\\\"Code\\\":\\\"{{AIMS_Value_3}}\\\"}],\\\"aims_4\\\":[{\\\"Code\\\":\\\"{{AIMS_Value_4}}\\\"}],\\\"aims_5\\\":[{\\\"Code\\\":\\\"{{AIMS_Value_5}}\\\"}],\\\"aims_6\\\":[{\\\"Code\\\":\\\"{{AIMS_Value_6}}\\\"}],\\\"aims_7\\\":[{\\\"Code\\\":\\\"{{AIMS_Value_7}}\\\"}],\\\"aims_8\\\":\\\"{{AIMS_Value_8}}\\\",\\\"aims_9\\\":\\\"{{AIMS_Value_9}}\\\",\\\"aims_10\\\":\\\"{{AIMS_Value_10}}\\\",\\\"aims_11\\\":\\\"{{AIMS_Value_11}}\\\",\\\"aims_12\\\":\\\"{{AIMS_Value_12}}\\\",\\\"aims_13\\\":\\\"{{AIMS_Value_13}}\\\",\\\"aims_14\\\":\\\"{{AIMS_Value_14}}\\\",\\\"currentPage\\\":\\\"{{currentPage}}\\\",\\\"currentPageNo\\\":\\\"{{Pagenumber}}\\\"}\",\n\n    \"responseExternalId\": \"{{AIMSassessment_responseExternalId}}\",\n    \"status\": \"{{Complete}}\",\n    \"submittedSource\": \"{{submittedSource}}\",\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\n    \"submittedUserId\": \"{{providerUserId}}\",\n    \"submittedUserLastName\": \"{{providerLastname}}\",\n    \"toUserEmail\": \"{{patientEmail}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{AIMSassessment_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get AIMS",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "85e3fb0e-f038-4fcb-a7d2-b6e55c8a661a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "aaaeb827-364c-4224-9604-e1347a83d486",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 4000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);",
+									"});",
+									"",
+									"pm.test(\"Verify assessment updated date\", function () {",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"AIMSassessment_responseExternalId\")){",
+									"    var d = new Date();",
+									"    d.setDate(d.getDate());",
+									"    d = d.toISOString().slice(0, 10);",
+									"    d = d.split(\"T\")[0];",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);",
+									"        }}",
+									"});",
+									"",
+									"pm.test(\"Verify assessment created date\", function () {",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"AIMSassessment_responseExternalId\")){",
+									"    var d = new Date();",
+									"    d.setDate(d.getDate());",
+									"    d = d.toISOString().slice(0, 10);",
+									"    d = d.split(\"T\")[0];",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);",
+									"        }",
+									"     }",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify AIMS Assessment Response\", function(){",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"AIMSassessment_responseExternalId\")){",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);",
+									"           pm.expect(assessment_data[\"aims_1\"][0][\"Code\"]).to.eql(pm.environment.get(\"AIMS_Value_1\"));",
+									"           pm.expect(assessment_data[\"aims_2\"][0][\"Code\"]).to.eql(pm.environment.get(\"AIMS_Value_2\"));",
+									"           pm.expect(assessment_data[\"aims_3\"][0][\"Code\"]).to.eql(pm.environment.get(\"AIMS_Value_3\"));",
+									"           pm.expect(assessment_data[\"aims_4\"][0][\"Code\"]).to.eql(pm.environment.get(\"AIMS_Value_4\"));",
+									"           pm.expect(assessment_data[\"aims_5\"][0][\"Code\"]).to.eql(pm.environment.get(\"AIMS_Value_5\"));",
+									"           pm.expect(assessment_data[\"aims_6\"][0][\"Code\"]).to.eql(pm.environment.get(\"AIMS_Value_6\"));",
+									"           pm.expect(assessment_data[\"aims_7\"][0][\"Code\"]).to.eql(pm.environment.get(\"AIMS_Value_7\"));",
+									"           pm.expect(assessment_data[\"aims_8\"]).to.eql(pm.environment.get(\"AIMS_Value_8\"));",
+									"           pm.expect(assessment_data[\"aims_9\"]).to.eql(pm.environment.get(\"AIMS_Value_9\"));",
+									"           pm.expect(assessment_data[\"aims_10\"]).to.eql(pm.environment.get(\"AIMS_Value_10\")); ",
+									"           pm.expect(assessment_data[\"aims_11\"]).to.eql(pm.environment.get(\"AIMS_Value_11\"));  ",
+									"           pm.expect(assessment_data[\"aims_12\"]).to.eql(pm.environment.get(\"AIMS_Value_12\")); ",
+									"           pm.expect(assessment_data[\"aims_13\"]).to.eql(pm.environment.get(\"AIMS_Value_13\"));",
+									"           pm.expect(assessment_data[\"aims_14\"]).to.eql(pm.environment.get(\"AIMS_Value_14\"));",
+									"",
+									"           pm.expect(jsonData.assessments[i].submittedUserName).to.eql(pm.environment.get(\"providerFirstname\")+\" \"+pm.environment.get(\"providerLastname\"));",
+									"",
+									"             pm.expect(jsonData.assessments[i].responseExternalId).to.eql(pm.environment.get(\"AIMSassessment_responseExternalId\"));",
+									"",
+									"",
+									"            ",
+									"          }",
+									"     }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "77f24a65-0233-45ed-becc-e5a6ac779eba",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "surveyName::{{survey_name}}%26userId::{{patientId}}",
+									"disabled": true
+								},
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "96d30238-1325-4471-a316-491287586baa"
