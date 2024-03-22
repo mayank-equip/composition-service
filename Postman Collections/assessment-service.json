@@ -12865,7 +12865,7 @@
 					"response": []
 				},
 				{
-					"name": "Discharge summary Copy",
+					"name": "Discharge summary",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -12945,7 +12945,7 @@
 					"response": []
 				},
 				{
-					"name": "Discharge summary Copy",
+					"name": "Discharge summary",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -13048,7 +13048,7 @@
 					"response": []
 				},
 				{
-					"name": "Discharge summary Copy",
+					"name": "Discharge summary",
 					"event": [
 						{
 							"listen": "test",
@@ -13160,7 +13160,7 @@
 					"response": []
 				},
 				{
-					"name": "NIAAA/BSTAD Copy",
+					"name": "NIAAA/BSTAD",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -13242,7 +13242,7 @@
 					"response": []
 				},
 				{
-					"name": "NIAAA/BSTAD Copy",
+					"name": "NIAAA/BSTAD",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -13343,7 +13343,7 @@
 					"response": []
 				},
 				{
-					"name": "NIAAA/BSTAD Copy",
+					"name": "NIAAA/BSTAD",
 					"event": [
 						{
 							"listen": "test",
