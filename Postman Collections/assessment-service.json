@@ -13158,6 +13158,288 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "NIAAA/BSTAD Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"SurveyNIAA_BSTAD\", \"NIAAA/BSTAD\");\r",
+									"pm.environment.set(\"NewInstance\", \"New\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify responseExternalId is generated\", function () {\r",
+									"    pm.expect(jsonData.responseExternalId).length.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"NIAA_BSTAD_assessment_responseExternalId\", jsonData.responseExternalId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "988de5ba-83d3-4633-90a2-1abce347ce8c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"{{NewInstance}}\",\r\n    \"submittedSource\": \"{{submittedSource}}\",\r\n    \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n    \"submittedUserId\": \"{{providerUserId}}\",\r\n    \"submittedUserLastName\": \"{{providerLastname}}\",\r\n    \"surveyName\": \"{{SurveyNIAA_BSTAD}}\",\r\n    \"toUserEmail\": \"{{patientEmail}}\",\r\n    \"toUserFirstName\": \"{{patientFirstName}}\",\r\n    \"toUserLastName\": \"{{patientLastName}}\",\r\n    \"toUserPhone\": \"{{patientPhoneNumber}}\",\r\n    \"userId\": \"{{patientId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments"
+					},
+					"response": []
+				},
+				{
+					"name": "NIAAA/BSTAD Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27a553e6-8afe-4882-808d-4d4f501eaf3d",
+								"exec": [
+									"let ld = require('lodash');\r",
+									"const submitted_source_list = ['Web'];\r",
+									"\r",
+									"pm.environment.set(\"submittedSource\", submitted_source_list[Math.floor(Math.random() * submitted_source_list.length)]);\r",
+									"pm.environment.set(\"Complete\", \"Done\");\r",
+									"let Days = Math.floor(1 + Math.random() * 7);\r",
+									"\r",
+									"let bstad_substanceTypes = [\"Cocaine or Crack\",\"Heroin\"];\r",
+									"let bstad_medicationTypes = [\"Prescription pain relievers (e.g., morphine, percocet, vicodin, oxycontin, dilaudid, methadone, buprenorphine, etc).\"];\r",
+									"\r",
+									"\r",
+									"if (pm.environment.name === \"dev\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"037f80e7-621e-4444-bb80-a5346bb0893e\");\r",
+									"} else if (pm.environment.name === \"qa\") {\r",
+									"    pm.environment.set(\"providerFirstname\", \"QA Automation\");\r",
+									"    pm.environment.set(\"providerLastname\", \"User\");\r",
+									"    pm.environment.set(\"providerUserId\", \"c644ba00-9271-4f3e-bf2c-f3ec4a0fafca\");\r",
+									"    \r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"pt_dob\", \"2009-02-01\");\r",
+									"pm.environment.set(\"tobacco_use\", Days.toString());\r",
+									"pm.environment.set(\"marijuana_use\", Days.toString());\r",
+									"pm.environment.set(\"substance_types\",ld.sample(bstad_substanceTypes));\r",
+									"pm.environment.set(\"medication_types\",ld.sample(bstad_medicationTypes));\r",
+									"pm.environment.set(\"cocaine_use\", Days.toString());\r",
+									"pm.environment.set(\"meds_use\", Days.toString());\r",
+									"\r",
+									"let CraftFlagQuestions =[\"Yes\",\"No\"];\r",
+									"for(i=11; i<=16; i++){\r",
+									"    pm.environment.set(\"Craft_Value_\"+i,ld.sample(CraftFlagQuestions));\r",
+									"}\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"SurveyPronouns\", ((pm.environment.get(\"patientPronounsOnRecord\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyPreferredContact\", ((pm.environment.get(\"patientContactPreferences\"))[0]).toString());\r",
+									"pm.environment.set(\"SurveyEthnicity\", ((pm.environment.get(\"patientEthnicities\"))[0]).toString());\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "236263ae-1d2d-4f7b-ac14-f381c07dcf86",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response is saved\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.eql(\"Survey response saved!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "515cbf12-9cb3-47cb-af7d-09a1716411f5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n       \"jsonResults\": \"{\\\"firstName\\\":\\\"{{patientFirstName}}\\\",\\\"lastName\\\":\\\"{{patientLastName}}\\\",\\\"chosenName\\\":\\\"{{patientChosenName}}\\\",\\\"patientDOB\\\":\\\"{{patientDateOfBirth}}\\\",\\\"assignedGenderAtBirth\\\":\\\"{{patientSex}}\\\",\\\"patientGender\\\":\\\"{{patientGenderOnRecord}}\\\",\\\"patientEthnicity\\\":[\\\"{{SurveyEthnicity}}}}\\\"],\\\"patientEmail\\\":\\\"{{patientEmail}}\\\",\\\"patientPhone\\\":\\\"{{patientPhoneNumber}}\\\",\\\"patientPreferredContact\\\":[\\\"{{SurveyPreferredContact}}\\\"],\\\"patientMail\\\":\\\"{{patientAddressLine1}}, {{patientAddressLine2}}\\\",\\\"patientCity\\\":\\\"{{patientCity}}\\\",\\\"patientState\\\":\\\"{{patientState}}\\\",\\\"patientZipcode\\\":\\\"{{patientZip}}\\\",\\\"contacts\\\":[],\\\"patientTags\\\":[],\\\"niaaa_pt_dob\\\":\\\"{{pt_dob}}\\\",\\\"niaaa_friends_drinking_presence\\\":true,\\\"niaaa_pt_drinking_presence\\\":false,\\\"niaaa_pt_other_substances_presence\\\":true,\\\"bstad_tobacco_use\\\":\\\"{{tobacco_use}}\\\",\\\"bstad_marijuana_use\\\":\\\"{{marijuana_use}}\\\",\\\"bstad_substance_types\\\":[\\\"{{substance_types}}\\\"],\\\"bstad_medication_types\\\":[\\\"{{medication_types}}\\\"],\\\"bstad_cocaine_use\\\":\\\"{{cocaine_use}}\\\",\\\"bstad_pain_meds_use\\\":\\\"{{meds_use}}\\\",\\\"crafft_oui_presence\\\":\\\"{{Craft_Value_1}}\\\",\\\"crafft_use_to_relax_feel_better_fit_in\\\":\\\"{{Craft_Value_2}}\\\",\\\"crafft_use_alone\\\":\\\"{{Craft_Value_3}}\\\",\\\"crafft_forget_things\\\":\\\"{{Craft_Value_4}}\\\",\\\"crafft_family_friends_concern\\\":\\\"{{Craft_Value_5}}\\\",\\\"crafft_trouble_presence\\\":\\\"{{Craft_Value_6}}\\\",\\\"currentPage\\\":\\\"NIAAA/BSTAD\\\",\\\"currentPageNo\\\":0}\",\r\n       \"responseExternalId\": \"{{NIAA_BSTAD_assessment_responseExternalId}}\",\r\n       \"status\": \"{{Complete}}\",\r\n       \"submittedSource\": \"{{submittedSource}}\",\r\n       \"submittedUserFirstName\": \"{{providerFirstname}}\",\r\n       \"submittedUserId\": \"{{providerUserId}}\",\r\n       \"submittedUserLastName\": \"{{providerLastname}}\",\r\n       \"toUserEmail\": \"{{patientEmail}}\"\r\n   }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{host}}/assessments/{{NIAA_BSTAD_assessment_responseExternalId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "NIAAA/BSTAD Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31ec692a-f032-46f5-888b-f609f2e2dad1",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 4000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment updated date\", function () {\r",
+									"    for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"NIAA_BSTAD_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].updatedDate).to.contains(d);\r",
+									"        }}\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify assessment created date\", function () {\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"NIAA_BSTAD_assessment_responseExternalId\")){\r",
+									"    var d = new Date();\r",
+									"    d.setDate(d.getDate());\r",
+									"    d = d.toISOString().slice(0, 10);\r",
+									"    d = d.split(\"T\")[0];\r",
+									"    pm.expect(jsonData.assessments[i].createdDate).to.contains(d);\r",
+									"        }\r",
+									"     }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify AIMS Assessment Response\", function(){\r",
+									"     for (i = 0; i < jsonData.assessments.length; i++) {\r",
+									"        if(jsonData.assessments[i].responseExternalId==pm.environment.get(\"NIAA_BSTAD_assessment_responseExternalId\")){\r",
+									"            let assessment_data = JSON.parse(jsonData.assessments[i].jsonResults);\r",
+									"            \r",
+									"           pm.expect(assessment_data[\"bstad_tobacco_use\"]).to.eql(pm.environment.get(\"tobacco_use\"));\r",
+									"           pm.expect(assessment_data[\"bstad_marijuana_use\"]).to.eql(pm.environment.get(\"marijuana_use\"));\r",
+									"           pm.expect(assessment_data[\"substance_types\"]).to.eql(pm.environment.get(\"bstad_substance_types\")); \r",
+									"           pm.expect(assessment_data[\"medication_types\"]).to.eql(pm.environment.get(\"bstad_medication_types\"));  \r",
+									"           pm.expect(assessment_data[\"bstad_cocaine_use\"]).to.eql(pm.environment.get(\"cocaine_use\")); \r",
+									"           pm.expect(assessment_data[\"bstad_pain_meds_use\"]).to.eql(pm.environment.get(\"meds_use\"));\r",
+									"           pm.expect(assessment_data[\"crafft_oui_presence\"]).to.eql(pm.environment.get(\"Craft_Value_1\"));\r",
+									"           pm.expect(assessment_data[\"crafft_use_to_relax_feel_better_fit_in\"]).to.eql(pm.environment.get(\"Craft_Value_2\"));\r",
+									"           pm.expect(assessment_data[\"crafft_use_alone\"]).to.eql(pm.environment.get(\"Craft_Value_3\"));\r",
+									"           pm.expect(assessment_data[\"crafft_forget_things\"]).to.eql(pm.environment.get(\"Craft_Value_4\"));\r",
+									"           pm.expect(assessment_data[\"crafft_family_friends_concern\"]).to.eql(pm.environment.get(\"Craft_Value_5\"));\r",
+									"           pm.expect(assessment_data[\"crafft_trouble_presence\"]).to.eql(pm.environment.get(\"Craft_Value_6\"));\r",
+									"                      \r",
+									"          }\r",
+									"     }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "8ea3c51e-725b-4ac9-a2b3-b166e9f3553f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{test-token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/assessments?filter-by=userId::{{patientId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"assessments"
+							],
+							"query": [
+								{
+									"key": "filter-by",
+									"value": "userId::{{patientId}}"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "96d30238-1325-4471-a316-491287586baa"
