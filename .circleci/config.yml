@@ -1,24 +1,32 @@
 version: 2.1
 
-working_directory: ~/project
-parameters:
-  environment:
-    type: string
-    default: DEV
-    description: "Environment to run to"
-  service:
-    type: string
-    default: NA
-    description: "Service to run"
-steps:
-  - checkout
-  - newman/newman-run:
-      collection: https://api.getpostman.com/collections/${COMPOSITION_COLLECTION_UID}?apikey=${POSTMAN_API_KEY}
-      environment: https://api.getpostman.com/environments/${DEV_ENV_UID}?apikey=${POSTMAN_API_KEY}
-      additional-options: --ignore-redirects -r cli,junit --reporter-junit-export xml-file-reports
-      context:
-        - automation
-  - store_artifacts:
-      path: ~/project/newman
-  - store_test_results:
-      path: test-results
+orbs:
+  node: circleci/node@5.0.2
+
+jobs:
+  run-newman-tests:
+    docker:
+      - image: cimg/node:18.12.1
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Install Newman
+          command: |
+            sudo npm install -g newman
+      - run:
+          name: Run Newman Tests
+          command: |
+            newman run https://api.getpostman.com/collections/${COMPOSITION_COLLECTION_UID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${DEV_ENV_UID}?apikey=${POSTMAN_API_KEY} --reporters cli,htmlextra,junit --reporter-htmlextra-export /tmp/newman/report.html --reporter-junit-export /tmp/newman/junit.xml
+      - store_test_results:
+          path: /tmp/newman
+      - store_artifacts:
+          path: /tmp/newman
+          destination: newman-report
+
+workflows:
+  test:
+    jobs:
+      - run-newman-tests:
+          context: automation
