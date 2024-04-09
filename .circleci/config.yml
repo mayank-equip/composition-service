@@ -26,8 +26,8 @@ steps:
   - store_artifacts:
       path: ~/project/newman          
 
-workflows:
-  test:
-    jobs:
-      - run-newman-tests:
-          context: automation
+# workflows:
+#   test:
+#     jobs:
+#       - run-newman-tests:
+#           context: automation
