@@ -1,0 +1,54 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@2.0
+
+jobs:
+  deploy:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - aws-cli/setup
+      - run:
+          name: Deploy to Environment
+          command: |
+            # Your deployment script goes here
+            # Example:
+            echo "Deploying branch '${CIRCLE_BRANCH}' to '${ENVIRONMENT}' environment"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - deploy:
+          context: my-context
+          filters:
+            branches:
+              ignore: main
+          matrix:
+            parameters:
+              environment:
+                - sandbox
+                - dev
+                - qa
+                - staging
+                - production
+      - hold-for-approval:
+          type: approval
+          requires:
+            - deploy
+          filters:
+            branches:
+              only: main
+      - deploy:
+          context: my-context
+          requires:
+            - hold-for-approval
+          filters:
+            branches:
+              only: main
+          matrix:
+            parameters:
+              environment:
+                - production
