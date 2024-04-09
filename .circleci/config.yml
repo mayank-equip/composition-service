@@ -3,6 +3,8 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 
+working_directory: ~/project
+
 jobs:
   run-newman-tests:
     docker:
