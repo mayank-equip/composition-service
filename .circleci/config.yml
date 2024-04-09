@@ -1,54 +1,38 @@
 version: 2.1
 
 orbs:
-  aws-cli: circleci/aws-cli@2.0
+  node: circleci/node@4.7
+
+executors:
+  docker: # Docker using the Base Convenience Image
+    docker:
+      - image: cimg/base:stable
+  linux: # a Linux VM running Ubuntu 20.04
+    machine:
+      image: ubuntu-2004:202107-02
+  macos: # macos executor running Xcode
+    macos:
+      xcode: 14.2.0
 
 jobs:
-  deploy:
-    docker:
-      - image: cimg/python:3.10
+  test:
+    parameters:
+      os:
+        type: executor
+      node-version:
+        type: string
+    executor: << parameters.os >>
     steps:
       - checkout
-      - aws-cli/setup
-      - run:
-          name: Deploy to Environment
-          command: |
-            # Your deployment script goes here
-            # Example:
-            echo "Deploying branch '${CIRCLE_BRANCH}' to '${ENVIRONMENT}' environment"
+      - node/install:
+          node-version: << parameters.node-version >>
+          install-yarn: true
 
 workflows:
-  version: 2
-  build-and-deploy:
+  all-tests:
     jobs:
-      - deploy:
-          context: my-context
-          filters:
-            branches:
-              ignore: main
+      - test:
           matrix:
             parameters:
-              environment:
-                - sandbox
-                - dev
-                - qa
-                - staging
-                - production
-      - hold-for-approval:
-          type: approval
-          requires:
-            - deploy
-          filters:
-            branches:
-              only: main
-      - deploy:
-          context: my-context
-          requires:
-            - hold-for-approval
-          filters:
-            branches:
-              only: main
-          matrix:
-            parameters:
-              environment:
-                - production
+              os: [docker, linux, macos]
+              node-version: ["14.17.6", "16.9.0"]
