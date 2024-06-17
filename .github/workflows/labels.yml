@@ -1,0 +1,22 @@
+name: Check Label on Pull Request
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
+
+jobs:
+  check-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Labels
+        if: 
+          contains(github.event.pull_request.labels.*.name, 'major') == false && 
+          contains(github.event.pull_request.labels.*.name, 'minor') == false &&
+          contains(github.event.pull_request.labels.*.name, 'patch') == false &&
+          contains(github.event.pull_request.labels.*.name, 'skip-ci') == false &&
+          contains(github.event.pull_request.labels.*.name, 'non-release') == false
+        run: exit 1

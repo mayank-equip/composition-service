@@ -1,0 +1,46 @@
+name: Create Release Tag and Notes
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+
+    steps:
+      - name: Tag
+        id: version
+        uses: brunopadz/semver-release-action@main
+        with:
+          release_branch: main
+          # Default "release" (release: creates a GitHub release ; tag: creates a lightweight tag ; none: computes the next SemVer version but does not create a release or tag).
+          release_strategy: none
+          # Optional Format used to create tags. Default "v%major%.%minor%.%patch%".
+          # tag_format: 
+          # Optional Tag to use. If left undefined, it will be computed using the tags already present in the repository.
+          # tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Set up Git
+        run: git config --global user.email "actions@github.com" && git config --global user.name "GitHub Actions"
+
+      - name: Create Tag and Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          echo $RELEASE_TAG
+
+          #Create a tag
+          git tag -a "$RELEASE_TAG" -m "Release Tag $RELEASE_TAG is created"
+          git push origin $RELEASE_TAG
+
+          # Create a GitHub release
+          gh release create $RELEASE_TAG --title "$RELEASE_TAG" --latest --generate-notes
+
