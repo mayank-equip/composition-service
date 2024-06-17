@@ -1,28 +1,75 @@
 version: 2.1
 
 orbs:
-  newman: postman/newman@1.0.0
+  slack: circleci/slack@4.4.4
+  jira: circleci/jira@2.1.0
 
-# executor: newman
+defaults: &defaults
+  working_directory: ~/project
+  docker:
+    - image: cimg/node:20.12.2
+  resource_class: xlarge
+  environment:
+    IMAGE_NAME: cimg/node:20.12.2
 
-working_directory: ~/project
-# jobs:
-#   example-workflow:
-#     executor: newman/postman-newman-docker
-#     context: automation
-#     steps:
-#       - checkout
-#       - newman/newman-run:
-#           collection: https://api.getpostman.com/collections/${COMPOSITION_COLLECTION_UID}?apikey=${POSTMAN_API_KEY}
-#           environment: https://api.getpostman.com/environments/${DEV_ENV_UID}?apikey=${POSTMAN_API_KEY}
-#           additional-options: -n 1 -r htmlextra --reporter-htmlextra-export --reporter-htmlextra-title 'Equip API Run Report' --reporter-htmlextra-displayProgressBar --verbose --ignore-redirects  --reporter-junit-export /project/newman/junit.xml
-#       - store_test_results:
-#           path: ~/project/newman      
-#       - store_artifacts:
-#           path: ~/project/newman
-# # workflows: null
+release_tag_filter: &release_tag_filter
+  filters:
+    tags:
+      only:
+        - /^v\d+\.\d+\.\d+$/
+    branches:
+      ignore:
+        - /.*/
+
+jobs:
+  deploy:
+    <<: *defaults
+    parameters:
+      environment:
+        type: string
+        default: sandbox
+        description: "Environment to deploy to"
+      environment_type:
+        type: enum
+        default: development
+        description: "Environment of the build deployed to - like development, testing, staging, etc"
+        enum: ["production", "staging", "testing", "development", "unmapped"]
+      pipeline_id:
+        description: "Pass in the pipeline id via CircleCI pipeline parameters."
+        type: string
+      pipeline_number:
+        description: "Pass in the pipeline number via CircleCI pipeline parameters."
+        type: integer
+      pipeline_tag:
+        description: "Pass in the pipeline git tag via CircleCI pipeline parameters."
+        type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - store_artifacts:
+          path: ~/.npm/_logs
+      - jira/notify:
+          environment: <<parameters.environment>>
+          environment_type: <<parameters.environment_type>>
+          job_type: deployment
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>
+          service_id: << pipeline.git.tag >>
+
 workflows:
-    example-workflow:
-      jobs:
-        - newman/run:
-            collection: https://api.getpostman.com/collections/${COMPOSITION_COLLECTION_UID}?apikey=${POSTMAN_API_KEY} 
+  version: 2
+  # Release branch workflow (release-xx.xx.xx) that deploys to QA, Stg, Prod with an approval step
+  deploy-all:
+    jobs:
+      - deploy: #dev
+          <<: *release_tag_filter
+          name: deploy-dev
+          context:
+            - automation
+          environment: dev
+          environment_type: development
+          pipeline_id: << pipeline.id >>
+          pipeline_number: << pipeline.number >>
+          pipeline_tag: << pipeline.git.tag >>
+ 
