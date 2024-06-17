@@ -6,18 +6,23 @@ orbs:
 # executor: newman
 
 working_directory: ~/project
-jobs:
-  newman-collection-run:
-    executor: newman/postman-newman-docker
-    context: automation
-    steps:
-      - checkout
-      - newman/newman-run:
-          collection: https://api.getpostman.com/collections/${COMPOSITION_COLLECTION_UID}?apikey=${POSTMAN_API_KEY}
-          environment: https://api.getpostman.com/environments/${DEV_ENV_UID}?apikey=${POSTMAN_API_KEY}
-          additional-options: -n 1 -r htmlextra --reporter-htmlextra-export --reporter-htmlextra-title 'Equip API Run Report' --reporter-htmlextra-displayProgressBar --verbose --ignore-redirects  --reporter-junit-export /project/newman/junit.xml
-      - store_test_results:
-          path: ~/project/newman      
-      - store_artifacts:
-          path: ~/project/newman
-# workflows: null
+# jobs:
+#   example-workflow:
+#     executor: newman/postman-newman-docker
+#     context: automation
+#     steps:
+#       - checkout
+#       - newman/newman-run:
+#           collection: https://api.getpostman.com/collections/${COMPOSITION_COLLECTION_UID}?apikey=${POSTMAN_API_KEY}
+#           environment: https://api.getpostman.com/environments/${DEV_ENV_UID}?apikey=${POSTMAN_API_KEY}
+#           additional-options: -n 1 -r htmlextra --reporter-htmlextra-export --reporter-htmlextra-title 'Equip API Run Report' --reporter-htmlextra-displayProgressBar --verbose --ignore-redirects  --reporter-junit-export /project/newman/junit.xml
+#       - store_test_results:
+#           path: ~/project/newman      
+#       - store_artifacts:
+#           path: ~/project/newman
+# # workflows: null
+workflows:
+    example-workflow:
+      jobs:
+        - newman/run:
+            collection: https://api.getpostman.com/collections/${COMPOSITION_COLLECTION_UID}?apikey=${POSTMAN_API_KEY} 
